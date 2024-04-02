@@ -13,17 +13,19 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "nuxt": "^3.11.1",
     "pinia": "^2.1.7",
     "typescript": "^5.4.3",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
-    "vue-tsc": "^2.0.7",
-    "vuetify": "^3.5.13"
+    "vue-tsc": "^2.0.7"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.12.1",
-    "eslint": "^8.57.0"
+    "eslint": "^8.57.0",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vuetify": "^3.5.13"
   }
 }
