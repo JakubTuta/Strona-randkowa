@@ -1,3 +1,4 @@
+/* eslint-disable node/prefer-global/process */
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 
 export default defineNuxtConfig({
@@ -19,6 +20,18 @@ export default defineNuxtConfig({
       template: {
         transformAssetUrls,
       },
+    },
+  },
+  runtimeConfig: {
+    public: {
+      NODE_ENV: process.env.NODE_ENV,
+      APP_VERSION: process.env.npm_package_version,
+      apiKey: process.env.apiKey,
+      authDomain: process.env.authDomain,
+      projectId: process.env.projectId,
+      storageBucket: process.env.storageBucket,
+      messagingSenderId: process.env.messagingSenderId,
+      appId: process.env.appId,
     },
   },
   devtools: { enabled: true },
