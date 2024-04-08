@@ -27,3 +27,5 @@ with open(credentials_file, "w") as file:
 
 credentials = firebase_admin.credentials.Certificate(credentials_file)
 firebase_admin.initialize_app(credentials)
+
+firestore_client = firebase_admin.firestore.client()
