@@ -10,8 +10,11 @@ class UserModel:
     description: str
     score: float
     elo: int
-    photos: list[str] = dataclasses.field(
-        default_factory=list, hash=False, compare=False
-    )
+    photos: list[str]
     preferred_gender: str
     looking_for: str
+
+    def __init__(self, data, reference):
+        for key, value in data.items():
+            setattr(self, key, value)
+        setattr(self, "reference", reference)
