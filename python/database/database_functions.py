@@ -1,10 +1,9 @@
 import typing
-import warnings
 
 from google.cloud import firestore
 from google.cloud.firestore_v1.base_query import FieldFilter
+from models.user import UserModel
 
-from ..models.user import UserModel
 from .database_init import firestore_client as fc
 
 collection_users = fc.collection("users")
@@ -38,9 +37,6 @@ def get_user_doc(
 
 
 def get_all_users() -> typing.List[firestore.DocumentReference]:
-    # query = collection_users.where(filter=FieldFilter("name", "!=", ""))
-    # docs = query.stream()
-
     docs = collection_users.stream()
 
     users = [UserModel(doc.to_dict(), doc.id) for doc in docs]
@@ -48,5 +44,23 @@ def get_all_users() -> typing.List[firestore.DocumentReference]:
     return users
 
 
-# print(get_user_doc("pierwszy"))
-print(get_all_users())
+def get_other_users(
+    user_ref: firestore.DocumentReference,
+) -> typing.List[firestore.DocumentReference]:
+    user_doc = user_ref.get()
+    user = UserModel(user_doc.to_dict(), user_doc.id)
+
+    query = collection_users.where(
+        filter=FieldFilter("gender", "==", user.preferred_gender)
+    )
+    docs = query.stream()
+
+    users = [UserModel(doc.to_dict(), doc.id) for doc in docs]
+
+    return users
+
+
+def get_user_from_id(doc_id: str) -> firestore.DocumentReference:
+    doc_ref = collection_users.document(doc_id)
+
+    return doc_ref
