@@ -21,12 +21,7 @@ config = {
     "universe_domain": os.getenv("universe_domain"),
 }
 
-credentials_file = "python/firebase_credentials.json"
-
-with open(credentials_file, "w") as file:
-    file.write(json.dumps(config, indent=2))
-
-credentials = firebase_admin.credentials.Certificate(credentials_file)
+credentials = firebase_admin.credentials.Certificate(config)
 firebase_admin.initialize_app(credentials)
 
 firestore_client = firestore.client()
