@@ -60,7 +60,7 @@ def get_other_users(
     return users
 
 
-def get_user_from_id(doc_id: str) -> firestore.DocumentReference:
+def get_reference_from_id(doc_id: str) -> firestore.DocumentReference:
     doc_ref = collection_users.document(doc_id)
 
     return doc_ref
