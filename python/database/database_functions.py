@@ -26,13 +26,9 @@ def get_user_doc(
     if not reference:
         return None
 
-    # document = reference.get()
-    # user = UserModel(document.to_dict(), document.reference)
-    # return user
-
-    doc_ref = collection_users.document("pierwszy")
-    document = doc_ref.get()
+    document = reference.get()
     user = UserModel(document.to_dict(), document.reference)
+
     return user
 
 
