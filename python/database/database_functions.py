@@ -20,7 +20,7 @@ collection_users = fc.collection("users")
 #     return wrapper
 
 
-def get_user_doc(
+def get_user(
     reference: typing.Optional[firestore.DocumentReference],
 ) -> typing.Optional[UserModel]:
     if not reference:

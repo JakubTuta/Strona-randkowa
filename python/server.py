@@ -13,4 +13,8 @@
 
 import database.database_functions as db_functions
 
-db_functions.get_all_users()
+# db_functions.get_all_users()
+user_ref = db_functions.get_reference_from_id("pierwszy")
+user = db_functions.get_user(user_ref)
+
+print(user)

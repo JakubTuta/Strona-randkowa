@@ -15,7 +15,10 @@ class UserModel:
     photos: list[str]
     preferred_gender: str
     looking_for: str
-    reference: firestore.DocumentReference
+
+    reference: firestore.DocumentReference = dataclasses.field(
+        compare=False, hash=False, repr=False
+    )
 
     def __init__(self, data, reference):
         for key, value in data.items():
@@ -24,6 +27,6 @@ class UserModel:
 
     def to_map(self):
         data = dataclasses.asdict(self)
-        del data.reference
+        del data["reference"]
 
         return data
