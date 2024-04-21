@@ -5,7 +5,7 @@
   "scripts": {
     "install-python": "pip install -r python/modules.txt",
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev && python python/server.py",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
