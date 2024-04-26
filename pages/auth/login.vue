@@ -4,7 +4,7 @@ import {emailRule, passwordRule, requiredRule} from "~/helpers/rules";
 import NavBarGuest from "~/composables/navBars/navBarGuest.vue";
 
 useHead({
-  title: "Logowanie - Parking+"
+  title: "Logowanie - Randki+"
 })
 
 // const auth = useAuthStore()
