@@ -16,6 +16,7 @@
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "@nuxt/content": "github:nuxt/content",
+    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@pinia/nuxt": "^0.5.1",
     "firebase": "^10.10.0",
     "nuxt": "^3.11.1",
