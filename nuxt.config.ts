@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@pinia/nuxt',
+    '@nuxtjs/i18n',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // eslint-disable-next-line ts/ban-ts-comment
@@ -33,6 +34,11 @@ export default defineNuxtConfig({
       messagingSenderId: process.env.messagingSenderId,
       appId: process.env.appId,
     },
+  },
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'pl',
+    vueI18n: './i18n.config.ts',
   },
   devtools: { enabled: true },
 })
