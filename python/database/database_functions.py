@@ -9,17 +9,6 @@ from .database_init import firestore_client as fc
 collection_users = fc.collection("users")
 
 
-# def ignore_warnings(function):
-#     def wrapper(*args, **kwargs):
-#         with warnings.catch_warnings():
-#             warnings.simplefilter("ignore")
-#             reference = args[0]
-#             result = function(reference)
-#             return result
-
-#     return wrapper
-
-
 def get_user(
     reference: typing.Optional[firestore.DocumentReference],
 ) -> typing.Optional[UserModel]:
