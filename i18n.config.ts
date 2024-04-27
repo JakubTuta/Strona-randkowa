@@ -1,14 +1,15 @@
-import {defineI18nConfig} from "~/node_modules/.pnpm/@nuxtjs+i18n@8.3.1_rollup@4.13.2_vue@3.4.21/node_modules/@nuxtjs/i18n/dist/runtime/composables";
+import pl from './locales/pl.json'
+import en from './locales/en.json'
 
 export default defineI18nConfig(() => ({
+    useCookie: true,
     legacy: false,
     locale: 'en',
+    locales: ['pl', 'en'],
+    defaultLocale: 'en',
+    fallbackLocale: 'pl',
     messages: {
-        en: {
-            welcome: 'Welcome'
-        },
-        fr: {
-            welcome: 'Bienvenue'
-        }
-    }
+        pl,
+        en,
+    },
 }))

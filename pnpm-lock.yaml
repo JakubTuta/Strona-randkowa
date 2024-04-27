@@ -15,8 +15,8 @@ dependencies:
     specifier: github:nuxt/content
     version: github.com/nuxt/content/f753723d3cd4d8f8a92d050b9be59489c522c35f(nuxt@3.11.1)(rollup@4.13.2)(vue@3.4.21)
   '@nuxtjs/i18n':
-    specifier: ^8.3.1
-    version: 8.3.1(rollup@4.13.2)(vue@3.4.21)
+    specifier: npm:@nuxtjs/i18n-edge
+    version: /@nuxtjs/i18n-edge@8.3.1-28565891.16f9309(rollup@4.13.2)(vue@3.4.21)
   '@pinia/nuxt':
     specifier: ^0.5.1
     version: 0.5.1(rollup@4.13.2)(typescript@5.4.3)(vue@3.4.21)
@@ -1867,8 +1867,8 @@ packages:
       - vue-tsc
     dev: false
 
-  /@nuxtjs/i18n@8.3.1(rollup@4.13.2)(vue@3.4.21):
-    resolution: {integrity: sha512-VHnnjFTTep2oC5++61WY06y4c/h943NyHQh1CRUJQvjsdbGSMX3WQjMGk+X05a3pyPFN70aq0YbgtsEoEoTEjQ==}
+  /@nuxtjs/i18n-edge@8.3.1-28565891.16f9309(rollup@4.13.2)(vue@3.4.21):
+    resolution: {integrity: sha512-Bu9ySQIbvV/QCysABHuqZwCPGyxZCkVGSUMpaHiqJOpK0SeYbPDJ6MD4fmqIJx5JuG9vljplkdCci8DMKIZ0/g==}
     engines: {node: ^14.16.0 || >=16.11.0}
     dependencies:
       '@intlify/h3': 0.5.0
@@ -2031,6 +2031,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: false
     bundledDependencies:
       - napi-wasm
@@ -7010,6 +7011,10 @@ packages:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
+    dev: false
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: false
 
   /natural-compare-lite@1.4.0:

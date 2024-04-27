@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
 
+const { t } = useI18n()
+
 const theme = useTheme()
 function toggleTheme() {
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
@@ -20,7 +22,8 @@ function toggleTheme() {
 
     <div class="hidden-sm-and-down">
       <v-btn variant="text" color="default" to="/auth/login">
-        Logowanie
+        {{ t("navBar.login") }}
+
       </v-btn>
 
       <v-btn variant="text" color="default" icon="mdi-theme-light-dark" @click="toggleTheme" />
