@@ -35,7 +35,7 @@ function toggleTheme() {
         <v-menu activator="parent">
           <v-list class="justify-center">
             <v-list-item to="/auth/login">
-              <v-list-item-title>Logowanie</v-list-item-title>
+              <v-list-item-title> {{ t("navBar.login") }} </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
