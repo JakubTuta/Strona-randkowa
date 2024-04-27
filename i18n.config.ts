@@ -4,10 +4,10 @@ import en from './locales/en.json'
 export default defineI18nConfig(() => ({
     useCookie: true,
     legacy: false,
-    locale: 'en',
+    locale: 'pl',
     locales: ['pl', 'en'],
-    defaultLocale: 'en',
-    fallbackLocale: 'pl',
+    defaultLocale: 'pl',
+    fallbackLocale: 'en',
     messages: {
         pl,
         en,
