@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import formValidation from "~/helpers/formValidation";
-import {emailRule, passwordRule, requiredRule} from "~/helpers/rules";
-import NavBarGuest from "~/composables/navBars/navBarGuest.vue";
+import formValidation from '~/helpers/formValidation'
+import { emailRule, passwordRule, requiredRule } from '~/helpers/rules'
+import NavBarGuest from '~/composables/navBars/navBarGuest.vue'
 
-useHead({
-  title: "Logowanie - Randki+"
-})
+// useHead({
+//   title: 'Logowanie - Randki+',
+// })
 
 // const auth = useAuthStore()
 // const {user, loginError} = storeToRefs(auth)
@@ -35,10 +35,10 @@ async function logIn() {
   <NavBarGuest />
 
   <v-sheet
-      class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
-      elevation="4"
-      max-width="1100"
-      rounded
+    class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
+    elevation="4"
+    max-width="1100"
+    rounded
   >
     <v-row justify="center">
       <v-col cols="12" sm="12" md="6">
@@ -48,35 +48,34 @@ async function logIn() {
           </div>
 
           <v-form
-              ref="form"
-              @submit.prevent="logIn"
-              class="w-75 my-2"
-              v-model="valid"
+            ref="form"
+            v-model="valid"
+            class="w-75 my-2"
+            @submit.prevent="logIn"
           >
             <v-text-field
-                v-model="email"
-                label="Adres Email"
-                placeholder="example@mail.com"
-                type="email"
-                @keyup.enter="logIn"
-                :rules="[requiredRule(), emailRule()]"
+              v-model="email"
+              label="Adres Email"
+              placeholder="example@mail.com"
+              type="email"
+              :rules="[requiredRule(), emailRule()]"
+              @keyup.enter="logIn"
             />
 
             <v-text-field
-                v-model="password"
-                label="Hasło"
-                :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="showPassword ? 'text' : 'password'"
-                @click:append-inner="showPassword = !showPassword"
-                @keyup.enter="logIn"
-                :rules="[requiredRule(), passwordRule()]"
+              v-model="password"
+              label="Hasło"
+              :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPassword ? 'text' : 'password'"
+              :rules="[requiredRule(), passwordRule()]"
+              @click:append-inner="showPassword = !showPassword"
+              @keyup.enter="logIn"
             />
 
             <v-row class="justify-center my-1">
               <v-btn class="mx-2 mb-2" @click="logIn">
                 Zaloguj
               </v-btn>
-
             </v-row>
           </v-form>
 
@@ -88,25 +87,25 @@ async function logIn() {
             Zarejestruj się
           </v-btn>
 
-<!--          <v-alert-->
-<!--              v-if="loginError"-->
-<!--              color="error"-->
-<!--              variant="tonal"-->
-<!--              class="my-4"-->
-<!--          >-->
-<!--            Niepoprawne dane logowania-->
-<!--          </v-alert>-->
+          <!--          <v-alert -->
+          <!--              v-if="loginError" -->
+          <!--              color="error" -->
+          <!--              variant="tonal" -->
+          <!--              class="my-4" -->
+          <!--          > -->
+          <!--            Niepoprawne dane logowania -->
+          <!--          </v-alert> -->
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="6">
         <div class="d-flex flex-column align-center justify-center h-100 mx-2 pa-6">
           <v-img
-              class="mx-auto my-5 elevation-5"
-              rounded="xl"
-              :width="300"
-              aspect-ratio="4/3"
-              cover
-              src="/LandingOne.jpeg"
+            class="mx-auto my-5 elevation-5"
+            rounded="xl"
+            :width="300"
+            aspect-ratio="4/3"
+            cover
+            src="/LandingOne.jpeg"
           />
         </div>
       </v-col>

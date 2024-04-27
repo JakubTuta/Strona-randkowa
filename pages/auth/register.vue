@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import formValidation from "~/helpers/formValidation";
-import {emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule} from "~/helpers/rules";
-import NavBarGuest from "~/composables/navBars/navBarGuest.vue";
+import formValidation from '~/helpers/formValidation'
+import { emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
+import NavBarGuest from '~/composables/navBars/navBarGuest.vue'
 
 // definePageMeta({
 //   middleware: ['guest-page-guard'],
 // })
 
-useHead({
-  title: "Rejestracja - Randki+"
-})
+// useHead({
+//   title: "Rejestracja - Randki+"
+// })
 
 // const auth = useAuthStore()
 
@@ -49,29 +49,28 @@ async function registerUser() {
 }
 
 // onMounted(() => registerError.value = false)
-
 </script>
 
 <template>
   <NavBarGuest />
 
   <v-sheet
-      class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
-      elevation="4"
-      max-width="1100"
-      rounded
+    class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
+    elevation="4"
+    max-width="1100"
+    rounded
   >
     <v-row justify="center">
       <v-col cols="12" sm="12" md="6">
         <div class="d-flex flex-column align-center justify-center h-100 mx-2 pa-6">
           <v-img
-              class="mx-auto my-5 elevation-5"
-              rounded="xl"
-              :width="300"
-              max-height="300px"
-              aspect-ratio="4/3"
-              cover
-              src="/LandingOne.jpeg"
+            class="mx-auto my-5 elevation-5"
+            rounded="xl"
+            :width="300"
+            max-height="300px"
+            aspect-ratio="4/3"
+            cover
+            src="/LandingOne.jpeg"
           />
         </div>
       </v-col>
@@ -82,52 +81,52 @@ async function registerUser() {
           </div>
 
           <v-form
-              class="w-75 my-2"
-              v-model="valid"
-              ref="form"
-              @submit.prevent="registerUser"
+            ref="form"
+            v-model="valid"
+            class="w-75 my-2"
+            @submit.prevent="registerUser"
           >
             <v-text-field
-                v-model="email"
-                label="Adres Email"
-                placeholder="example@mail.com"
-                type="email"
-                @keyup.enter="registerUser"
-                :rules="[requiredRule(), emailRule()]"
+              v-model="email"
+              label="Adres Email"
+              placeholder="example@mail.com"
+              type="email"
+              :rules="[requiredRule(), emailRule()]"
+              @keyup.enter="registerUser"
             />
 
             <v-text-field
-                v-model="name"
-                label="Nazwa użytkownika"
-                type="text"
-                @keyup.enter="registerUser"
-                :rules="[requiredRule(), lengthRuleShort(), lengthRule()]"
+              v-model="name"
+              label="Nazwa użytkownika"
+              type="text"
+              :rules="[requiredRule(), lengthRuleShort(), lengthRule()]"
+              @keyup.enter="registerUser"
             />
 
             <v-text-field
-                v-model="password1"
-                label="Hasło"
-                @keyup.enter="registerUser"
-                :append-inner-icon="showPasswordOne ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="showPasswordOne ? 'text' : 'password'"
-                @click:append-inner="showPasswordOne = !showPasswordOne"
-                :rules="[requiredRule(), passwordRule()]"
+              v-model="password1"
+              label="Hasło"
+              :append-inner-icon="showPasswordOne ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPasswordOne ? 'text' : 'password'"
+              :rules="[requiredRule(), passwordRule()]"
+              @keyup.enter="registerUser"
+              @click:append-inner="showPasswordOne = !showPasswordOne"
             />
 
             <v-text-field
-                v-model="password2"
-                label="Powtórz hasło"
-                @keyup.enter="registerUser"
-                :append-inner-icon="showPasswordTwo ? 'mdi-eye' : 'mdi-eye-off'"
-                :type="showPasswordTwo ? 'text' : 'password'"
-                @click:append-inner="showPasswordTwo = !showPasswordTwo"
-                :rules="[requiredRule(), passwordRule()]"
+              v-model="password2"
+              label="Powtórz hasło"
+              :append-inner-icon="showPasswordTwo ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="showPasswordTwo ? 'text' : 'password'"
+              :rules="[requiredRule(), passwordRule()]"
+              @keyup.enter="registerUser"
+              @click:append-inner="showPasswordTwo = !showPasswordTwo"
             />
 
             <v-checkbox
-                v-model="rules"
-                label="Akceptuję regulamin"
-                :rules="[requiredRule()]"
+              v-model="rules"
+              label="Akceptuję regulamin"
+              :rules="[requiredRule()]"
             />
 
             <v-btn @click="registerUser">
@@ -135,17 +134,16 @@ async function registerUser() {
             </v-btn>
           </v-form>
 
-<!--          <v-alert-->
-<!--              v-if="registerError"-->
-<!--              color="error"-->
-<!--              variant="tonal"-->
-<!--              class="my-4"-->
-<!--          >-->
-<!--            Niepoprawne dane rejestracji-->
-<!--          </v-alert>-->
+          <!--          <v-alert -->
+          <!--              v-if="registerError" -->
+          <!--              color="error" -->
+          <!--              variant="tonal" -->
+          <!--              class="my-4" -->
+          <!--          > -->
+          <!--            Niepoprawne dane rejestracji -->
+          <!--          </v-alert> -->
         </div>
       </v-col>
     </v-row>
   </v-sheet>
 </template>
-

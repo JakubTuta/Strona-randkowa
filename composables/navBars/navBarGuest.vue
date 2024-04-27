@@ -23,7 +23,6 @@ function toggleTheme() {
     <div class="hidden-sm-and-down">
       <v-btn variant="text" color="default" to="/auth/login">
         {{ t("navBar.login") }}
-
       </v-btn>
 
       <v-btn variant="text" color="default" icon="mdi-theme-light-dark" @click="toggleTheme" />
