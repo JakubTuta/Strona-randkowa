@@ -2,6 +2,8 @@
 import formValidation from '~/helpers/formValidation'
 import { emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
 import NavBarGuest from '~/composables/navBars/navBarGuest.vue'
+import type { UserModel } from '~/models/user'
+// import '@vuepic/vue-datepicker/dist/main.css'
 
 // definePageMeta({
 //   middleware: ['guest-page-guard'],
@@ -21,6 +23,7 @@ const email = ref('')
 const userName = ref('')
 const name = ref('')
 const surname = ref('')
+// const birthDate = ref('')
 const password1 = ref('')
 const password2 = ref('')
 const rules = ref(false)
@@ -96,6 +99,11 @@ async function registerUser() {
               v-model="surname" label="Nazwisko" type="text"
               :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" @keyup.enter="registerUser"
             />
+
+            <!-- <VueDatePicker
+              v-model="birthDate" class="mt-2" auto-apply :enable-time-picker="true"
+              label="Data urodzenia" :min-date="new Date()" position="left"
+            /> -->
 
             <v-text-field
               v-model="index" label="Indeks uczelniany" type="text"
