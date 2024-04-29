@@ -18,10 +18,13 @@ const { form, valid, isValid } = formValidation()
 // const {registerError} = storeToRefs(auth)
 
 const email = ref('')
+const userName = ref('')
 const name = ref('')
+const surname = ref('')
 const password1 = ref('')
 const password2 = ref('')
 const rules = ref(false)
+const index = ref('') // DODAĆ ZASADY ŻE MUSZĄ BYĆ CYFRY I MAX 6 ZNAKÓW
 
 const showPasswordOne = ref(false)
 const showPasswordTwo = ref(false)
@@ -55,21 +58,14 @@ async function registerUser() {
   <NavBarGuest />
 
   <v-sheet
-    class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
-    elevation="4"
-    max-width="1100"
-    rounded
+    class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4" elevation="4"
+    max-width="1100" rounded
   >
     <v-row justify="center">
       <v-col cols="12" sm="12" md="6">
         <div class="d-flex flex-column align-center justify-center h-100 mx-2 pa-6">
           <v-img
-            class="mx-auto my-5 elevation-5"
-            rounded="xl"
-            :width="300"
-            max-height="300px"
-            aspect-ratio="4/3"
-            cover
+            class="mx-auto my-5 elevation-5" rounded="xl" :width="300" max-height="300px" aspect-ratio="4/3" cover
             src="/LandingOne.jpeg"
           />
         </div>
@@ -80,54 +76,47 @@ async function registerUser() {
             Rejestracja
           </div>
 
-          <v-form
-            ref="form"
-            v-model="valid"
-            class="w-75 my-2"
-            @submit.prevent="registerUser"
-          >
+          <v-form ref="form" v-model="valid" class="w-75 my-2" @submit.prevent="registerUser">
             <v-text-field
-              v-model="email"
-              label="Adres Email"
-              placeholder="example@mail.com"
-              type="email"
-              :rules="[requiredRule(), emailRule()]"
-              @keyup.enter="registerUser"
+              v-model="email" label="Adres Email" placeholder="example@mail.com" type="email"
+              :rules="[requiredRule(), emailRule()]" @keyup.enter="registerUser"
             />
 
             <v-text-field
-              v-model="name"
-              label="Nazwa użytkownika"
-              type="text"
-              :rules="[requiredRule(), lengthRuleShort(), lengthRule()]"
-              @keyup.enter="registerUser"
+              v-model="userName" label="Nazwa użytkownika" type="text"
+              :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" @keyup.enter="registerUser"
             />
 
             <v-text-field
-              v-model="password1"
-              label="Hasło"
+              v-model="name" label="Imię" type="text"
+              :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" @keyup.enter="registerUser"
+            />
+
+            <v-text-field
+              v-model="surname" label="Nazwisko" type="text"
+              :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" @keyup.enter="registerUser"
+            />
+
+            <v-text-field
+              v-model="index" label="Indeks uczelniany" type="text"
+              :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" @keyup.enter="registerUser"
+            />
+
+            <v-text-field
+              v-model="password1" label="Hasło"
               :append-inner-icon="showPasswordOne ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPasswordOne ? 'text' : 'password'"
-              :rules="[requiredRule(), passwordRule()]"
-              @keyup.enter="registerUser"
-              @click:append-inner="showPasswordOne = !showPasswordOne"
+              :type="showPasswordOne ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
+              @keyup.enter="registerUser" @click:append-inner="showPasswordOne = !showPasswordOne"
             />
 
             <v-text-field
-              v-model="password2"
-              label="Powtórz hasło"
+              v-model="password2" label="Powtórz hasło"
               :append-inner-icon="showPasswordTwo ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPasswordTwo ? 'text' : 'password'"
-              :rules="[requiredRule(), passwordRule()]"
-              @keyup.enter="registerUser"
-              @click:append-inner="showPasswordTwo = !showPasswordTwo"
+              :type="showPasswordTwo ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
+              @keyup.enter="registerUser" @click:append-inner="showPasswordTwo = !showPasswordTwo"
             />
 
-            <v-checkbox
-              v-model="rules"
-              label="Akceptuję regulamin"
-              :rules="[requiredRule()]"
-            />
+            <v-checkbox v-model="rules" label="Akceptuję regulamin" :rules="[requiredRule()]" />
 
             <v-btn @click="registerUser">
               Zarejestruj się
