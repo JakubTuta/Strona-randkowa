@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
-import { toggleTheme } from '~/composables/theme'
+import { toggleTheme } from '~/helpers/theme'
 
 const { t } = useI18n()
 

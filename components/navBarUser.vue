@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTheme } from 'vuetify'
-import { toggleTheme } from '~/composables/theme'
+import { toggleTheme } from '~/helpers/theme'
 
 const theme = useTheme()
 const drawer = defineModel({ default: false })

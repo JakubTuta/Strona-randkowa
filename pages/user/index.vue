@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-const drawer = ref(false)
-
-const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
+definePageMeta({
+  layout: 'user',
+})
 </script>
 
 <template>
-  <NavBarUser v-model="drawer" />
-  <DrawerUser v-model="drawer" class="hidden-md-and-up" />
-
   <v-container fluid class="px-8">
     <v-row justify="center" class="mt-4">
       <v-col cols="12" md="8">
@@ -68,23 +65,6 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
       </v-col>
     </v-row>
   </v-container>
-
-  <v-footer class="d-flex flex-column justify-center mt-10" elevation="4">
-    <div>
-      <v-btn
-        v-for="icon in icons"
-        :key="icon"
-        :icon="icon"
-        class="mx-4"
-        size="small"
-        variant="plain"
-      />
-    </div>
-
-    <div class="text-center mt-2">
-      <strong> Projekt Kompetencyjny {{ new Date().getFullYear() }} ©</strong>
-    </div>
-  </v-footer>
 </template>
 
 <style scoped>
