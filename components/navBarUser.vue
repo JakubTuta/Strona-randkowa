@@ -29,7 +29,7 @@ function changeIcon() {
         color="default"
         prepend-icon="mdi-account-group"
       >
-        Społeczności
+        {{ $t('navBar.user.communities') }}
       </v-btn>
 
       <v-btn
@@ -38,19 +38,19 @@ function changeIcon() {
         prepend-icon="mdi-calendar-multiple"
         :append-icon="eventMenuIcon"
       >
-        Wydarzenia
+        {{ $t('navBar.user.events.events') }}
         <v-menu activator="parent" @update:model-value="changeIcon">
           <v-list class="justify-center">
             <v-list-item
               to="user/events/add"
               prepend-icon="mdi-plus"
-              title="Utwórz wydarzenie"
+              :title="$t('navBar.user.events.add')"
             />
 
             <v-list-item
               to="user/events"
               prepend-icon="mdi-party-popper"
-              title="Przeglądaj"
+              :title="$t('navBar.user.events.browse')"
             />
           </v-list>
         </v-menu>
@@ -61,7 +61,7 @@ function changeIcon() {
         color="default"
         prepend-icon="mdi-heart"
       >
-        Poznawaj
+        {{ $t('navBar.user.meet') }}
       </v-btn>
 
       <v-btn
@@ -69,7 +69,7 @@ function changeIcon() {
         color="default"
         prepend-icon="mdi-chat"
       >
-        Czat
+        {{ $t('navBar.user.chat') }}
       </v-btn>
     </div>
 

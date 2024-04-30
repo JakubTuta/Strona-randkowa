@@ -16,32 +16,49 @@ const drawer = defineModel({ default: false })
     <div class="hidden-sm-and-up">
       <v-list-item
         append-icon="mdi-account"
-        :title="$t('navBar.myProfile')"
+        :title="$t('navBar.user.myProfile')"
       />
 
       <v-divider />
     </div>
 
-    <v-list-item link title="Społeczności" append-icon="mdi-account-group" />
-    <v-list-item link title="Wydarzenia" append-icon="mdi-calendar-multiple">
+    <v-list-item
+      link
+      :title="$t('navBar.user.communities')"
+      append-icon="mdi-account-group"
+    />
+    <v-list-item
+      link
+      :title="$t('navBar.user.events.events')"
+      append-icon="mdi-calendar-multiple"
+    >
       <v-menu activator="parent" location="start">
         <v-list class="justify-center">
           <v-list-item
             to="user/events/add"
             append-icon="mdi-plus"
-            title="Utwórz wydarzenie"
+            :title="$t('navBar.user.events.add')"
           />
 
           <v-list-item
             to="user/events"
             append-icon="mdi-party-popper"
-            title="Przeglądaj"
+            :title="$t('navBar.user.events.browse')"
           />
         </v-list>
       </v-menu>
     </v-list-item>
-    <v-list-item link title="Poznawaj" append-icon="mdi-heart" />
-    <v-list-item link title="Czat" append-icon="mdi-chat" />
+
+    <v-list-item
+      link
+      :title="$t('navBar.user.meet')"
+      append-icon="mdi-heart"
+    />
+    <v-list-item
+      link
+      :title="$t('navBar.user.chat')"
+      append-icon="mdi-chat"
+    />
 
     <div class="hidden-sm-and-up">
       <v-divider />
