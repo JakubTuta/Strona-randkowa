@@ -7,7 +7,9 @@ from google.cloud import firestore
 @dataclasses.dataclass
 class UserModel:
     user_name: str = ""
-    photos: typing.List[str] = dataclasses.field(default_factory=list, repr=False)
+    photos: typing.List[str] = dataclasses.field(
+        default_factory=list, compare=False, hash=False, repr=False
+    )
     first_name: str = ""
     faculty: str = ""
     last_name: str = ""
