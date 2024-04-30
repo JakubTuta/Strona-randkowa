@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-  <v-card color="primary" min-height="300" min-width="360" class="rounded-xl pt-2 cursor-pointer grow ma-3">
+  <v-card color="secondary" min-height="300" min-width="310" class="rounded-xl pt-2 cursor-pointer grow ma-3">
     <v-card-title class="width-100 d-flex justify-space-between">
       <span>{{ name }}</span>
       <span v-if="age">{{ age }} lat</span>

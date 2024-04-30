@@ -24,7 +24,7 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
             src="/testEvent.jpg"
             cover
           >
-            <v-btn variant="elevated" size="large">
+            <v-btn variant="elevated" size="large" color="secondary">
               Dołącz teraz!
             </v-btn>
           </v-carousel-item>
@@ -33,7 +33,7 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
             src="https://cdn.vuetifyjs.com/images/cards/hotel.jpg"
             cover
           >
-            <v-btn variant="elevated" size="large">
+            <v-btn variant="elevated" size="large" color="secondary">
               Dołącz teraz!
             </v-btn>
           </v-carousel-item>
@@ -42,7 +42,7 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
             src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
             cover
           >
-            <v-btn variant="elevated" size="large">
+            <v-btn variant="elevated" size="large" color="secondary">
               Dołącz teraz!
             </v-btn>
           </v-carousel-item>
@@ -59,7 +59,7 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
     </v-row>
 
     <v-row justify="center">
-      <v-col cols="12" md="8" class="mt-4 d-flex justify-space-around ">
+      <v-col cols="12" md="8" class="mt-4 d-flex justify-space-around flex-wrap ">
         <UserCard img="/testPerson1.jpg" name="Madzia" :age="22" />
 
         <UserCard img="/testPerson2.jpg" name="Ewa" :age="21" />
@@ -69,7 +69,7 @@ const icons = ['mdi-facebook', 'mdi-twitter', 'mdi-instagram']
     </v-row>
   </v-container>
 
-  <v-footer class="d-flex flex-column justify-center mt-10">
+  <v-footer class="d-flex flex-column justify-center mt-10" elevation="4">
     <div>
       <v-btn
         v-for="icon in icons"
