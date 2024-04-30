@@ -32,8 +32,8 @@ class RecommendationAlgorithm:
         other_score = 0
 
         other_score += RecommendationAlgorithm.__calculate_preferred_gender(user, other)
-        other_score += RecommendationAlgorithm.__calculate_elo_score(other.elo)
-        other_score += RecommendationAlgorithm.__calculate_rating_score(other.rating)
+        other_score += RecommendationAlgorithm.__calculate_elo_score(other)
+        other_score += RecommendationAlgorithm.__calculate_rating_score(other)
         other_score += RecommendationAlgorithm.__check_if_is_photo(other)
         other_score += RecommendationAlgorithm.__check_if_is_description(other)
 
@@ -52,19 +52,23 @@ class RecommendationAlgorithm:
         return score
 
     @staticmethod
-    def __calculate_elo_score(original_score: int) -> float:
-        normalized_score = (
-            (original_score - ELO_SCORE["MIN_ORIGINAL_SCORE"])
+    def __calculate_elo_score(user: UserModel) -> float:
+        user_elo = user.elo
+
+        normalized_elo = (
+            (user_elo - ELO_SCORE["MIN_ORIGINAL_SCORE"])
             / (ELO_SCORE["MAX_ORIGINAL_SCORE"] - ELO_SCORE["MIN_ORIGINAL_SCORE"])
         ) * (ELO_SCORE["MAX_NORMALIZED_SCORE"] - ELO_SCORE["MIN_NORMALIZED_SCORE"])
         +ELO_SCORE["MIN_NORMALIZED_SCORE"]
 
-        return normalized_score
+        return normalized_elo
 
     @staticmethod
-    def __calculate_rating_score(original_score: float) -> float:
+    def __calculate_rating_score(user: UserModel) -> float:
+        user_score = user.score
+
         normalized_score = (
-            (original_score - RATING_SCORE["MIN_ORIGINAL_SCORE"])
+            (user_score - RATING_SCORE["MIN_ORIGINAL_SCORE"])
             / (RATING_SCORE["MAX_ORIGINAL_SCORE"] - RATING_SCORE["MIN_ORIGINAL_SCORE"])
         ) * (
             RATING_SCORE["MAX_NORMALIZED_SCORE"] - RATING_SCORE["MIN_NORMALIZED_SCORE"]
@@ -74,13 +78,13 @@ class RecommendationAlgorithm:
         return normalized_score
 
     @staticmethod
-    def __check_if_is_photo(other: UserModel) -> float:
-        score = (len(other.photos) != 0) * SCORING["IS_PHOTO"]
+    def __check_if_is_photo(user: UserModel) -> float:
+        score = (len(user.photos) != 0) * SCORING["IS_PHOTO"]
 
         return score
 
     @staticmethod
-    def __check_if_is_description(other: UserModel) -> float:
-        score = (len(other.description) != 0) * SCORING["IS_DESCRIPTION"]
+    def __check_if_is_description(user: UserModel) -> float:
+        score = (len(user.description) != 0) * SCORING["IS_DESCRIPTION"]
 
         return score
