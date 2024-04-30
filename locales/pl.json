@@ -1,5 +1,8 @@
 {
   "navBar": {
-    "login": "Logowanie"
+    "login": "Logowanie",
+    "logout": "Wyloguj",
+    "changeTheme": "Zmień motyw",
+    "myProfile": "Mój profil"
   }
 }

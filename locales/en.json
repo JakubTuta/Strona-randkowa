@@ -1,5 +1,7 @@
 {
   "navBar": {
-    "login": "Login"
+    "login": "Login",
+    "logout": "Log out",
+    "changeTheme": "Change theme"
   }
 }
