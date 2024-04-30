@@ -16,6 +16,7 @@ function changeIcon() {
   <v-app-bar
     prominent
     class="px-2"
+    color="primary"
   >
     <v-btn variant="text" color="default" to="/user">
       Randki+

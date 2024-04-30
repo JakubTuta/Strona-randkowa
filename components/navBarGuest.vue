@@ -11,6 +11,7 @@ const theme = useTheme()
   <v-app-bar
     prominent
     class="px-2"
+    color="primary"
   >
     <v-btn variant="text" color="default" to="/">
       Randki+
