@@ -1,5 +1,19 @@
 {
   "navBar": {
-    "login": "Login"
+    "login": "Login",
+    "logout": "Log out",
+    "changeTheme": "Change theme",
+    "user": {
+      "myProfile": "My profile",
+      "communities": "Communities",
+      "events": {
+        "events": "Events",
+        "add": "Create an event",
+        "browse": "Browse events"
+      },
+      "meet": "Meet people",
+      "chat": "Chat"
+
+    }
   }
 }
