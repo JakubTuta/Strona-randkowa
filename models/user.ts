@@ -1,62 +1,92 @@
 import type { DocumentData, DocumentReference } from 'firebase/firestore'
+import { Timestamp } from 'firebase/firestore'
+import type { TGender } from '~/types/gender'
+import type { THobby } from '~/types/hobby'
+import type { TLookingFor } from '~/types/lookingFor'
+import type { TPreferredGender } from '~/types/preferredGender'
+import type { TRole } from '~/types/role'
 
 export interface IUser {
-  name: string // name last-name
-  age: number
-  gender: string // male female other
+  userName: string
+  photos: string[]
+  firstName: string
   faculty: string
-  description: string
+  lastName: string
+  dateBirth: Date | Timestamp
+  gender: TGender
+  index: number
+  role: TRole
   score: number
   elo: number
-  // photos
-
-  preferred_gender: string
-  looking_for: string
+  preferred_gender: TPreferredGender
+  looking_for: TLookingFor
+  blocked_profiles: DocumentReference[]
+  hobbies: THobby[]
 }
 
 export class UserModel implements IUser {
-  name: string
-  age: number
-  gender: string
+  userName: string
+  photos: string[]
+  firstName: string
   faculty: string
-  description: string
+  lastName: string
+  dateBirth: Date | Timestamp
+  gender: TGender
+  index: number
+  role: TRole
   score: number
   elo: number
-  // photos
-
-  preferred_gender: string
-  looking_for: string
+  preferred_gender: TPreferredGender
+  looking_for: TLookingFor
+  blocked_profiles: DocumentReference[]
+  hobbies: THobby[]
 
   reference: DocumentReference | null
 
   constructor(data: IUser, reference: DocumentReference | null) {
-    this.name = data.name || ''
-    this.age = data.age || 0
-    this.gender = data.gender || ''
+    this.userName = data.userName || ''
+    this.photos = data.photos || ''
+    this.firstName = data.firstName || ''
     this.faculty = data.faculty || ''
-    this.description = data.description || ''
+    this.lastName = data.lastName || ''
+    this.dateBirth = data.dateBirth instanceof Timestamp ? data.dateBirth.toDate() : data.dateBirth
+    this.gender = data.gender || ''
+    this.index = data.index || 0
+    this.role = data.role || ''
     this.score = data.score || 0
     this.elo = data.elo || 0
-    // this.photos = data.photos || []
-
     this.preferred_gender = data.preferred_gender || ''
     this.looking_for = data.looking_for || ''
+    this.blocked_profiles = data.blocked_profiles || []
+    this.hobbies = data.hobbies || []
 
     this.reference = reference
   }
 
   toMap() {
     return {
-      name: this.name,
-      age: this.age,
-      gender: this.gender,
+      userName: this.userName,
+      photos: this.photos,
+      firstName: this.firstName,
       faculty: this.faculty,
-      description: this.description,
-      // photos: this.photos,
+      lastName: this.lastName,
+      dateBirth: this.dateBirth,
+      gender: this.gender,
+      index: this.index,
+      role: this.role,
+      score: this.score,
+      elo: this.elo,
       preferred_gender: this.preferred_gender,
       looking_for: this.looking_for,
+      blocked_profiles: this.blocked_profiles,
+      hobbies: this.hobbies,
     }
   }
 }
 
-export const mapUser = (user: DocumentData) => new UserModel(user.data(), user.ref)
+export function mapUser(user: DocumentData) {
+  return new UserModel(
+    user.data(),
+    user.ref,
+  )
+}
