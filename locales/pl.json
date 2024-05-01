@@ -14,5 +14,13 @@
       "meet": "Poznawaj",
       "chat": "Czat"
     }
+  },
+  "profile": {
+    "description": "Opis",
+    "dateBirth": "Data urodzenia",
+    "gender": "Płeć",
+    "faculty": "Wydział",
+    "fieldOfStudy": "Kierunek",
+    "index": "Indeks"
   }
 }

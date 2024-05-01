@@ -13,7 +13,14 @@
       },
       "meet": "Meet people",
       "chat": "Chat"
-
     }
+  },
+  "profile": {
+    "description": "Description",
+    "dateBirth": "Date of birth",
+    "gender": "Gender",
+    "faculty": "Faculty",
+    "fieldOfStudy": "Field of study",
+    "index": "Index"
   }
 }
