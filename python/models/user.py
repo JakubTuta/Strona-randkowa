@@ -1,4 +1,5 @@
 import dataclasses
+import datetime
 import typing
 
 from google.cloud import firestore
@@ -13,7 +14,7 @@ class UserModel:
     first_name: str = ""
     faculty: str = ""
     last_name: str = ""
-    date_birth: str = ""
+    date_birth: datetime.datetime = datetime.datetime.now()
     gender: str = ""
     index: int = 0
     role: str = ""
