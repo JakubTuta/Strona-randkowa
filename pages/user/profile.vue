@@ -31,16 +31,14 @@ import ProfileTab from '~/components/user/profileTab.vue'
       >
         <v-col cols="12" sm="12" md="12">
           <v-row>
-            <v-col sm="12" md="6">
-              <div class="text-h4 pa-3 align-center">
+            <v-card class="mx-auto">
+              <v-card-title class="text-h4">
                 IMIĘ NAZWISKO, 22
-              </div>
-            </v-col>
-            <v-col sm="12" md="6">
-              <div class="text-h6 my-2 pa-3">
+              </v-card-title>
+              <v-card-subtitle>
                 @anne123
-              </div>
-            </v-col>
+              </v-card-subtitle>
+            </v-card>
           </v-row>
 
           <v-row>
