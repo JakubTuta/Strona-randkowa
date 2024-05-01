@@ -3,7 +3,7 @@ import type { DocumentData, DocumentReference } from 'firebase/firestore'
 export interface IUser {
   userName: string // username
   name: string
-  surname: string
+  lastName: string
   email: string
   dateBirth: string
   gender: string // male female other
@@ -13,7 +13,7 @@ export interface IUser {
   role: UserRole
   score: number
   elo: number
-  // photos
+  // photos: string // tymczasowo
 
   preferred_gender: string
   looking_for: string
@@ -22,7 +22,7 @@ export interface IUser {
 export class UserModel implements IUser {
   userName: string // username
   name: string
-  surname: string
+  lastName: string
   email: string
   dateBirth: string
   gender: string
@@ -42,7 +42,7 @@ export class UserModel implements IUser {
   constructor(data: IUser, reference: DocumentReference | null) {
     this.userName = data.userName
     this.name = data.name || ''
-    this.surname = data.surname
+    this.lastName = data.lastName
     this.email = data.email
     this.dateBirth = data.dateBirth || ''
     this.gender = data.gender || ''
@@ -64,7 +64,7 @@ export class UserModel implements IUser {
     return {
       userName: this.userName,
       name: this.name,
-      surname: this.userName,
+      lastName: this.lastName,
       email: this.email,
       dateBirth: this.dateBirth,
       gender: this.gender,
