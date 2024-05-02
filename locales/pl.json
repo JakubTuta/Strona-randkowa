@@ -21,6 +21,12 @@
     "gender": "Płeć",
     "faculty": "Wydział",
     "fieldOfStudy": "Kierunek",
-    "index": "Indeks"
+    "index": "Indeks",
+    "prefferedGender": "Preferowana płeć",
+    "lookingFor": "Poszukuje",
+    "hobbies": "Zainteresowania",
+    "yourPreferences": "Twoje preferencje i zainteresowania",
+    "editProfile": "Edytuj dane",
+    "editPreferences": "Edytuj preferencje"
   }
 }

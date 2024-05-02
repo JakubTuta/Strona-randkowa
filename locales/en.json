@@ -21,6 +21,12 @@
     "gender": "Gender",
     "faculty": "Faculty",
     "fieldOfStudy": "Field of study",
-    "index": "Index"
+    "index": "Index",
+    "prefferedGender": "Preffered gender",
+    "lookingFor": "Looking for",
+    "hobbies": "Hobbies",
+    "yourPreferences": "Your preferences and hobbies",
+    "editProfile": "Edit data",
+    "editPreferences": "Edit preferences"
   }
 }
