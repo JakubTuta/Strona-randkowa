@@ -20,29 +20,78 @@ function changePreferencesEditFlag() {
   <v-row justify="center">
     <v-col cols="12" sm="12" , md="6">
       <v-sheet
-        class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-height="1100"
+        class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-height="1200"
         max-width="1100" rounded
       >
         <v-row justify="center">
-          <v-col cols="12" sm="12" md="6">
+          <v-col cols="12" sm="12" md="12">
+            <div>
+              <v-card-title class="text-h5 my-2">
+                Twoje profilowe:
+              </v-card-title>
+            </div>
             <div>
               <v-img
-                class="mx-auto my-5 elevation-5" rounded="xl" :width="300" aspect-ratio="4/3" cover
+                class="mx-auto my-5 elevation-5" rounded="xl" :width="400" :height="400" cover
                 src="/testPerson3.jpg"
               />
             </div>
-          </v-col>
-        </v-row>
 
-        <v-row>
-          reszta zdjęć
+            <!-- ZMIENIĆ NA PĘTLE WYŚWIETLANIE ZDJĘĆ W ZALEŻNOŚCI OD DŁUGOŚCI TABLICY PHOTOS W USERZE -->
+            <v-row justify="center">
+              <v-div>
+                <v-col>
+                  <v-img
+                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                    src="/testPerson3.jpg"
+                  />
+                </v-col>
+              </v-div>
+
+              <v-div>
+                <v-col>
+                  <v-img
+                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                    src="/testPerson3.jpg"
+                  />
+                </v-col>
+              </v-div>
+
+              <v-div>
+                <v-col>
+                  <v-img
+                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                    src="/testPerson3.jpg"
+                  />
+                </v-col>
+              </v-div>
+
+              <v-div>
+                <v-col>
+                  <v-img
+                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                    src="/testPerson3.jpg"
+                  />
+                </v-col>
+              </v-div>
+
+              <v-div>
+                <v-col>
+                  <v-img
+                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                    src="/testPerson3.jpg"
+                  />
+                </v-col>
+              </v-div>
+            </v-row>
+          </v-col>
         </v-row>
       </v-sheet>
     </v-col>
 
     <v-col cols="12" sm="12" , md="6">
       <v-sheet
-        class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1100"
+        class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1100" max-height="1200"
         rounded
       >
         <v-col cols="12" sm="12" md="12">
@@ -77,14 +126,14 @@ function changePreferencesEditFlag() {
 
           <v-card-actions class="justify-end">
             <v-btn @click="changeProfileEditFlag()">
-              Edytuj dane
+              {{ $t("profile.editProfile") }}
             </v-btn>
           </v-card-actions>
 
           <v-row>
             <div class="mx-auto">
               <v-card-title class="text-h4">
-                Twoje preferencje i zainteresowania
+                {{ $t("profile.yourPreferences") }}
               </v-card-title>
             </div>
           </v-row>
@@ -110,7 +159,7 @@ function changePreferencesEditFlag() {
 
           <v-card-actions class="justify-end">
             <v-btn @click="changePreferencesEditFlag()">
-              Edytuj preferencje
+              {{ $t("profile.editPreferences") }}
             </v-btn>
           </v-card-actions>
         </v-col>
