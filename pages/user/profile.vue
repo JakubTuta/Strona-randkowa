@@ -1,5 +1,18 @@
-<script>
+<script lang="ts" setup>
 import NavBarUser from '~/components/navBarUser.vue'
+import EditProfile from '~/components/user/editProfile.vue'
+import EditPreferences from '~/components/user/editPreferences.vue'
+
+const editProfileFlag = ref<boolean>(false)
+const editPreferencesFlag = ref<boolean>(false)
+
+function changeProfileEditFlag() {
+  editProfileFlag.value = !editProfileFlag.value
+}
+
+function changePreferencesEditFlag() {
+  editPreferencesFlag.value = !editPreferencesFlag.value
+}
 </script>
 
 <template>
@@ -63,7 +76,7 @@ import NavBarUser from '~/components/navBarUser.vue'
           </v-row>
 
           <v-card-actions class="justify-end">
-            <v-btn>
+            <v-btn @click="changeProfileEditFlag()">
               Edytuj dane
             </v-btn>
           </v-card-actions>
@@ -87,7 +100,7 @@ import NavBarUser from '~/components/navBarUser.vue'
               <v-chip-group>
                 <v-chip
                   v-for="element in ['Silownia', 'Piłka', 'Książki', 'Praca', 'IT', 'Basen', 'Koszenie trawy']"
-                  :key="element" size="large"
+                  :key="element" size="large" class="outlined"
                 >
                   {{ element }}
                 </v-chip>
@@ -96,7 +109,7 @@ import NavBarUser from '~/components/navBarUser.vue'
           </v-row>
 
           <v-card-actions class="justify-end">
-            <v-btn @click="print()">
+            <v-btn @click="changePreferencesEditFlag()">
               Edytuj preferencje
             </v-btn>
           </v-card-actions>
@@ -104,4 +117,7 @@ import NavBarUser from '~/components/navBarUser.vue'
       </v-sheet>
     </v-col>
   </v-row>
+
+  <EditProfile :is-show="editProfileFlag" @on-close="changeProfileEditFlag" />
+  <EditPreferences :is-show="editPreferencesFlag" @on-close="changePreferencesEditFlag" />
 </template>
