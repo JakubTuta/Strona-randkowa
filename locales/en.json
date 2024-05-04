@@ -20,6 +20,9 @@
     "emailExists": "Email already exists",
     "saved": "Saved",
     "passwordsNotMatch": "Passwords do not match"
+  },
+  "registration": {
+    "step": "Step {step}",
+    "optional": "Optional"
   }
-
 }

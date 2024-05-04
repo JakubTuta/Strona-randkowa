@@ -19,5 +19,9 @@
     "emailExists": "Email już istnieje",
     "saved": "Zapisano",
     "passwordsNotMatch": "Hasła nie są takie same"
+  },
+  "registration": {
+    "step": "Krok {step}",
+    "optional": "Opcjonalny"
   }
 }
