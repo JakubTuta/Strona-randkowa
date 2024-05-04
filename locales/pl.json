@@ -1,5 +1,10 @@
 {
   "navBar": {
     "login": "Logowanie"
+  },
+  "universal": {
+    "emailExists": "Email już istnieje",
+    "saved": "Zapisano",
+    "passwordsNotMatch": "Hasła nie są takie same"
   }
 }

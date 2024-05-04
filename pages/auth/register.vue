@@ -1,25 +1,24 @@
 <script setup lang="ts">
 import type { DocumentReference } from 'firebase/firestore'
-import { generateCodeFrame } from 'vue/compiler-sfc'
 import formValidation from '~/helpers/formValidation'
 import { emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
 import NavBarGuest from '~/composables/navBars/navBarGuest.vue'
 import { UserModel } from '~/models/user'
-import type { UserRole } from '~/models/user'
 import { useAppStore } from '~/store/appStore'
+import { useSharedStore } from '~/store/sharedStore'
 // import '@vuepic/vue-datepicker/dist/main.css'
 
-const { firestore } = useFirebase()
-const createdUserRef: Ref<DocumentReference | null> = ref(null)
+let createdUserRef: DocumentReference | null = null
 
 const appStore = useAppStore()
-const { user, parentObject, userObject } = storeToRefs(appStore)
 
-// const { form, valid, isValid } = formValidation()
+const { t } = useI18n()
+const router = useRouter()
 
-// const {registerError} = storeToRefs(auth)
+const sharedStore = useSharedStore()
 
-const createdAccount = ref(false)
+const { form, valid, isValid } = formValidation()
+
 const email = ref('')
 const userName = ref('')
 const name = ref('')
@@ -32,12 +31,11 @@ const password2 = ref('')
 const rules = ref(false)
 const index = ref('') // DODAĆ ZASADY ŻE MUSZĄ BYĆ CYFRY I MAX 6 ZNAKÓW
 
-const showPasswordOne = ref(false)
-const showPasswordTwo = ref(false)
+const isPasswordShown = ref(false)
 
-// function verifyPassword() {
-//   return password1.value === password2.value
-// }
+function verifyPassword() {
+  return password1.value === password2.value
+}
 
 function prepareNewAccount() {
   return new UserModel(
@@ -57,23 +55,38 @@ function prepareNewAccount() {
       preferred_gender: '',
       looking_for: '',
     },
-    createdUserRef.value,
+    createdUserRef,
   )
 }
 
 async function createAccount() {
-  createdUserRef.value = (await appStore.registerWithPassword(email.value, password1.value))
-  if (createdUserRef.value)
-    createdAccount.value = true
-    // valid.value = false
+  if (!await isValid())
+    return
+
+  if (!verifyPassword()) {
+    sharedStore.failureSnackbar({ code: String(t('universal.passwordsNotMatch')) })
+    return
+  }
+
+  createdUserRef = await appStore.registerWithPassword(email.value, password1.value)
+
+  sharedStore.init()
+
+  if (createdUserRef) {
+    await appStore.createUser(prepareNewAccount())
+    sharedStore.successSnackbar()
+    router.push('/')
+  }
+  else { sharedStore.failureSnackbar({ code: String(t('universal.emailExists')) }) }
+
+  // valid.value = false
 }
 
-onMounted(() => {
-  if (user.value) {
-    getUserQuery(user.value.uid, firestore).then(data => createdUserRef.value = data.ref)
-    createdAccount.value = true
-  }
-})
+// onMounted(() => {
+//   if (user.value) {
+//     getUserQuery(user.value.uid, firestore).then(data => createdUserRef = data.ref)
+//   }
+// })
 </script>
 
 <template>
@@ -134,17 +147,21 @@ onMounted(() => {
             />
 
             <v-text-field
-              v-model="password1" label="Hasło"
-              :append-inner-icon="showPasswordOne ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPasswordOne ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
-              @keyup.enter="createAccount" @click:append-inner="showPasswordOne = !showPasswordOne"
+              v-model="password1"
+              label="Hasło"
+              :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="isPasswordShown ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
+              prepend-inner-icon="mdi-lock" @keyup.enter="createAccount"
+              @click:append-inner="isPasswordShown = !isPasswordShown"
             />
 
             <v-text-field
-              v-model="password2" label="Powtórz hasło"
-              :append-inner-icon="showPasswordTwo ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPasswordTwo ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
-              @keyup.enter="createAccount" @click:append-inner="showPasswordTwo = !showPasswordTwo"
+              v-model="password2"
+              prepend-inner-icon="mdi-lock"
+              label="Powtórz hasło"
+              :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="isPasswordShown ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
+              @keyup.enter="createAccount" @click:append-inner="isPasswordShown = !isPasswordShown"
             />
 
             <v-checkbox v-model="rules" label="Akceptuję regulamin" :rules="[requiredRule()]" />
@@ -153,15 +170,6 @@ onMounted(() => {
               Zarejestruj się
             </v-btn>
           </v-form>
-
-          <!--          <v-alert -->
-          <!--              v-if="registerError" -->
-          <!--              color="error" -->
-          <!--              variant="tonal" -->
-          <!--              class="my-4" -->
-          <!--          > -->
-          <!--            Niepoprawne dane rejestracji -->
-          <!--          </v-alert> -->
         </div>
       </v-col>
     </v-row>

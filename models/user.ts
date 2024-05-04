@@ -72,6 +72,8 @@ export class UserModel implements IUser {
       index: this.index,
       description: this.description,
       role: this.role,
+      score: this.score,
+      elo: this.elo,
       // photos: this.photos,
       preferred_gender: this.preferred_gender,
       looking_for: this.looking_for,

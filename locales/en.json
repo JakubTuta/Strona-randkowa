@@ -1,5 +1,11 @@
 {
   "navBar": {
     "login": "Login"
+  },
+  "universal": {
+    "emailExists": "Email already exists",
+    "saved": "Saved",
+    "passwordsNotMatch": "Passwords do not match"
   }
+
 }
