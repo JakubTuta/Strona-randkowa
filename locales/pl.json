@@ -1,6 +1,19 @@
 {
   "navBar": {
-    "login": "Logowanie"
+    "login": "Logowanie",
+    "logout": "Wyloguj",
+    "changeTheme": "Zmień motyw",
+    "user": {
+      "myProfile": "Mój profil",
+      "communities": "Społeczności",
+      "events": {
+        "events": "Wydarzenia",
+        "add": "Utwórz wydarzenie",
+        "browse": "Przeglądaj wydarzenia"
+      },
+      "meet": "Poznawaj",
+      "chat": "Czat"
+    }
   },
   "universal": {
     "emailExists": "Email już istnieje",

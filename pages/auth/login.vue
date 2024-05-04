@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import formValidation from '~/helpers/formValidation'
 import { emailRule, passwordRule, requiredRule } from '~/helpers/rules'
-import NavBarGuest from '~/composables/navBars/navBarGuest.vue'
 
-// useHead({
-//   title: 'Logowanie - Randki+',
-// })
+useHead({
+  title: 'Logowanie - Randki+',
+})
 
 // const auth = useAuthStore()
 // const {user, loginError} = storeToRefs(auth)
