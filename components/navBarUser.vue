@@ -15,7 +15,7 @@ function changeIcon() {
 <template>
   <v-app-bar
     prominent
-    class="px-2"
+    class="px-2 position-sticky"
     color="primary"
   >
     <v-btn variant="text" color="default" to="/user">
