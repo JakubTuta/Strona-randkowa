@@ -8,9 +8,6 @@ const { loading } = storeToRefs(sharedStore)
 
 <template>
   <div>
-    <div v-if="loading">
-      LOADING
-    </div>
     <v-progress-linear id="loading" :active="loading" color="secondary" indeterminate absolute />
   </div>
 </template>

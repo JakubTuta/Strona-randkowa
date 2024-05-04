@@ -34,8 +34,8 @@ async function logIn() {
   <NavBarGuest />
 
   <v-sheet
-    class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
-    elevation="4"
+    class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4 bg-transparent mt-4"
+    elevation="0"
     max-width="1100"
     rounded
   >
@@ -57,12 +57,14 @@ async function logIn() {
               label="Adres Email"
               placeholder="example@mail.com"
               type="email"
+              prepend-inner-icon="mdi-email"
               :rules="[requiredRule(), emailRule()]"
               @keyup.enter="logIn"
             />
 
             <v-text-field
               v-model="password"
+              prepend-inner-icon="mdi-lock"
               label="Hasło"
               :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
@@ -72,7 +74,7 @@ async function logIn() {
             />
 
             <v-row class="justify-center my-1">
-              <v-btn class="mx-2 mb-2" @click="logIn">
+              <v-btn class="mx-2 mb-2" color="secondary" variant="elevated" @click="logIn">
                 Zaloguj
               </v-btn>
             </v-row>
@@ -82,7 +84,7 @@ async function logIn() {
             Nie masz jeszcze konta?
           </p>
 
-          <v-btn to="/auth/register">
+          <v-btn to="/auth/register" variant="elevated">
             Zarejestruj się
           </v-btn>
 

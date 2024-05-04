@@ -23,12 +23,11 @@ const sharedStore = useSharedStore()
 
 const { form, valid, isValid } = formValidation()
 
-const form1: Ref<null | {
+const credentialsForm: Ref<null | {
   resetValidation: () => void
   reset: () => void
   validate: () => Promise<{ valid: boolean }>
 }> = ref(null)
-const form1Model = ref(null)
 
 const email = ref('')
 const userName = ref('')
@@ -92,7 +91,7 @@ async function createAccount() {
 }
 
 async function checkStepCondition(next: () => void) {
-  if (!form1.value || !await validateForm(form1.value))
+  if (!credentialsForm.value || !await validateForm(credentialsForm.value))
     return
 
   if (!verifyPassword()) {
@@ -152,7 +151,7 @@ async function checkStepCondition(next: () => void) {
                   <v-stepper-window-item
                     value="1"
                   >
-                    <v-form ref="form1" v-model="form1Model" @submit.prevent="createAccount">
+                    <v-form ref="credentialsForm" @submit.prevent="createAccount">
                       <div class="py-4">
                         <v-text-field
                           v-model="email" label="Adres Email" placeholder="example@mail.com" type="email"
