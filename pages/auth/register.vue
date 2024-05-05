@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { DocumentReference } from 'firebase/firestore'
+import { useTheme } from 'vuetify'
+import VueDatePicker from '@vuepic/vue-datepicker'
 import formValidation, { validateForm } from '~/helpers/formValidation'
 import { emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
 import { UserModel } from '~/models/user'
-
-// import '@vuepic/vue-datepicker/dist/main.css'
+import type { TGender } from '~/types/gender'
+import '@vuepic/vue-datepicker/dist/main.css'
 
 let createdUserRef: DocumentReference | null = null
 
@@ -13,11 +15,14 @@ useHead({
 })
 
 const appStore = useAppStore()
+const sharedStore = useSharedStore()
 
 const { t } = useI18n()
 const router = useRouter()
+const { current } = useTheme()
 
-const sharedStore = useSharedStore()
+const { mappedGenders } = useGenders()
+const { facultiesList } = useFaculties()
 
 const { form, valid, isValid } = formValidation()
 
@@ -31,13 +36,14 @@ const email = ref('')
 const userName = ref('')
 const name = ref('')
 const surname = ref('')
-const gender = ref('')
-const faculty = ref('')
+const gender: Ref<TGender | null> = ref(null)
+const faculty: Ref<string | null> = ref(null)
 // const birthDate = ref('')
 const password1 = ref('')
 const password2 = ref('')
 const rules = ref(false)
-const index = ref('') // DODAĆ ZASADY ŻE MUSZĄ BYĆ CYFRY I MAX 6 ZNAKÓW
+const index = ref('')
+const dateBirth = ref(null)
 
 const isPasswordShown = ref(false)
 
@@ -54,8 +60,8 @@ function prepareNewAccount() {
       lastName: surname.value,
       dateBirth: '',
       index: Number.parseInt(index.value),
-      gender: gender.value,
-      faculty: faculty.value,
+      gender: gender.value || 'other',
+      faculty: faculty.value || '',
       role: 'user',
       description: '',
       score: 0,
@@ -96,6 +102,10 @@ async function checkStepCondition(next: () => void) {
 
   next()
 }
+
+const isDark = computed(() => {
+  return current.value.dark
+})
 </script>
 
 <template>
@@ -130,10 +140,12 @@ async function checkStepCondition(next: () => void) {
 
                     <v-divider />
 
+                    <!-- TODO change editable -->
                     <v-stepper-item
                       :title="$t('registration.step', { step: 2 })"
                       :subtitle="$t('registration.optional')"
                       value="2"
+                      editable
                       color="secondary"
                     />
 
@@ -189,6 +201,16 @@ async function checkStepCondition(next: () => void) {
                       value="2"
                     >
                       <div class="py-4">
+                        <VueDatePicker
+                          v-model="dateBirth"
+                          class="mb-6"
+                          :dark="isDark"
+                          auto-apply
+                          placeholder="Podaj datę urodzenia"
+                          :enable-time-picker="false"
+                          position="left"
+                        />
+
                         <v-text-field
                           v-model="userName" label="Nazwa użytkownika" type="text"
                           density="comfortable"
@@ -199,7 +221,7 @@ async function checkStepCondition(next: () => void) {
                         <v-select
                           v-model="gender"
                           label="Płeć"
-                          :items="['Mężczyzna', 'Kobieta']"
+                          :items="mappedGenders"
                           color="secondary"
                           variant="outlined"
                           density="comfortable"
@@ -208,7 +230,7 @@ async function checkStepCondition(next: () => void) {
                         <v-select
                           v-model="faculty"
                           label="Wydział"
-                          :items="['WEEIA', 'FTIMS']"
+                          :items="facultiesList"
                           color="secondary"
                           variant="outlined"
                           density="comfortable"
@@ -261,14 +283,6 @@ async function checkStepCondition(next: () => void) {
                 </template>
               </v-stepper>
             </v-col>
-          <!--
-
-            <VueDatePicker
-              v-model="birthDate" class="mt-2" auto-apply :enable-time-picker="true"
-              label="Data urodzenia" :min-date="new Date()" position="left"
-            />
-
- -->
           </div>
         </v-col>
       </v-row>
@@ -280,5 +294,33 @@ async function checkStepCondition(next: () => void) {
 .stepper {
   background: rgba(0, 0, 0, 0.76);
   color: white;
+}
+</style>
+
+<style>
+:root {
+  /* Vue datepicker styling */
+  --dp-font-family: Roboto, sans-serif;
+  --dp-input-padding: 11px 30px 11px 12px; /*Padding in the input*/
+  --dp-cell-size: 28px;   /*Width and height of calendar cell*/
+
+}
+
+.dp__theme_dark {
+  --dp-background-color: rgba(0, 0, 0, 0.6);
+  --dp-primary-color: #87CACA;
+  --dp-border-color: rgb(133, 133, 133);
+  --dp-disabled-color-text: #fff;
+}
+
+.dp__theme_light {
+  --dp-background-color: rgba(0, 0, 0, 0.6);
+  --dp-primary-color: #76A8A8;
+    --dp-border-color: rgb(133, 133, 133);
+}
+
+::placeholder {
+  color: white;
+  opacity: 1; /* Firefox */
 }
 </style>

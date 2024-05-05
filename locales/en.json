@@ -28,5 +28,12 @@
   "authErrors": {
     "invalidEmailOrPassword": "Invalid email or password",
     "unknown": "Unknown error"
+  },
+  "user": {
+    "sex": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other"
+    }
   }
 }

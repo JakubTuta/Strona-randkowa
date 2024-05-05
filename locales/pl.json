@@ -27,5 +27,12 @@
   "authErrors": {
     "invalidEmailOrPassword": "Nieprawidłowy email lub hasło",
     "unknown": "Nieznany błąd"
+  },
+  "user": {
+    "sex": {
+      "male": "Mężczyzna",
+      "female": "Kobieta",
+      "other": "Inna"
+    }
   }
 }

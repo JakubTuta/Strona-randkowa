@@ -9,6 +9,8 @@ export const useSnackbarStore = defineStore('snackbar', () => {
   const text = ref('works')
   const timeout = ref(TIMEOUT)
 
+  const { t } = useI18n()
+
   const resetState = () => {
     visible.value = false
     color.value = 'primary'
@@ -17,7 +19,7 @@ export const useSnackbarStore = defineStore('snackbar', () => {
   }
   const showSnackbarSaveDefault = () => {
     color.value = 'primary'
-    text.value = 'universal.saved'
+    text.value = t('universal.saved')
     timeout.value = TIMEOUT
     visible.value = true
     setTimeout(() => {
