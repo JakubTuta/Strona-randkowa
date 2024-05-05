@@ -1,4 +1,4 @@
-import type { DocumentData, DocumentReference } from 'firebase/firestore'
+import type { DocumentData, DocumentReference, DocumentSnapshot } from 'firebase/firestore'
 import { Timestamp } from 'firebase/firestore'
 import type { TGender } from '~/types/gender'
 import type { THobby } from '~/types/hobby'
@@ -7,12 +7,12 @@ import type { TPreferredGender } from '~/types/preferredGender'
 import type { TRole } from '~/types/role'
 
 export interface IUser {
-  userName: string
   photos: string[]
   firstName: string
+  description: string
   faculty: string
   lastName: string
-  dateBirth: Date | Timestamp
+  dateBirth: Date | Timestamp | null
   gender: TGender
   index: number
   role: TRole
@@ -25,12 +25,12 @@ export interface IUser {
 }
 
 export class UserModel implements IUser {
-  userName: string
   photos: string[]
   firstName: string
+  description: string
   faculty: string
   lastName: string
-  dateBirth: Date | Timestamp
+  dateBirth: Date | Timestamp | null
   gender: TGender
   index: number
   role: TRole
@@ -44,9 +44,9 @@ export class UserModel implements IUser {
   reference: DocumentReference | null
 
   constructor(data: IUser, reference: DocumentReference | null) {
-    this.userName = data.userName || ''
     this.photos = data.photos || ''
     this.firstName = data.firstName || ''
+    this.description = data.description || ''
     this.faculty = data.faculty || ''
     this.lastName = data.lastName || ''
     this.dateBirth = data.dateBirth instanceof Timestamp ? data.dateBirth.toDate() : data.dateBirth
@@ -65,10 +65,10 @@ export class UserModel implements IUser {
 
   toMap() {
     return {
-      userName: this.userName,
       photos: this.photos,
       firstName: this.firstName,
       faculty: this.faculty,
+      description: this.description,
       lastName: this.lastName,
       dateBirth: this.dateBirth,
       gender: this.gender,
@@ -84,9 +84,14 @@ export class UserModel implements IUser {
   }
 }
 
-export function mapUser(user: DocumentData) {
+export function mapUser(user: DocumentSnapshot<DocumentData>) {
+  const data = user.data()
+
+  if (!data)
+    return null
+
   return new UserModel(
-    user.data(),
+    data as IUser,
     user.ref,
   )
 }

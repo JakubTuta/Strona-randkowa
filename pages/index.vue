@@ -2,30 +2,25 @@
 </script>
 
 <template>
-  <v-layout
-    class="mb-10"
-    min-height="250"
+  <v-img
+    src="/public/landingThree.jpg"
+    cover
+    gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
   >
-    <NavBarGuest />
-    <v-img
-      src="/public/landingThree.jpg"
-      cover
-      gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
-    >
-      <div class="d-flex flex-column align-center justify-center h-100 mx-2">
-        <span class="text-h4 font-weight-bold text-white">
-          Witamy na stronie randkowej
-        </span>
+    <div class="d-flex flex-column align-center justify-center h-100 mx-2">
+      <span class="text-h4 font-weight-bold text-white">
+        Witamy na stronie randkowej
+      </span>
 
-        <p class="mt-2 text-white">
-          Aplikacja zaprojektowana specjalnie do tego żeby ją usunąć. Zaintrygowało?
-        </p>
-        <v-btn class="my-4" to="auth/login" variant="elevated" color="secondary">
-          Zacznij już teraz
-        </v-btn>
-      </div>
-    </v-img>
-  </v-layout>
+      <p class="mt-2 text-white">
+        Aplikacja zaprojektowana specjalnie do tego żeby ją usunąć. Zaintrygowało?
+      </p>
+      <v-btn class="my-4" to="auth/login" variant="elevated" color="secondary">
+        Zacznij już teraz
+      </v-btn>
+    </div>
+  </v-img>
+
   <v-card
     class="mx-10 my-10 px-4"
     elevation="0"
