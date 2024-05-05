@@ -2,10 +2,12 @@
 import type { DocumentReference } from 'firebase/firestore'
 import { useTheme } from 'vuetify'
 import VueDatePicker from '@vuepic/vue-datepicker'
+import { Timestamp } from 'firebase/firestore'
 import formValidation, { validateForm } from '~/helpers/formValidation'
 import { emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
 import { UserModel } from '~/models/user'
 import type { TGender } from '~/types/gender'
+
 import '@vuepic/vue-datepicker/dist/main.css'
 
 let createdUserRef: DocumentReference | null = null
@@ -21,7 +23,8 @@ const { t } = useI18n()
 const router = useRouter()
 const { current } = useTheme()
 
-const { mappedGenders } = useGenders()
+const { mappedGenders, mappedGendersPreferences } = useGenders()
+const { mappedRelationships } = useRelationship()
 const { facultiesList } = useFaculties()
 
 const { form, valid, isValid } = formValidation()
@@ -33,17 +36,17 @@ const credentialsForm: Ref<null | {
 }> = ref(null)
 
 const email = ref('')
-const userName = ref('')
 const name = ref('')
 const surname = ref('')
 const gender: Ref<TGender | null> = ref(null)
 const faculty: Ref<string | null> = ref(null)
-// const birthDate = ref('')
 const password1 = ref('')
 const password2 = ref('')
 const rules = ref(false)
 const index = ref('')
 const dateBirth = ref(null)
+const preferredGender = ref(null)
+const lookingFor = ref(null)
 
 const isPasswordShown = ref(false)
 
@@ -54,11 +57,9 @@ function verifyPassword() {
 function prepareNewAccount() {
   return new UserModel(
     {
-      userName: userName.value,
-      email: email.value,
       firstName: name.value,
       lastName: surname.value,
-      dateBirth: '',
+      dateBirth: dateBirth.value ? Timestamp.fromDate(dateBirth.value) : null,
       index: Number.parseInt(index.value),
       gender: gender.value || 'other',
       faculty: faculty.value || '',
@@ -66,8 +67,11 @@ function prepareNewAccount() {
       description: '',
       score: 0,
       elo: 0,
-      preferred_gender: '',
-      looking_for: '',
+      preferred_gender: preferredGender.value || 'any',
+      looking_for: lookingFor.value || 'other',
+      photos: [],
+      blocked_profiles: [],
+      hobbies: [],
     },
     createdUserRef,
   )
@@ -140,12 +144,10 @@ const isDark = computed(() => {
 
                     <v-divider />
 
-                    <!-- TODO change editable -->
                     <v-stepper-item
                       :title="$t('registration.step', { step: 2 })"
                       :subtitle="$t('registration.optional')"
                       value="2"
-                      editable
                       color="secondary"
                     />
 
@@ -211,13 +213,6 @@ const isDark = computed(() => {
                           position="left"
                         />
 
-                        <v-text-field
-                          v-model="userName" label="Nazwa użytkownika" type="text"
-                          density="comfortable"
-                          color="secondary"
-                          @keyup.enter="checkStepCondition(next)"
-                        />
-
                         <v-select
                           v-model="gender"
                           label="Płeć"
@@ -231,6 +226,24 @@ const isDark = computed(() => {
                           v-model="faculty"
                           label="Wydział"
                           :items="facultiesList"
+                          color="secondary"
+                          variant="outlined"
+                          density="comfortable"
+                        />
+
+                        <v-select
+                          v-model="preferredGender"
+                          label="Poszukiwana płeć do relacji"
+                          :items="mappedGendersPreferences"
+                          color="secondary"
+                          variant="outlined"
+                          density="comfortable"
+                        />
+
+                        <v-select
+                          v-model="lookingFor"
+                          label="Aktualnie moja poszukiwana relacja to: "
+                          :items="mappedRelationships"
                           color="secondary"
                           variant="outlined"
                           density="comfortable"

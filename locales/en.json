@@ -33,6 +33,13 @@
     "sex": {
       "male": "Male",
       "female": "Female",
+      "other": "Other",
+      "any": "Any"
+    },
+    "prefferedRelationship": {
+      "friendship": "Friendship",
+      "relationship": "Relationship",
+      "studyPartner": "Study partner",
       "other": "Other"
     }
   }

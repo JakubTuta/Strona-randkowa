@@ -1,4 +1,5 @@
 export type TLookingFor =
   'relationship' |
-  'friend' |
-  'studyPartner'
+  'friendship' |
+  'studyPartner' |
+  'other'
