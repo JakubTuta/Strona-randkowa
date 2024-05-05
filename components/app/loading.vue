@@ -1,7 +1,4 @@
-import type { logEvent } from 'firebase/analytics';
 <script lang="ts" setup>
-import { useSharedStore } from '~/store/sharedStore'
-
 const sharedStore = useSharedStore()
 const { loading } = storeToRefs(sharedStore)
 </script>

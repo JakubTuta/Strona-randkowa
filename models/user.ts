@@ -1,4 +1,4 @@
-import type { DocumentData, DocumentReference } from 'firebase/firestore'
+import type { DocumentData, DocumentReference, DocumentSnapshot } from 'firebase/firestore'
 import { Timestamp } from 'firebase/firestore'
 import type { TGender } from '~/types/gender'
 import type { THobby } from '~/types/hobby'
@@ -84,9 +84,14 @@ export class UserModel implements IUser {
   }
 }
 
-export function mapUser(user: DocumentData) {
+export function mapUser(user: DocumentSnapshot<DocumentData>) {
+  const data = user.data()
+
+  if (!data)
+    return null
+
   return new UserModel(
-    user.data(),
+    data as IUser,
     user.ref,
   )
 }

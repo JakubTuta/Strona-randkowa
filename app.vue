@@ -1,3 +1,11 @@
+<script setup lang="ts">
+const appStore = useAppStore()
+
+onMounted(async () => {
+  await appStore.currentUser()
+})
+</script>
+
 <template>
   <NuxtLayout>
     <v-app>

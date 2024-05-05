@@ -3,8 +3,6 @@ import type { DocumentReference } from 'firebase/firestore'
 import formValidation, { validateForm } from '~/helpers/formValidation'
 import { emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
 import { UserModel } from '~/models/user'
-import { useAppStore } from '~/store/appStore'
-import { useSharedStore } from '~/store/sharedStore'
 
 // import '@vuepic/vue-datepicker/dist/main.css'
 
@@ -80,14 +78,11 @@ async function createAccount() {
 
   createdUserRef = await appStore.registerWithPassword(email.value, password1.value)
 
-  sharedStore.init()
-
   if (createdUserRef) {
     await appStore.createUser(prepareNewAccount())
     sharedStore.successSnackbar()
     router.push('/')
   }
-  else { sharedStore.failureSnackbar({ code: String(t('universal.emailExists')) }) }
 }
 
 async function checkStepCondition(next: () => void) {
@@ -244,14 +239,13 @@ async function checkStepCondition(next: () => void) {
                         <v-otp-input
                           v-model="index"
                           type="number"
-                          variant="outlined"
                           class="mb-4"
                           @keyup.enter="createAccount"
                         />
                       </div>
                     </v-form>
 
-                    <v-btn variant="elevated" @click="createAccount">
+                    <v-btn variant="elevated" color="secondary" @click="createAccount">
                       Zarejestruj się
                     </v-btn>
                   </v-stepper-window-item>

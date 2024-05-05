@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import { useSnackbarStore } from '~/store/snackbarStore'
 
 const { t } = useI18n()
 
