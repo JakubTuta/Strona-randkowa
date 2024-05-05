@@ -16,18 +16,12 @@ const showPassword = ref(false)
 
 const { form, valid, isValid } = formValidation()
 
+const appStore = useAppStore()
+
 async function logIn() {
-  if (await isValid()) {
-    // await auth.loginUser(email.value, password.value)
-
-    // if (user.value?.role === 'user')
-    //   navigateTo('/client')
-    // else if (user.value?.role === 'admin')
-    //   navigateTo('/administration')
-  }
+  if (await isValid())
+    await appStore.logInWithPassword(email.value, password.value)
 }
-
-// onMounted(() => loginError.value = false)
 </script>
 
 <template>

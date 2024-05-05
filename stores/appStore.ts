@@ -23,9 +23,13 @@ export const useAppStore = defineStore('app', () => {
   const userData: Ref<UserModel | null> = ref(null)
 
   const signOut = async () => {
+    sharedStore.init()
+
     await signoutFirebase(auth)
     user.value = null
     userData.value = null
+
+    sharedStore.success()
   }
 
   const createUser = async (newUser: UserModel) => {
@@ -125,7 +129,10 @@ export const useAppStore = defineStore('app', () => {
 
   return {
     user,
+    userData,
     registerWithPassword,
+    logInWithPassword,
+    signOut,
     createUser,
     currentUser,
   }

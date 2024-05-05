@@ -50,7 +50,7 @@ function prepareNewAccount() {
     {
       userName: userName.value,
       email: email.value,
-      name: name.value,
+      firstName: name.value,
       lastName: surname.value,
       dateBirth: '',
       index: Number.parseInt(index.value),

@@ -3,12 +3,21 @@ import { useTheme } from 'vuetify'
 import { toggleTheme } from '~/helpers/theme'
 
 const theme = useTheme()
+const router = useRouter()
+const appStore = useAppStore()
+const { userData } = storeToRefs(appStore)
+
 const drawer = defineModel({ default: false })
 
 const eventMenuIcon = ref('mdi-menu-down')
 
 function changeIcon() {
   eventMenuIcon.value = eventMenuIcon.value === 'mdi-menu-down' ? 'mdi-menu-up' : 'mdi-menu-down'
+}
+
+async function logOut() {
+  await appStore.signOut()
+  router.push('/')
 }
 </script>
 
@@ -77,8 +86,8 @@ function changeIcon() {
     <v-spacer />
 
     <div class="hidden-xs">
-      <v-btn class=" mr-2" color="default" prepend-icon="mdi-account">
-        Jan Kowalski
+      <v-btn v-if="userData" class=" mr-2" color="default" prepend-icon="mdi-account">
+        {{ `${userData.firstName} ${userData.lastName}` }}
         <v-menu activator="parent">
           <v-list class="justify-center">
             <v-list-item
@@ -87,9 +96,9 @@ function changeIcon() {
               @click="toggleTheme(theme)"
             />
             <v-list-item
-              to="/"
               prepend-icon="mdi-logout"
               :title="$t('navBar.logout')"
+              @click="logOut"
             />
           </v-list>
         </v-menu>
