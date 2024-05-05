@@ -52,7 +52,6 @@ async function logIn() {
               placeholder="example@mail.com"
               type="email"
               prepend-inner-icon="mdi-email"
-              :rules="[requiredRule(), emailRule()]"
               @keyup.enter="logIn"
             />
 
@@ -62,10 +61,15 @@ async function logIn() {
               label="Hasło"
               :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
-              :rules="[requiredRule(), passwordRule()]"
               @click:append-inner="showPassword = !showPassword"
               @keyup.enter="logIn"
-            />
+            >
+              <!-- <template v-if="true" #details>
+                <span class="py-2 text-error">
+                  Puste hasło lub email
+                </span>
+              </template> -->
+            </v-text-field>
 
             <v-row class="justify-center my-1">
               <v-btn class="mx-2 mb-2" color="secondary" variant="elevated" @click="logIn">
@@ -81,15 +85,6 @@ async function logIn() {
           <v-btn to="/auth/register" variant="elevated">
             Zarejestruj się
           </v-btn>
-
-          <!--          <v-alert -->
-          <!--              v-if="loginError" -->
-          <!--              color="error" -->
-          <!--              variant="tonal" -->
-          <!--              class="my-4" -->
-          <!--          > -->
-          <!--            Niepoprawne dane logowania -->
-          <!--          </v-alert> -->
         </div>
       </v-col>
       <v-col cols="12" sm="12" md="6">

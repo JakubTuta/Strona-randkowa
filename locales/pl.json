@@ -23,5 +23,9 @@
   "registration": {
     "step": "Krok {step}",
     "optional": "Opcjonalny"
+  },
+  "authErrors": {
+    "invalidEmailOrPassword": "Nieprawidłowy email lub hasło",
+    "unknown": "Nieznany błąd"
   }
 }

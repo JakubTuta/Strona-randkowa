@@ -12,6 +12,7 @@ import { type IUser, UserModel } from '~/models/user'
 export const useAppStore = defineStore('app', () => {
   const { firestore, auth } = useFirebase()
   const { fetchDocumentById } = useDatabase()
+  const { getAuthError } = useError()
   const { t } = useI18n()
 
   const usersCollection = collection(firestore, 'users')
@@ -83,8 +84,8 @@ export const useAppStore = defineStore('app', () => {
 
       sharedStore.success()
     }
-    catch (caughtError) {
-      sharedStore.failureSnackbar({ code: String(caughtError) })
+    catch (caughtError: any) {
+      sharedStore.failureSnackbar({ code: getAuthError(caughtError.code) })
     }
   }
 

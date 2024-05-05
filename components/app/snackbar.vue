@@ -43,7 +43,7 @@ onBeforeUnmount(() => {
 <template>
   <v-snackbar :color="color || 'primary'" :model-value="visible" :timeout="timeout || 600">
     <div class="flex justify-center">
-      {{ $t(text) }}
+      {{ text }}
     </div>
   </v-snackbar>
 </template>
