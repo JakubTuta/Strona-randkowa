@@ -1,13 +1,10 @@
 <script setup lang="ts">
+import { useDisplay } from 'vuetify'
 import formValidation from '~/helpers/formValidation'
-import { emailRule, passwordRule, requiredRule } from '~/helpers/rules'
 
 useHead({
   title: 'Logowanie - Randki+',
 })
-
-// const auth = useAuthStore()
-// const {user, loginError} = storeToRefs(auth)
 
 const email = ref('')
 const password = ref('')
@@ -25,80 +22,69 @@ async function logIn() {
 </script>
 
 <template>
-  <NavBarGuest />
-
-  <v-sheet
-    class="d-flex align-center justify-center flex-wrap text-center mx-auto px-4 bg-transparent mt-4"
-    elevation="0"
-    max-width="1100"
-    rounded
+  <v-img
+    src="/public/landingTwo.jpeg"
+    cover
+    gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
+    class="d-flex justify-center  flex-wrap w-100 h-100"
   >
-    <v-row justify="center">
-      <v-col cols="12" sm="12" md="6">
-        <div class="d-flex flex-column align-center justify-center h-100 mx-2 py-3">
-          <div class="text-h5 my-2">
+    <v-sheet
+      class="d-flex align-center justify-center flex-wrap text-center w-100 mt-16 pt-16 mx-auto bg-transparent"
+      elevation="0"
+      max-width="1450"
+      style="color: white !important;"
+      rounded
+    >
+      <v-row justify="center">
+        <v-col cols="12" sm="12" md="6">
+          <div class="text-h4 my-2">
             Logowanie
           </div>
-
-          <v-form
-            ref="form"
-            v-model="valid"
-            class="w-75 my-2"
-            @submit.prevent="logIn"
-          >
-            <v-text-field
-              v-model="email"
-              label="Adres Email"
-              placeholder="example@mail.com"
-              type="email"
-              prepend-inner-icon="mdi-email"
-              @keyup.enter="logIn"
-            />
-
-            <v-text-field
-              v-model="password"
-              prepend-inner-icon="mdi-lock"
-              label="Hasło"
-              :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPassword ? 'text' : 'password'"
-              @click:append-inner="showPassword = !showPassword"
-              @keyup.enter="logIn"
+          <div class="d-flex flex-column align-center justify-center h-100">
+            <v-form
+              ref="form"
+              v-model="valid"
+              class="w-75 my-2"
+              @submit.prevent="logIn"
             >
-              <!-- <template v-if="true" #details>
-                <span class="py-2 text-error">
-                  Puste hasło lub email
-                </span>
-              </template> -->
-            </v-text-field>
+              <v-text-field
+                v-model="email"
+                label="Adres Email"
+                placeholder="example@mail.com"
+                type="email"
+                prepend-inner-icon="mdi-email"
+                bg-color="rgba(255, 255, 255, 0.10)"
+                @keyup.enter="logIn"
+              />
 
-            <v-row class="justify-center my-1">
-              <v-btn class="mx-2 mb-2" color="secondary" variant="elevated" @click="logIn">
-                Zaloguj
-              </v-btn>
-            </v-row>
-          </v-form>
+              <v-text-field
+                v-model="password"
+                prepend-inner-icon="mdi-lock"
+                label="Hasło"
+                :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPassword ? 'text' : 'password'"
+                bg-color="rgba(255, 255, 255, 0.10)"
+                @click:append-inner="showPassword = !showPassword"
+                @keyup.enter="logIn"
+              />
 
-          <p class="my-5">
-            Nie masz jeszcze konta?
-          </p>
+              <v-row class="justify-center my-1">
+                <v-btn class="mx-2 mb-2" color="secondary" variant="elevated" @click="logIn">
+                  Zaloguj
+                </v-btn>
+              </v-row>
+            </v-form>
 
-          <v-btn to="/auth/register" variant="elevated">
-            Zarejestruj się
-          </v-btn>
-        </div>
-      </v-col>
-      <v-col cols="12" sm="12" md="6">
-        <div class="d-flex flex-column align-center justify-center h-100 mx-2 pa-6">
-          <v-img
-            class="mx-auto my-5 elevation-5"
-            rounded="xl"
-            :width="300"
-            aspect-ratio="4/3"
-            cover
-            src="/LandingOne.jpeg"
-          />
-        </div>
-      </v-col>
-    </v-row>
-  </v-sheet>
+            <p class="my-5">
+              Nie masz jeszcze konta?
+            </p>
+
+            <v-btn to="/auth/register" variant="elevated">
+              Zarejestruj się
+            </v-btn>
+          </div>
+        </v-col>
+      </v-row>
+    </v-sheet>
+  </v-img>
 </template>

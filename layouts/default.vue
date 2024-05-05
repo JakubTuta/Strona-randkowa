@@ -4,6 +4,7 @@ import { icons } from '../helpers/socials'
 
 <template>
   <v-app>
+    <NavBarGuest />
     <slot />
 
     <v-footer class="d-flex flex-column justify-center" elevation="4">
@@ -26,7 +27,3 @@ import { icons } from '../helpers/socials'
     </v-footer>
   </v-app>
 </template>
-
-<style>
-
-</style>
