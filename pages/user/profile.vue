@@ -13,10 +13,12 @@ function changeProfileEditFlag() {
 function changePreferencesEditFlag() {
   editPreferencesFlag.value = !editPreferencesFlag.value
 }
+definePageMeta({
+  layout: 'user',
+})
 </script>
 
 <template>
-  <NavBarUser />
   <v-row justify="center">
     <v-col cols="12" sm="12" , md="6">
       <v-sheet
@@ -26,7 +28,7 @@ function changePreferencesEditFlag() {
         <v-row justify="center">
           <v-col cols="12" sm="12" md="12">
             <div>
-              <v-card-title class="text-h5 my-2">
+              <v-card-title class="text-h4 my-2">
                 Twoje profilowe:
               </v-card-title>
             </div>

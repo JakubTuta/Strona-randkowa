@@ -41,5 +41,19 @@
       "studyPartner": "Partner do nauki",
       "other": "Inna"
     }
+  },
+  "profile": {
+    "description": "Opis",
+    "dateBirth": "Data urodzenia",
+    "gender": "Płeć",
+    "faculty": "Wydział",
+    "fieldOfStudy": "Kierunek",
+    "index": "Indeks",
+    "prefferedGender": "Preferowana płeć",
+    "lookingFor": "Czego szukam",
+    "hobbies": "Zainteresowania",
+    "yourPreferences": "Twoje preferencje i hobby",
+    "editProfile": "Edytuj dane",
+    "editPreferences": "Edytuj preferencje"
   }
 }
