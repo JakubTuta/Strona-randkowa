@@ -25,10 +25,7 @@ def matches():
     user_data = db_functions.get_user_data(user_reference)
 
     other_users = db_functions.get_other_users(user_data)
-    print(other_users)
-
     ranked_users = RecommendationAlgorithm.score_all_users(user_data, other_users)
-
     users_references_ids = [user.reference.id for user in ranked_users]
 
     return flask.jsonify(users_references_ids), 200

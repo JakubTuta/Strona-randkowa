@@ -51,17 +51,17 @@ class RecommendationAlgorithm:
             for other in others
         ]
 
-        sorted_ranking = sorted(ranking, key=lambda item: item[1])
-        print(sorted_ranking)
+        sorted_ranking = sorted(ranking, key=lambda item: item[1], reverse=True)
+        sorted_users = [item[0] for item in sorted_ranking]
 
-        return sorted_ranking
+        return sorted_users
 
     @staticmethod
     def __calculate_preferred_gender(user: UserModel, other: UserModel) -> float:
         score = 0
 
-        if user.looking_for == "relationship":
-            if user.preferred_gender == other.gender:
+        if user.lookingFor == "relationship":
+            if user.preferredGender == other.gender:
                 score += SCORING["IS_PREFERRED_GENDER"]
             else:
                 score -= SCORING["IS_PREFERRED_GENDER"]
