@@ -2,24 +2,48 @@
 import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
 
-// const appStore = useAppStore()
-// const { userData } = storeToRefs(appStore)
+const appStore = useAppStore()
+const { userData } = storeToRefs(appStore)
 
-// const name = ref<string>('')
-// const surname = ref<string>('')
-// const index = ref<string>('')
-// const gender = ref<string>('')
-// const birthDate = ref<string>('')
-// const faculty = ref<string>('')
-// const fieldOfStudy = ref<string>('')
-// const preferedGender = ref<string>('')
+const name = ref<string>('')
+const surname = ref<string>('')
+const age = ref<string>('')
+const index = ref<string>('')
+const gender = ref<string>('')
+const birthDate = ref < string >('')
+const faculty = ref<string>('')
+const preferredGender = ref<string>('')
+const lookingFor = ref<string>('')
 
-// function setData() {
-//   if (userData.value != null) {
-//     surname.value = userData.value.lastName
-//     name.value = userData.value.firstName
-//   }
-// }
+function countAge(dateBirth: Date) {
+  const today = new Date()
+
+  let age = today.getFullYear() - dateBirth.getFullYear()
+  const m = today.getMonth() - dateBirth.getMonth()
+
+  if (m < 0 || (m === 0 && today.getDate() < dateBirth.getDate()))
+    age--
+
+  return age.toString()
+}
+
+function setDateString(date: Date) {
+  return date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+
+function setData() {
+  if (userData.value != null) {
+    surname.value = userData.value.lastName
+    name.value = userData.value.firstName
+    index.value = (userData.value.index).toString()
+    age.value = countAge(userData.value.dateBirth)
+    birthDate.value = setDateString(userData.value.dateBirth)
+    gender.value = userData.value.gender
+    faculty.value = userData.value.faculty
+    preferredGender.value = userData.value.preferred_gender
+    lookingFor.value = userData.value.looking_for
+  }
+}
 
 const editProfileFlag = ref<boolean>(false)
 const editPreferencesFlag = ref<boolean>(false)
@@ -34,6 +58,11 @@ function changePreferencesEditFlag() {
 definePageMeta({
   layout: 'user',
 })
+
+onMounted(() => {
+  setData()
+},
+)
 </script>
 
 <template>
@@ -100,10 +129,10 @@ definePageMeta({
           <v-row>
             <div class="mx-auto">
               <v-card-title class="text-h4 flex-wrap">
-                Piotr Jasiński, 22
+                {{ `${userData?.firstName} ${userData?.lastName}, ${age}` }}
               </v-card-title>
               <v-card-subtitle>
-                @anne123
+                {{ index }}
               </v-card-subtitle>
             </div>
           </v-row>
@@ -112,18 +141,18 @@ definePageMeta({
             <v-col cols="12" md="12" sm="12">
               <v-text-field :label="$t('profile.description')" readonly />
             </v-col>
-            <v-col cols="12" md="6" sm="12">
-              <v-text-field :label="$t('profile.dateBirth')" readonly />
+            <v-col cols="12" md="12" sm="12">
+              <v-text-field v-model="birthDate" :label="$t('profile.dateBirth')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field :label="$t('profile.gender')" readonly />
+              <v-text-field v-model="gender" :label="$t('profile.gender')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field :label="$t('profile.faculty')" readonly />
+              <v-text-field v-model="faculty" :label="$t('profile.faculty')" readonly />
             </v-col>
-            <v-col cols="12" md="6" sm="12">
+            <!-- <v-col cols="12" md="6" sm="12">
               <v-text-field :label="$t('profile.fieldOfStudy')" readonly />
-            </v-col>
+            </v-col> -->
           </v-row>
 
           <v-card-actions class="justify-end">
@@ -142,10 +171,10 @@ definePageMeta({
 
           <v-row>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field :label="$t('profile.lookingFor')" readonly />
+              <v-text-field v-model="lookingFor" :label="$t('profile.lookingFor')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field :label="$t('profile.prefferedGender')" readonly />
+              <v-text-field v-model="preferredGender" :label="$t('profile.prefferedGender')" readonly />
             </v-col>
             <v-col cols="12" md="12" sm="12">
               <v-chip-group>

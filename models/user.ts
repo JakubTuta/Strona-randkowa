@@ -12,7 +12,7 @@ export interface IUser {
   description: string
   faculty: string
   lastName: string
-  dateBirth: Date | Timestamp | null
+  dateBirth: Date
   gender: TGender
   index: number
   role: TRole
@@ -30,7 +30,7 @@ export class UserModel implements IUser {
   description: string
   faculty: string
   lastName: string
-  dateBirth: Date | Timestamp | null
+  dateBirth: Date
   gender: TGender
   index: number
   role: TRole
