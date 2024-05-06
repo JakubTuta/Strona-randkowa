@@ -32,7 +32,3 @@ const drawer = ref(false)
     </v-footer>
   </v-app>
 </template>
-
-<style>
-
-</style>

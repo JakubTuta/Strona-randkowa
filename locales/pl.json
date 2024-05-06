@@ -15,18 +15,31 @@
       "chat": "Czat"
     }
   },
-  "profile": {
-    "description": "Opis",
-    "dateBirth": "Data urodzenia",
-    "gender": "Płeć",
-    "faculty": "Wydział",
-    "fieldOfStudy": "Kierunek",
-    "index": "Indeks",
-    "prefferedGender": "Preferowana płeć",
-    "lookingFor": "Poszukuje",
-    "hobbies": "Zainteresowania",
-    "yourPreferences": "Twoje preferencje i zainteresowania",
-    "editProfile": "Edytuj dane",
-    "editPreferences": "Edytuj preferencje"
+  "universal": {
+    "emailExists": "Email już istnieje",
+    "saved": "Zapisano",
+    "passwordsNotMatch": "Hasła nie są takie same"
+  },
+  "registration": {
+    "step": "Krok {step}",
+    "optional": "Opcjonalny"
+  },
+  "authErrors": {
+    "invalidEmailOrPassword": "Nieprawidłowy email lub hasło",
+    "unknown": "Nieznany błąd"
+  },
+  "user": {
+    "sex": {
+      "male": "Mężczyzna",
+      "female": "Kobieta",
+      "other": "Inna",
+      "any": "Dowolna"
+    },
+    "prefferedRelationship": {
+      "friendship": "Przyjaźń",
+      "relationship": "Związek",
+      "studyPartner": "Partner do nauki",
+      "other": "Inna"
+    }
   }
 }
