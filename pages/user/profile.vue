@@ -1,7 +1,25 @@
 <script lang="ts" setup>
-import NavBarUser from '~/components/navBarUser.vue'
 import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
+
+// const appStore = useAppStore()
+// const { userData } = storeToRefs(appStore)
+
+// const name = ref<string>('')
+// const surname = ref<string>('')
+// const index = ref<string>('')
+// const gender = ref<string>('')
+// const birthDate = ref<string>('')
+// const faculty = ref<string>('')
+// const fieldOfStudy = ref<string>('')
+// const preferedGender = ref<string>('')
+
+// function setData() {
+//   if (userData.value != null) {
+//     surname.value = userData.value.lastName
+//     name.value = userData.value.firstName
+//   }
+// }
 
 const editProfileFlag = ref<boolean>(false)
 const editPreferencesFlag = ref<boolean>(false)
@@ -20,7 +38,7 @@ definePageMeta({
 
 <template>
   <v-row justify="center">
-    <v-col cols="12" sm="12" , md="6">
+    <v-col cols="12" sm="12" md="6">
       <v-sheet
         class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-height="1200"
         max-width="1100" rounded
@@ -41,66 +59,48 @@ definePageMeta({
 
             <!-- ZMIENIĆ NA PĘTLE WYŚWIETLANIE ZDJĘĆ W ZALEŻNOŚCI OD DŁUGOŚCI TABLICY PHOTOS W USERZE -->
             <v-row justify="center">
-              <v-div>
+              <div>
                 <v-col>
                   <v-img
                     class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
                     src="/testPerson3.jpg"
                   />
                 </v-col>
-              </v-div>
+              </div>
 
-              <v-div>
+              <div>
                 <v-col>
                   <v-img
                     class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
                     src="/testPerson3.jpg"
                   />
                 </v-col>
-              </v-div>
+              </div>
 
-              <v-div>
+              <div>
                 <v-col>
                   <v-img
                     class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
                     src="/testPerson3.jpg"
                   />
                 </v-col>
-              </v-div>
-
-              <v-div>
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
-                  />
-                </v-col>
-              </v-div>
-
-              <v-div>
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
-                  />
-                </v-col>
-              </v-div>
+              </div>
             </v-row>
           </v-col>
         </v-row>
       </v-sheet>
     </v-col>
 
-    <v-col cols="12" sm="12" , md="6">
+    <v-col cols="12" sm="12" md="6">
       <v-sheet
-        class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1100" max-height="1200"
-        rounded
+        class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1100"
+        max-height="1200" rounded
       >
         <v-col cols="12" sm="12" md="12">
           <v-row>
             <div class="mx-auto">
               <v-card-title class="text-h4 flex-wrap">
-                IMIĘ NAZWISKO, 22
+                Piotr Jasiński, 22
               </v-card-title>
               <v-card-subtitle>
                 @anne123
