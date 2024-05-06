@@ -18,9 +18,9 @@ export interface IUser {
   role: TRole
   score: number
   elo: number
-  preferred_gender: TPreferredGender
-  looking_for: TLookingFor
-  blocked_profiles: DocumentReference[]
+  preferredGender: TPreferredGender
+  lookingFor: TLookingFor
+  blockedProfiles: DocumentReference[]
   hobbies: THobby[]
 }
 
@@ -36,9 +36,9 @@ export class UserModel implements IUser {
   role: TRole
   score: number
   elo: number
-  preferred_gender: TPreferredGender
-  looking_for: TLookingFor
-  blocked_profiles: DocumentReference[]
+  preferredGender: TPreferredGender
+  lookingFor: TLookingFor
+  blockedProfiles: DocumentReference[]
   hobbies: THobby[]
 
   reference: DocumentReference | null
@@ -55,9 +55,9 @@ export class UserModel implements IUser {
     this.role = data.role || ''
     this.score = data.score || 0
     this.elo = data.elo || 0
-    this.preferred_gender = data.preferred_gender || ''
-    this.looking_for = data.looking_for || ''
-    this.blocked_profiles = data.blocked_profiles || []
+    this.preferredGender = data.preferredGender || ''
+    this.lookingFor = data.lookingFor || ''
+    this.blockedProfiles = data.blockedProfiles || []
     this.hobbies = data.hobbies || []
 
     this.reference = reference
@@ -76,9 +76,9 @@ export class UserModel implements IUser {
       role: this.role,
       score: this.score,
       elo: this.elo,
-      preferred_gender: this.preferred_gender,
-      looking_for: this.looking_for,
-      blocked_profiles: this.blocked_profiles,
+      preferredGender: this.preferredGender,
+      lookingFor: this.lookingFor,
+      blockedProfiles: this.blockedProfiles,
       hobbies: this.hobbies,
     }
   }
