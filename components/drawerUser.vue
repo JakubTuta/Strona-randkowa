@@ -35,13 +35,13 @@ const drawer = defineModel({ default: false })
       <v-menu activator="parent" location="start">
         <v-list class="justify-center">
           <v-list-item
-            to="user/events/add"
+            to="/user/events/add"
             append-icon="mdi-plus"
             :title="$t('navBar.user.events.add')"
           />
 
           <v-list-item
-            to="user/events"
+            to="/user/events"
             append-icon="mdi-party-popper"
             :title="$t('navBar.user.events.browse')"
           />
