@@ -1,6 +1,7 @@
 import database.database_functions as db_functions
 import flask
 import flask_cors
+from RecommendationAlgorithm import RecommendationAlgorithm
 
 app = flask.Flask(__name__)
 flask_cors.CORS(app)
@@ -21,8 +22,14 @@ def matches():
         return flask.jsonify({"error": str(e)}), 400
 
     user_reference = db_functions.get_reference_from_id(user_reference_id)
-    users = db_functions.get_other_users(user_reference)
-    users_references_ids = [user.reference.id for user in users]
+    user_data = db_functions.get_user_data(user_reference)
+
+    other_users = db_functions.get_other_users(user_data)
+    print(other_users)
+
+    ranked_users = RecommendationAlgorithm.score_all_users(user_data, other_users)
+
+    users_references_ids = [user.reference.id for user in ranked_users]
 
     return flask.jsonify(users_references_ids), 200
 

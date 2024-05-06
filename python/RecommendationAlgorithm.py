@@ -2,7 +2,7 @@ import typing
 
 from models.user import UserModel
 
-# zakładając elo mieści się od 500 do 2000
+# zakładając że elo mieści się od 500 do 2000
 ELO_SCORE = {
     "MIN_ORIGINAL_SCORE": 500,
     "MAX_ORIGINAL_SCORE": 2000,
@@ -43,11 +43,28 @@ class RecommendationAlgorithm:
     def score_all_users(
         user: UserModel, others: typing.Iterable[UserModel]
     ) -> typing.Iterable[float]:
-        pass
+        ranking = [
+            (
+                other,
+                RecommendationAlgorithm.score_one_user(user, other),
+            )
+            for other in others
+        ]
+
+        sorted_ranking = sorted(ranking, key=lambda item: item[1])
+        print(sorted_ranking)
+
+        return sorted_ranking
 
     @staticmethod
     def __calculate_preferred_gender(user: UserModel, other: UserModel) -> float:
-        score = (user.preferred_gender == other.gender) * SCORING["IS_PREFERRED_GENDER"]
+        score = 0
+
+        if user.looking_for == "relationship":
+            if user.preferred_gender == other.gender:
+                score += SCORING["IS_PREFERRED_GENDER"]
+            else:
+                score -= SCORING["IS_PREFERRED_GENDER"]
 
         return score
 

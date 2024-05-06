@@ -21,6 +21,14 @@ def get_user(
     return user
 
 
+def get_user_data(reference: firestore.DocumentReference) -> UserModel:
+    document_data = reference.get()
+
+    user = UserModel(**document_data.to_dict(), reference=document_data.reference)
+
+    return user
+
+
 def get_all_users() -> typing.List[firestore.DocumentReference]:
     docs = collection_users.stream()
 
@@ -29,15 +37,8 @@ def get_all_users() -> typing.List[firestore.DocumentReference]:
     return users
 
 
-def get_other_users(
-    user_ref: firestore.DocumentReference,
-) -> typing.List[firestore.DocumentReference]:
-    user_doc = user_ref.get()
-    user = UserModel(**user_doc.to_dict(), reference=user_doc.reference)
-
-    query = collection_users.where(
-        filter=FieldFilter("gender", "==", user.preferred_gender)
-    )
+def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]:
+    query = collection_users.where(filter=FieldFilter("__name__", "!=", user.reference))
     docs = query.stream()
 
     users = [UserModel(**doc.to_dict(), reference=doc.reference) for doc in docs]
