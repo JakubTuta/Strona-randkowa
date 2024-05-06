@@ -23,6 +23,7 @@ logs
 .env.*
 !.env.example
 
+.vscode/tasks.json
 firebase_credentials.json
 __pycache__/
 settings.json

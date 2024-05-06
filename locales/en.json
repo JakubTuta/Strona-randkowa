@@ -1,5 +1,46 @@
 {
   "navBar": {
-    "login": "Login"
+    "login": "Login",
+    "logout": "Log out",
+    "changeTheme": "Change theme",
+    "user": {
+      "myProfile": "My profile",
+      "communities": "Communities",
+      "events": {
+        "events": "Events",
+        "add": "Create an event",
+        "browse": "Browse events"
+      },
+      "meet": "Meet people",
+      "chat": "Chat"
+
+    }
+  },
+  "universal": {
+    "emailExists": "Email already exists",
+    "saved": "Saved",
+    "passwordsNotMatch": "Passwords do not match"
+  },
+  "registration": {
+    "step": "Step {step}",
+    "optional": "Optional"
+  },
+  "authErrors": {
+    "invalidEmailOrPassword": "Invalid email or password",
+    "unknown": "Unknown error"
+  },
+  "user": {
+    "sex": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "any": "Any"
+    },
+    "prefferedRelationship": {
+      "friendship": "Friendship",
+      "relationship": "Relationship",
+      "studyPartner": "Study partner",
+      "other": "Other"
+    }
   }
 }
