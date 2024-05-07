@@ -54,6 +54,7 @@
     "hobbies": "Zainteresowania",
     "yourPreferences": "Twoje preferencje i hobby",
     "editProfile": "Edytuj dane",
-    "editPreferences": "Edytuj preferencje"
+    "editPreferences": "Edytuj preferencje",
+    "nothingToShow": "Brak zainteresowań"
   }
 }

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
+import type { THobby } from '~/types/hobby'
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
@@ -14,6 +15,9 @@ const birthDate = ref < string >('')
 const faculty = ref<string>('')
 const preferredGender = ref<string>('')
 const lookingFor = ref<string>('')
+const hobbies = ref<THobby[]>()
+
+// const hobbyArray: THobby [] = ['gym', 'studyPartner', 'beer']
 
 function countAge(dateBirth: Date) {
   const today = new Date()
@@ -32,6 +36,7 @@ function setDateString(date: Date) {
 }
 
 function setData() {
+  console.log(userData.value)
   if (userData.value != null) {
     surname.value = userData.value.lastName
     name.value = userData.value.firstName
@@ -40,8 +45,8 @@ function setData() {
     birthDate.value = setDateString(userData.value.dateBirth)
     gender.value = userData.value.gender
     faculty.value = userData.value.faculty
-    preferredGender.value = userData.value.preferred_gender
-    lookingFor.value = userData.value.looking_for
+    preferredGender.value = userData.value.preferredGender
+    lookingFor.value = userData.value.lookingFor
   }
 }
 
@@ -177,12 +182,14 @@ onMounted(() => {
               <v-text-field v-model="preferredGender" :label="$t('profile.prefferedGender')" readonly />
             </v-col>
             <v-col cols="12" md="12" sm="12">
-              <v-chip-group>
-                <v-chip
-                  v-for="element in ['Silownia', 'Piłka', 'Książki', 'Praca', 'IT', 'Basen', 'Koszenie trawy']"
-                  :key="element" size="large" class="outlined"
-                >
+              <v-chip-group v-if="hobbies">
+                <v-chip v-for="element in hobbies" :key="element" size="large" draggable>
                   {{ element }}
+                </v-chip>
+              </v-chip-group>
+              <v-chip-group v-else>
+                <v-chip size="large" class="outlined">
+                  {{ $t("profile.nothingToShow") }}
                 </v-chip>
               </v-chip-group>
             </v-col>
