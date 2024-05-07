@@ -1,5 +1,6 @@
 import typing
 
+import database.database_functions as db_functions
 from models.user import UserModel
 
 # zakładając że elo mieści się od 500 do 2000
@@ -23,6 +24,7 @@ SCORING = {
     "IS_PREFERRED_GENDER": 1.0,
     "IS_PHOTO": 1.0,
     "IS_DESCRIPTION": 1.0,
+    "IS_LIKE": 1.0,
 }
 
 
@@ -36,6 +38,7 @@ class RecommendationAlgorithm:
         other_score += RecommendationAlgorithm.__calculate_rating_score(other)
         other_score += RecommendationAlgorithm.__check_if_is_photo(other)
         other_score += RecommendationAlgorithm.__check_if_is_description(other)
+        other_score += RecommendationAlgorithm.__check_if_likes(user, other)
 
         return other_score
 
@@ -96,12 +99,21 @@ class RecommendationAlgorithm:
 
     @staticmethod
     def __check_if_is_photo(user: UserModel) -> float:
-        score = (len(user.photos) != 0) * SCORING["IS_PHOTO"]
+        score = (len(user.photos) > 0) * SCORING["IS_PHOTO"]
 
         return score
 
     @staticmethod
     def __check_if_is_description(user: UserModel) -> float:
-        score = (len(user.description) != 0) * SCORING["IS_DESCRIPTION"]
+        score = (len(user.description) > 0) * SCORING["IS_DESCRIPTION"]
+
+        return score
+
+    @staticmethod
+    def __check_if_likes(user: UserModel, other: UserModel) -> float:
+        score = (
+            db_functions.check_if_other_likes_user(user.reference, other.reference)
+            * SCORING["IS_LIKE"]
+        )
 
         return score
