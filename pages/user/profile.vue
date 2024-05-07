@@ -2,10 +2,14 @@
 import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
 import type { THobby } from '~/types/hobby'
+import type { UserModel } from '~/models/user'
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
 
+const currentUser: UserModel | null = userData.value
+
+const description = ref<string>('')
 const name = ref<string>('')
 const surname = ref<string>('')
 const age = ref<string>('')
@@ -36,17 +40,17 @@ function setDateString(date: Date) {
 }
 
 function setData() {
-  console.log(userData.value)
-  if (userData.value != null) {
-    surname.value = userData.value.lastName
-    name.value = userData.value.firstName
-    index.value = (userData.value.index).toString()
-    age.value = countAge(userData.value.dateBirth)
-    birthDate.value = setDateString(userData.value.dateBirth)
-    gender.value = userData.value.gender
-    faculty.value = userData.value.faculty
-    preferredGender.value = userData.value.preferredGender
-    lookingFor.value = userData.value.lookingFor
+  if (currentUser != null) {
+    description.value = currentUser.description
+    surname.value = currentUser.lastName
+    name.value = currentUser.firstName
+    index.value = (currentUser.index).toString()
+    age.value = countAge(currentUser.dateBirth)
+    birthDate.value = setDateString(currentUser.dateBirth)
+    gender.value = currentUser.gender
+    faculty.value = currentUser.faculty
+    preferredGender.value = currentUser.preferredGender
+    lookingFor.value = currentUser.lookingFor
   }
 }
 
@@ -62,6 +66,10 @@ function changePreferencesEditFlag() {
 }
 definePageMeta({
   layout: 'user',
+})
+
+watch(currentUser, async (newUser, oldUser) => {
+  setData()
 })
 
 onMounted(() => {
@@ -144,7 +152,7 @@ onMounted(() => {
 
           <v-row>
             <v-col cols="12" md="12" sm="12">
-              <v-text-field :label="$t('profile.description')" readonly />
+              <v-text-field v-model="description" :label="$t('profile.description')" readonly />
             </v-col>
             <v-col cols="12" md="12" sm="12">
               <v-text-field v-model="birthDate" :label="$t('profile.dateBirth')" readonly />
@@ -205,6 +213,6 @@ onMounted(() => {
     </v-col>
   </v-row>
 
-  <EditProfile :is-show="editProfileFlag" @on-close="changeProfileEditFlag" />
+  <EditProfile :is-show="editProfileFlag" :user-data="currentUser" @on-close="changeProfileEditFlag" />
   <EditPreferences :is-show="editPreferencesFlag" @on-close="changePreferencesEditFlag" />
 </template>
