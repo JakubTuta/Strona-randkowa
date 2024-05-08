@@ -15,6 +15,13 @@
       "chat": "Czat"
     }
   },
+  "events": {
+    "add": {
+      "eventName": "Nazwa wydarzenia",
+      "startDate": "Kiedy się zaczyna",
+      "endDate": "Kiedy się kończy"
+    }
+  },
   "universal": {
     "emailExists": "Email już istnieje",
     "saved": "Zapisano",

@@ -16,6 +16,13 @@
 
     }
   },
+  "events": {
+    "add": {
+      "eventName": "Event name",
+      "startDate": "Start time",
+      "endDate": "End time"
+    }
+  },
   "universal": {
     "emailExists": "Email already exists",
     "saved": "Saved",
