@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useDisplay } from 'vuetify'
 import formValidation from '~/helpers/formValidation'
 
+const { t } = useI18n()
+
 useHead({
-  title: 'Logowanie - Randki+',
+  title: 'Logowanie - ' +  t("appName"),
 })
 
 const email = ref('')

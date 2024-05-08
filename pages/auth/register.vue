@@ -11,15 +11,15 @@ import type { TGender } from '~/types/gender'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 let createdUserRef: DocumentReference | null = null
+const { t } = useI18n()
 
 useHead({
-  title: 'Rejestracja - Randki+',
+  title: 'Rejestracja - ' +  t("appName"),
 })
 
 const appStore = useAppStore()
 const sharedStore = useSharedStore()
 
-const { t } = useI18n()
 const router = useRouter()
 const { current } = useTheme()
 

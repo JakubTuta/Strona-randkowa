@@ -6,6 +6,7 @@ const theme = useTheme()
 const router = useRouter()
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
+const { t } = useI18n()
 
 const drawer = defineModel({ default: false })
 
@@ -28,7 +29,7 @@ async function logOut() {
     color="primary"
   >
     <v-btn variant="text" color="default" to="/user">
-      Randki+
+      {{ t("appName") }}
     </v-btn>
 
     <v-spacer />
@@ -39,7 +40,7 @@ async function logOut() {
         color="default"
         prepend-icon="mdi-account-group"
       >
-        {{ $t('navBar.user.communities') }}
+        {{ t('navBar.user.communities') }}
       </v-btn>
 
       <v-btn
@@ -48,19 +49,19 @@ async function logOut() {
         prepend-icon="mdi-calendar-multiple"
         :append-icon="eventMenuIcon"
       >
-        {{ $t('navBar.user.events.events') }}
+        {{ t('navBar.user.events.events') }}
         <v-menu activator="parent" @update:model-value="changeIcon">
           <v-list class="justify-center">
             <v-list-item
               to="user/events/add"
               prepend-icon="mdi-plus"
-              :title="$t('navBar.user.events.add')"
+              :title="t('navBar.user.events.add')"
             />
 
             <v-list-item
               to="user/events"
               prepend-icon="mdi-party-popper"
-              :title="$t('navBar.user.events.browse')"
+              :title="t('navBar.user.events.browse')"
             />
           </v-list>
         </v-menu>
@@ -71,7 +72,7 @@ async function logOut() {
         color="default"
         prepend-icon="mdi-heart"
       >
-        {{ $t('navBar.user.meet') }}
+        {{ t('navBar.user.meet') }}
       </v-btn>
 
       <v-btn
@@ -79,7 +80,7 @@ async function logOut() {
         color="default"
         prepend-icon="mdi-chat"
       >
-        {{ $t('navBar.user.chat') }}
+        {{ t('navBar.user.chat') }}
       </v-btn>
     </div>
 
@@ -97,7 +98,7 @@ async function logOut() {
             />
             <v-list-item
               prepend-icon="mdi-logout"
-              :title="$t('navBar.logout')"
+              :title="t('navBar.logout')"
               @click="logOut"
             />
           </v-list>
@@ -112,7 +113,3 @@ async function logOut() {
     </div>
   </v-app-bar>
 </template>
-
-<style>
-
-</style>
