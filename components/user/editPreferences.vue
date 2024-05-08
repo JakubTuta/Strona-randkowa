@@ -1,32 +1,89 @@
 <script lang="ts" setup>
+import VueDatePicker from '@vuepic/vue-datepicker'
+import type { UserModel } from '~/models/user'
+import { useGenders } from '~/composables/genders'
+import type { TPreferredGender } from '~/types/preferredGender'
+import type { TLookingFor } from '~/types/lookingFor'
+import { useRelationship } from '~/composables/relationship'
+
 const props = defineProps<{
   isShow: boolean
+  userData: UserModel | null
 }>()
 
 const emit = defineEmits<{
   (e: 'onClose'): void
+  (e: 'onSave'): UserModel
 }>()
+
+const appStore = useAppStore()
+const { isShow, userData } = toRefs(props)
+
+const { mappedRelationships } = useRelationship()
+const { mappedGendersPreferences } = useGenders()
+
+const newDataUser = ref<UserModel | null>(userData.value)
+const isShowRef = ref<boolean>()
+
+const currentGenderPref = ref<TPreferredGender>()
+const currentLookingFor = ref<TLookingFor>()
+// const currentDate = ref<Date>(newDataUser.value?.dateBirth)
+
+function setCurrentStudentData() {
+  if (userData.value != null)
+    newDataUser.value = userData.value
+
+  if (newDataUser.value != null) {
+    currentGenderPref.value = newDataUser.value.preferredGender
+    currentLookingFor.value = newDataUser.value.lookingFor
+  }
+}
 
 function close() {
   emit('onClose')
 }
 
-const { isShow } = toRefs(props)
-const isShowRef = ref<boolean>()
-
+function saveData() {
+  if (newDataUser.value != null) {
+    newDataUser.value.gender = currentGenderPref.value
+    newDataUser.value.lookingFor = currentLookingFor.value
+    appStore.editUser(newDataUser.value)
+  }
+  emit('onSave')
+  emit('onClose')
+}
+setCurrentStudentData()
 watch(isShow, () => isShowRef.value = isShow.value)
 </script>
 
 <template>
   <v-dialog max-width="800px" :model-value="isShowRef" scrollable @update:model-value="close">
     <v-card>
-      <v-card-title>
-        Dialog do preferencji
+      <v-card-title class="text-h5 flex-wrap">
+        {{ $t("profile.editProfile") }}
       </v-card-title>
+      <v-card-text>
+        <v-select
+          v-model="currentLookingFor" :label="$t('profile.lookingFor')" :items="mappedRelationships"
+          variant="outlined"
+        />
 
+        <v-select
+          v-model="currentGenderPref" :label="$t('profile.prefferedGender')" :items="mappedGendersPreferences"
+          variant="outlined"
+        />
+
+        <!-- <VueDatePicker
+          v-model="currentDate" class="py-4" auto-apply placeholder="Podaj datę urodzenia"
+          :enable-time-picker="false" position="left"
+        /> -->
+      </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">
           Zamknij
+        </v-btn>
+        <v-btn color="success" @click="saveData">
+          Zapisz
         </v-btn>
       </v-card-actions>
     </v-card>

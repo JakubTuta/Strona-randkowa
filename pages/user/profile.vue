@@ -216,5 +216,5 @@ onMounted(() => {
   </v-row>
 
   <EditProfile :is-show="editProfileFlag" :user-data="currentUser" @on-close="changeProfileEditFlag" />
-  <EditPreferences :is-show="editPreferencesFlag" @on-close="changePreferencesEditFlag" />
+  <EditPreferences :is-show="editPreferencesFlag" :user-data="currentUser" @on-close="changePreferencesEditFlag" />
 </template>
