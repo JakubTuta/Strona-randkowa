@@ -44,6 +44,8 @@
     }
   },
   "profile": {
+    "firstName": "First name",
+    "lastName": "Last name",
     "description": "Description",
     "dateBirth": "Date of birth",
     "gender": "Gender",

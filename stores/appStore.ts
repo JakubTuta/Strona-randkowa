@@ -130,9 +130,12 @@ export const useAppStore = defineStore('app', () => {
 
   const editUser = (newUser: UserModel) => {
     const data = {
+      firstName: newUser?.firstName,
+      lastName: newUser?.lastName,
       description: newUser?.description,
+      faculty: newUser?.faculty,
+      gender: newUser?.gender,
     }
-
     if (newUser.reference)
       updateDoc(newUser.reference, data)
   }

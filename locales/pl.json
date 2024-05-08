@@ -43,6 +43,8 @@
     }
   },
   "profile": {
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
     "description": "Opis",
     "dateBirth": "Data urodzenia",
     "gender": "Płeć",

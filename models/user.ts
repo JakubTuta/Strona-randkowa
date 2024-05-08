@@ -11,6 +11,7 @@ export interface IUser {
   firstName: string
   description: string
   faculty: string
+  // fieldOfStudy: string
   lastName: string
   dateBirth: Date
   gender: TGender
@@ -29,6 +30,7 @@ export class UserModel implements IUser {
   firstName: string
   description: string
   faculty: string
+  // fieldOfStudy: string
   lastName: string
   dateBirth: Date
   gender: TGender
@@ -48,6 +50,7 @@ export class UserModel implements IUser {
     this.firstName = data.firstName || ''
     this.description = data.description || ''
     this.faculty = data.faculty || ''
+    // this.fieldOfStudy = data.fieldOfStudy || ''
     this.lastName = data.lastName || ''
     this.dateBirth = data.dateBirth instanceof Timestamp ? data.dateBirth.toDate() : data.dateBirth
     this.gender = data.gender || ''
@@ -68,6 +71,7 @@ export class UserModel implements IUser {
       photos: this.photos,
       firstName: this.firstName,
       faculty: this.faculty,
+      // fieldOfStudy: this.fieldOfStudy,
       description: this.description,
       lastName: this.lastName,
       dateBirth: this.dateBirth,
