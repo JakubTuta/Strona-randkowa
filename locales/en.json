@@ -41,6 +41,11 @@
       "relationship": "Relationship",
       "studyPartner": "Study partner",
       "other": "Other"
+    },
+    "hobbies": {
+      "gym": "Gym",
+      "studyPartner": "Study Partnering",
+      "beer": "Beer"
     }
   },
   "profile": {

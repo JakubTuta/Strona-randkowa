@@ -53,6 +53,7 @@ function setData() {
     // fieldOfStudy.value = currentUser.fieldOfStudy
     preferredGender.value = currentUser.preferredGender
     lookingFor.value = currentUser.lookingFor
+    hobbies.value = currentUser.hobbies
   }
 }
 

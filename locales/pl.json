@@ -40,6 +40,11 @@
       "relationship": "Związek",
       "studyPartner": "Partner do nauki",
       "other": "Inna"
+    },
+    "hobbies": {
+      "gym": "Siłownia",
+      "studyPartner": "Pomoc studencka",
+      "beer": "Piwo"
     }
   },
   "profile": {
