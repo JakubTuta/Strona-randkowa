@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import VueDatePicker from '@vuepic/vue-datepicker'
 import type { UserModel } from '~/models/user'
 import { useGenders } from '~/composables/genders'
 import type { TPreferredGender } from '~/types/preferredGender'
 import type { TLookingFor } from '~/types/lookingFor'
 import { useRelationship } from '~/composables/relationship'
 import { useHobbies } from '~/composables/hobbies'
+import type { THobby } from '~/types/hobby'
 
 const props = defineProps<{
   isShow: boolean
@@ -49,7 +49,7 @@ function close() {
 
 function saveData() {
   if (newDataUser.value != null) {
-    newDataUser.value.gender = currentGenderPref.value
+    newDataUser.value.preferredGender = currentGenderPref.value
     newDataUser.value.lookingFor = currentLookingFor.value
     newDataUser.value.hobbies = hobbiesList.value
     appStore.editUser(newDataUser.value)

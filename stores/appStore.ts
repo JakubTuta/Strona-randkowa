@@ -139,6 +139,7 @@ export const useAppStore = defineStore('app', () => {
       preferredGender: newUser?.preferredGender,
       hobbies: newUser?.hobbies,
     }
+
     if (newUser.reference)
       updateDoc(newUser.reference, data)
   }

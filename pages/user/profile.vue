@@ -3,9 +3,11 @@ import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
 import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
+import { useHobbies } from '~/composables/hobbies'
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
+const { t } = useI18n()
 
 const currentUser: UserModel | null = userData.value
 
@@ -155,52 +157,58 @@ onMounted(() => {
 
           <v-row>
             <v-col cols="12" md="12" sm="12">
-              <v-text-field v-model="description" :label="$t('profile.description')" readonly />
+              <v-text-field v-model="description" :label="t('profile.description')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="birthDate" :label="$t('profile.dateBirth')" readonly />
+              <v-text-field v-model="birthDate" :label="t('profile.dateBirth')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="gender" :label="$t('profile.gender')" readonly />
+              <v-text-field v-model="gender" :value="t(`user.sex.${gender}`)" :label="t('profile.gender')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="faculty" :label="$t('profile.faculty')" readonly />
+              <v-text-field v-model="faculty" :label="t('profile.faculty')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field :label="$t('profile.fieldOfStudy')" readonly />
+              <v-text-field :label="t('profile.fieldOfStudy')" readonly />
             </v-col>
           </v-row>
 
           <v-card-actions class="justify-end">
             <v-btn @click="changeProfileEditFlag()">
-              {{ $t("profile.editProfile") }}
+              {{ t("profile.editProfile") }}
             </v-btn>
           </v-card-actions>
 
           <v-row>
             <div class="mx-auto">
               <v-card-title class="text-h4">
-                {{ $t("profile.yourPreferences") }}
+                {{ t("profile.yourPreferences") }}
               </v-card-title>
             </div>
           </v-row>
 
-          <v-row>
+          <v-row justify="center">
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="lookingFor" :label="$t('profile.lookingFor')" readonly />
+              <v-text-field
+                v-model="lookingFor" :value="t(`user.prefferedRelationship.${lookingFor}`)"
+                :label="t('profile.lookingFor')" readonly
+              />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="preferredGender" :label="$t('profile.prefferedGender')" readonly />
+              <v-text-field
+                v-model="preferredGender" :value="t(`user.sex.${preferredGender}`)"
+                :label="t('profile.prefferedGender')" readonly
+              />
             </v-col>
-            <v-col cols="12" md="12" sm="12">
+            <v-col cols="12" md="12" sm="12" class="d-flex justify-center">
               <v-chip-group v-if="hobbies">
                 <v-chip v-for="element in hobbies" :key="element" size="large" draggable>
-                  {{ element }}
+                  {{ t(`user.hobbies.${element}`) }}
                 </v-chip>
               </v-chip-group>
               <v-chip-group v-else>
                 <v-chip size="large" class="outlined">
-                  {{ $t("profile.nothingToShow") }}
+                  {{ t("profile.nothingToShow") }}
                 </v-chip>
               </v-chip-group>
             </v-col>
@@ -208,7 +216,7 @@ onMounted(() => {
 
           <v-card-actions class="justify-end">
             <v-btn @click="changePreferencesEditFlag()">
-              {{ $t("profile.editPreferences") }}
+              {{ t("profile.editPreferences") }}
             </v-btn>
           </v-card-actions>
         </v-col>
