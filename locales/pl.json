@@ -1,5 +1,13 @@
 {
   "appName": "Randki+",
+  "login": {
+    "login": "Logowanie",
+    "email": "Adres Email",
+    "password": "Hasło",
+    "signUp": "Zaloguj",
+    "doYouHaveAccount": "Nie masz jeszcze konta?",
+    "register": "Zarejestruj się"
+  },
   "navBar": {
     "login": "Logowanie",
     "logout": "Wyloguj",

@@ -1,5 +1,13 @@
 {
   "appName": "Randki+",
+  "login": {
+    "login": "Login",
+    "e-mail": "E-mail address",
+    "password": "Password",
+    "signUp": "Log in",
+    "doYouHaveAccount": "Don't have an account yet?",
+    "register": "Register"
+  },
   "navBar": {
     "login": "Login",
     "logout": "Log out",
