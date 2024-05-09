@@ -32,7 +32,21 @@
   },
   "registration": {
     "step": "Step {step}",
-    "optional": "Optional"
+    "optional": "Optional",
+    "register": "Registration",
+    "email": "Email Address",
+    "password": "Password",
+    "repeatPassword": "Repeat Password",
+    "giveBirthDate": "Enter your date of birth",
+    "sex": "Gender",
+    "faculty": "Faculty",
+    "preferredGender": "Wanted gender for a relationship",
+    "lookingFor": "Currently my looking for relationship is: ",
+    "name": "Name",
+    "surname": "Surname",
+    "acceptPolicy": "I accept the regulations",
+    "studentIndex": "University Index",
+    "registerYourself": "Register"
   },
   "authErrors": {
     "invalidEmailOrPassword": "Invalid email or password",
