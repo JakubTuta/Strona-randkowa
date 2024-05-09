@@ -40,7 +40,11 @@ def get_all_users() -> typing.List[firestore.DocumentReference]:
 
 
 def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]:
-    query = collection_users.where(filter=FieldFilter("__name__", "!=", user.reference))
+    query = collection_users.where(
+        filter=FieldFilter(
+            "__name__", "not-in", [user.reference, *user.blockedProfiles]
+        )
+    )
     docs = query.stream()
 
     users = [UserModel(**doc.to_dict(), reference=doc.reference) for doc in docs]
