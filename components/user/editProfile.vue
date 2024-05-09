@@ -5,6 +5,8 @@ import { useFaculties } from '~/composables/faculties'
 import type { UserModel } from '~/models/user'
 import { useGenders } from '~/composables/genders'
 import type { TGender } from '~/types/gender'
+import { descriptionLenghtRule, requiredRule } from '~/helpers/rules'
+import formValidation from '~/helpers/formValidation'
 
 const props = defineProps<{
   isShow: boolean
@@ -15,6 +17,8 @@ const emit = defineEmits<{
   (e: 'onClose'): void
   (e: 'onSave'): UserModel
 }>()
+
+const { form, valid, isValid } = formValidation()
 
 const appStore = useAppStore()
 const { isShow, userData } = toRefs(props)
@@ -49,17 +53,17 @@ function close() {
   emit('onClose')
 }
 
-function saveData() {
-  if (newDataUser.value != null) {
+async function saveData() {
+  if (await isValid() && newDataUser.value != null) {
     newDataUser.value.firstName = currentName.value
     newDataUser.value.lastName = currentSurname.value
     newDataUser.value.description = currentDescription.value
     newDataUser.value.faculty = currentFaculty.value
     newDataUser.value.gender = currentGender.value
     appStore.editUser(newDataUser.value)
+    emit('onSave')
+    emit('onClose')
   }
-  emit('onSave')
-  emit('onClose')
 }
 setCurrentStudentData()
 watch(isShow, () => isShowRef.value = isShow.value)
@@ -72,18 +76,23 @@ watch(isShow, () => isShowRef.value = isShow.value)
         {{ $t("profile.editProfile") }}
       </v-card-title>
       <v-card-text>
-        <v-text-field v-model="currentName" :label="$t('profile.firstName')" />
-        <v-text-field v-model="currentSurname" :label="$t('profile.lastName')" />
+        <v-form ref="form" v-model="valid" class="w-100" @submit.prevent="saveData">
+          <v-text-field v-model="currentName" :label="$t('profile.firstName')" :rules="[requiredRule()]" />
+          <v-text-field v-model="currentSurname" :label="$t('profile.lastName')" :rules="[requiredRule()]" />
 
-        <v-text-field v-model="currentDescription" :label="$t('profile.description')" />
+          <v-text-field
+            v-model="currentDescription" :label="$t('profile.description')"
+            :rules="[descriptionLenghtRule()]"
+          />
 
-        <v-select v-model="currentFaculty" :label="$t('profile.faculty')" :items="facultiesList" variant="outlined" />
-        <v-select v-model="currentGender" :label="$t('profile.gender')" :items="mappedGenders" variant="outlined" />
+          <v-select v-model="currentFaculty" :label="$t('profile.faculty')" :items="facultiesList" variant="outlined" />
+          <v-select v-model="currentGender" :label="$t('profile.gender')" :items="mappedGenders" variant="outlined" />
 
-        <!-- <VueDatePicker
+          <!-- <VueDatePicker
           v-model="currentDate" class="py-4" auto-apply placeholder="Podaj datę urodzenia"
           :enable-time-picker="false" position="left"
         /> -->
+        </v-form>
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">
