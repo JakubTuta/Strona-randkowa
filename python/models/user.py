@@ -7,22 +7,22 @@ from google.cloud import firestore
 
 @dataclasses.dataclass(kw_only=True)
 class UserModel:
-    user_name: str = ""
+    userName: str = ""
     photos: typing.List[str] = dataclasses.field(
         default_factory=list, compare=False, hash=False, repr=False
     )
-    first_name: str = ""
+    firstName: str = ""
     faculty: str = ""
-    last_name: str = ""
-    date_birth: datetime.datetime = datetime.datetime.now()
+    lastName: str = ""
+    dateBirth: datetime.datetime = datetime.datetime.now()
     gender: str = ""
     index: int = 0
     role: str = ""
     score: float = 0
     elo: int = 0
-    preferred_gender: str = ""
-    looking_for: str = ""
-    blocked_profiles: typing.List[firestore.DocumentReference] = dataclasses.field(
+    preferredGender: str = ""
+    lookingFor: str = ""
+    blockedProfiles: typing.List[firestore.DocumentReference] = dataclasses.field(
         default_factory=list, compare=False, hash=False, repr=False
     )
     hobbies: typing.List[str] = dataclasses.field(default_factory=list)

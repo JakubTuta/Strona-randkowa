@@ -1,4 +1,13 @@
 {
+  "appName": "Randki+",
+  "login": {
+    "login": "Logowanie",
+    "email": "Adres Email",
+    "password": "Hasło",
+    "signUp": "Zaloguj",
+    "doYouHaveAccount": "Nie masz jeszcze konta?",
+    "register": "Zarejestruj się"
+  },
   "navBar": {
     "login": "Logowanie",
     "logout": "Wyloguj",
@@ -22,7 +31,21 @@
   },
   "registration": {
     "step": "Krok {step}",
-    "optional": "Opcjonalny"
+    "optional": "Opcjonalny",
+    "register": "Rejestracja",
+    "email": "Adres Email",
+    "password": "Hasło",
+    "repeatPassword": "Powtórz hasło",
+    "giveBirthDate": "Podaj datę urodzenia",
+    "sex": "Płeć",
+    "faculty": "Wydział",
+    "preferredGender": "Poszukiwana płeć do relacji",
+    "lookingFor": "Aktualnie moja poszukiwana relacja to: ",
+    "name": "Imię",
+    "surname": "Nazwisko",
+    "acceptPolicy": "Akceptuję regulamin",
+    "studentIndex": "Indeks uczelniany",
+    "registerYourself": "Zarejestruj się"
   },
   "authErrors": {
     "invalidEmailOrPassword": "Nieprawidłowy email lub hasło",
