@@ -18,8 +18,9 @@
   "events": {
     "add": {
       "eventName": "Nazwa wydarzenia",
-      "startDate": "Kiedy się zaczyna",
-      "endDate": "Kiedy się kończy"
+      "durationTime": "Kiedy będzie?",
+      "addEvent": "Dodaj wydarzenie",
+      "error": "Podano nieprawidłowe dane"
     }
   },
   "universal": {

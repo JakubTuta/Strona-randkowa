@@ -8,7 +8,7 @@ export interface IEvent {
   startDate: Date | Timestamp
   endDate: Date | Timestamp
   createdBy: DocumentReference
-  comments: IComment
+  comments: IComment[]
 }
 
 export class EventModel implements IEvent {
@@ -17,7 +17,7 @@ export class EventModel implements IEvent {
   startDate: Date | Timestamp
   endDate: Date | Timestamp
   createdBy: DocumentReference
-  comments: IComment
+  comments: IComment[]
 
   reference: DocumentReference | null
 

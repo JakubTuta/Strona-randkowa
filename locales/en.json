@@ -19,8 +19,9 @@
   "events": {
     "add": {
       "eventName": "Event name",
-      "startDate": "Start time",
-      "endDate": "End time"
+      "durationTime": "When?",
+      "addEvent": "Add event",
+      "error": "Incorrect data"
     }
   },
   "universal": {
