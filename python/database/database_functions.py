@@ -45,6 +45,10 @@ def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]
             "__name__", "not-in", [user.reference, *user.blockedProfiles]
         )
     )
+
+    if user.lookingFor == "relationship":
+        query = query.where(filter=FieldFilter("gender", "==", user.preferredGender))
+
     docs = query.stream()
 
     users = [UserModel(**doc.to_dict(), reference=doc.reference) for doc in docs]
