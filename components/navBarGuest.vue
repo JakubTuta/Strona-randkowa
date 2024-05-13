@@ -14,7 +14,7 @@ const theme = useTheme()
     elevation="0"
   >
     <v-btn variant="text" color="white" to="/">
-      Randki+
+      {{ t("appName") }}
     </v-btn>
 
     <v-spacer />

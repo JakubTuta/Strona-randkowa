@@ -1,4 +1,13 @@
 {
+  "appName": "Randki+",
+  "login": {
+    "login": "Login",
+    "e-mail": "E-mail address",
+    "password": "Password",
+    "signUp": "Log in",
+    "doYouHaveAccount": "Don't have an account yet?",
+    "register": "Register"
+  },
   "navBar": {
     "login": "Login",
     "logout": "Log out",
@@ -23,7 +32,21 @@
   },
   "registration": {
     "step": "Step {step}",
-    "optional": "Optional"
+    "optional": "Optional",
+    "register": "Registration",
+    "email": "Email Address",
+    "password": "Password",
+    "repeatPassword": "Repeat Password",
+    "giveBirthDate": "Enter your date of birth",
+    "sex": "Gender",
+    "faculty": "Faculty",
+    "preferredGender": "Wanted gender for a relationship",
+    "lookingFor": "Currently my looking for relationship is: ",
+    "name": "Name",
+    "surname": "Surname",
+    "acceptPolicy": "I accept the regulations",
+    "studentIndex": "University Index",
+    "registerYourself": "Register"
   },
   "authErrors": {
     "invalidEmailOrPassword": "Invalid email or password",
@@ -41,6 +64,28 @@
       "relationship": "Relationship",
       "studyPartner": "Study partner",
       "other": "Other"
+    },
+    "hobbies": {
+      "gym": "Gym",
+      "studyPartner": "Study Partnering",
+      "beer": "Beer"
     }
+  },
+  "profile": {
+    "firstName": "First name",
+    "lastName": "Last name",
+    "description": "Description",
+    "dateBirth": "Date of birth",
+    "gender": "Gender",
+    "faculty": "Faculty",
+    "fieldOfStudy": "Field of study",
+    "index": "Index",
+    "prefferedGender": "Preffered gender",
+    "lookingFor": "Looking for",
+    "hobbies": "Hobbies",
+    "yourPreferences": "Your preferences and hobbies",
+    "editProfile": "Edit data",
+    "editPreferences": "Edit preferences",
+    "nothingToShow": "Nothing to show"
   }
 }
