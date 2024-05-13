@@ -10,7 +10,7 @@ class RecommendationAlgorithm:
         "MIN_ORIGINAL_SCORE": 500,
         "MAX_ORIGINAL_SCORE": 2000,
         "MIN_NORMALIZED_SCORE": 0.0,
-        "MAX_NORMALIZED_SCORE": 1.0,
+        "MAX_NORMALIZED_SCORE": 2.0,
     }
 
     # rating może być od 0 do 5
@@ -18,15 +18,15 @@ class RecommendationAlgorithm:
         "MIN_ORIGINAL_SCORE": 0.0,
         "MAX_ORIGINAL_SCORE": 5.0,
         "MIN_NORMALIZED_SCORE": 0.0,
-        "MAX_NORMALIZED_SCORE": 1.0,
+        "MAX_NORMALIZED_SCORE": 2.0,
     }
 
-    # punkty z każdej kategorii mają się mieścić od 0 do 1
     __SCORING = {
-        "IS_PREFERRED_GENDER": 1.0,
+        "IS_PREFERRED_GENDER": 2.0,
         "IS_PHOTO": 1.0,
         "IS_DESCRIPTION": 1.0,
-        "IS_LIKE": 1.0,
+        "IS_LIKE": 3.0,
+        "SAME_HOBBY": 0.5,
     }
 
     __MAX_PHOTOS = 9
@@ -41,6 +41,7 @@ class RecommendationAlgorithm:
         other_score += RecommendationAlgorithm.__check_if_is_photo(other)
         other_score += RecommendationAlgorithm.__check_if_is_description(other)
         other_score += RecommendationAlgorithm.__check_if_likes(user, other)
+        other_score += RecommendationAlgorithm.__check_hobbies(user, other)
 
         return other_score
 
@@ -131,5 +132,16 @@ class RecommendationAlgorithm:
             db_functions.check_if_other_likes_user(user.reference, other.reference)
             * RecommendationAlgorithm.__SCORING["IS_LIKE"]
         )
+
+        return score
+
+    @staticmethod
+    def __check_hobbies(user: UserModel, other: UserModel) -> float:
+        user_hobbies = set(user.hobbies)
+        other_hobbies = set(other.hobbies)
+
+        common_hobbies = user_hobbies.intersection(other_hobbies)
+
+        score = len(common_hobbies) * RecommendationAlgorithm.__SCORING["SAME_HOBBY"]
 
         return score
