@@ -5,7 +5,7 @@ import typing
 from google.cloud import firestore
 
 
-@dataclasses.dataclass(kw_only=True)
+@dataclasses.dataclass(kw_only=True, frozen=True)
 class UserModel:
     userName: str = ""
     photos: typing.List[str] = dataclasses.field(
@@ -22,6 +22,7 @@ class UserModel:
     elo: int = 0
     preferredGender: str = ""
     lookingFor: str = ""
+    description: str = ""
     blockedProfiles: typing.List[firestore.DocumentReference] = dataclasses.field(
         default_factory=list, compare=False, hash=False, repr=False
     )

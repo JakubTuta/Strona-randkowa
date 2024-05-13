@@ -18,6 +18,7 @@ function request() {
 </script>
 
 <template>
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <v-btn @click="request">
     send request to python
   </v-btn>
