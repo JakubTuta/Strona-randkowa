@@ -3,7 +3,6 @@ import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
 import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
-import { useHobbies } from '~/composables/hobbies'
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
