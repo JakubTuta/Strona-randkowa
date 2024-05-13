@@ -63,6 +63,28 @@
       "relationship": "Związek",
       "studyPartner": "Partner do nauki",
       "other": "Inna"
+    },
+    "hobbies": {
+      "gym": "Siłownia",
+      "studyPartner": "Pomoc studencka",
+      "beer": "Piwo"
     }
+  },
+  "profile": {
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "description": "Opis",
+    "dateBirth": "Data urodzenia",
+    "gender": "Płeć",
+    "faculty": "Wydział",
+    "fieldOfStudy": "Kierunek",
+    "index": "Indeks",
+    "prefferedGender": "Preferowana płeć",
+    "lookingFor": "Czego szukam",
+    "hobbies": "Zainteresowania",
+    "yourPreferences": "Twoje preferencje i hobby",
+    "editProfile": "Edytuj dane",
+    "editPreferences": "Edytuj preferencje",
+    "nothingToShow": "Brak zainteresowań"
   }
 }

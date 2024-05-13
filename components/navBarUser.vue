@@ -23,11 +23,7 @@ async function logOut() {
 </script>
 
 <template>
-  <v-app-bar
-    prominent
-    class="px-2 position-sticky"
-    color="primary"
-  >
+  <v-app-bar prominent class="px-2 position-sticky" color="primary">
     <v-btn variant="text" color="default" to="/user">
       {{ t("appName") }}
     </v-btn>
@@ -35,6 +31,7 @@ async function logOut() {
     <v-spacer />
 
     <div class="hidden-sm-and-down">
+
       <v-btn
         variant="text"
         color="default"
@@ -67,6 +64,7 @@ async function logOut() {
         </v-menu>
       </v-btn>
 
+
       <v-btn
         variant="text"
         color="default"
@@ -91,16 +89,9 @@ async function logOut() {
         {{ `${userData.firstName} ${userData.lastName}` }}
         <v-menu activator="parent">
           <v-list class="justify-center">
-            <v-list-item
-              prepend-icon="mdi-theme-light-dark"
-              title="Zmień motyw"
-              @click="toggleTheme(theme)"
-            />
-            <v-list-item
-              prepend-icon="mdi-logout"
-              :title="t('navBar.logout')"
-              @click="logOut"
-            />
+            <v-list-item to="/user/profile" prepend-icon="mdi-face-man-profile" :title="$t('navBar.user.myProfile')" />
+            <v-list-item prepend-icon="mdi-theme-light-dark" title="Zmień motyw" @click="toggleTheme(theme)" />
+            <v-list-item prepend-icon="mdi-logout" :title="$t('navBar.logout')" @click="logOut" />
           </v-list>
         </v-menu>
       </v-btn>

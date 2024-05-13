@@ -3,7 +3,7 @@ import type {
 
 } from 'firebase/auth'
 
-import { collection, doc, setDoc } from 'firebase/firestore'
+import { collection, doc, setDoc, updateDoc } from 'firebase/firestore'
 import type { DocumentReference } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut as signoutFirebase } from 'firebase/auth'
 import { useSharedStore } from './sharedStore'
@@ -128,6 +128,22 @@ export const useAppStore = defineStore('app', () => {
     })
   }
 
+  const editUser = (newUser: UserModel) => {
+    const data = {
+      firstName: newUser?.firstName,
+      lastName: newUser?.lastName,
+      description: newUser?.description,
+      faculty: newUser?.faculty,
+      gender: newUser?.gender,
+      lookingFor: newUser?.lookingFor,
+      preferredGender: newUser?.preferredGender,
+      hobbies: newUser?.hobbies,
+    }
+
+    if (newUser.reference)
+      updateDoc(newUser.reference, data)
+  }
+
   return {
     user,
     userData,
@@ -136,5 +152,6 @@ export const useAppStore = defineStore('app', () => {
     signOut,
     createUser,
     currentUser,
+    editUser,
   }
 })
