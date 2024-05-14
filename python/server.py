@@ -13,6 +13,7 @@ def matches():
         data = flask.request.get_json(force=True)
 
         user_reference_id = data["reference_id"]
+        max_users = data.get("max_users", 1000)
 
     except KeyError:
         return flask.jsonify({"error": "Nie podano reference_id"}), 400
@@ -26,7 +27,9 @@ def matches():
 
     other_users = db_functions.get_other_users(user_data)
     ranked_users = RecommendationAlgorithm.score_all_users(user_data, other_users)
+
     users_references_ids = [user.reference.id for user in ranked_users]
+    users_references_ids = users_references_ids[:max_users]
 
     return flask.jsonify(users_references_ids), 200
 

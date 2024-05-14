@@ -1,19 +1,16 @@
 <script setup lang="ts">
-function request() {
-  const url = 'http://localhost:2137/matches-api'
+const restStore = useRestStore()
+const { users } = storeToRefs(restStore)
 
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ reference_id: 'pierwszy' }),
-  })
-    .then((response) => {
-      return response.json()
-    })
-    .then(data => console.log(data))
-    .catch(error => console.error(error))
+const appStore = useAppStore()
+const { userData } = storeToRefs(appStore)
+
+function request() {
+  restStore.getTopUsers(userData.value, 2)
+}
+
+function print() {
+  console.log(users.value)
 }
 </script>
 
@@ -21,5 +18,11 @@ function request() {
   <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   <v-btn @click="request">
     send request to python
+  </v-btn>
+
+  <br>
+
+  <v-btn @click="print">
+    print users
   </v-btn>
 </template>
