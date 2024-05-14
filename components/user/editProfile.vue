@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import VueDatePicker from '@vuepic/vue-datepicker'
-import { updateCurrentUser } from 'firebase/auth'
 import { useFaculties } from '~/composables/faculties'
 import type { UserModel } from '~/models/user'
 import { useGenders } from '~/composables/genders'

@@ -14,7 +14,7 @@ let createdUserRef: DocumentReference | null = null
 const { t } = useI18n()
 
 useHead({
-  title: t('registration.register') + ' - ' +  t("appName"),
+  title: `${t('registration.register')} - ${t('appName')}`,
 })
 
 const appStore = useAppStore()
@@ -277,11 +277,12 @@ const isDark = computed(() => {
                             @keyup.enter="createAccount"
                           />
                           <v-checkbox
-                              v-model="rules"
-                              color="secondary"
-                              class="mt-n4 mb-2 "
-                              :label="t('registration.acceptPolicy')"
-                              :rules="[requiredRule()]" />
+                            v-model="rules"
+                            color="secondary"
+                            class="mt-n4 mb-2 "
+                            :label="t('registration.acceptPolicy')"
+                            :rules="[requiredRule()]"
+                          />
 
                           <span>
                             {{ t('registration.studentIndex') }}

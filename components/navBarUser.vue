@@ -31,7 +31,6 @@ async function logOut() {
     <v-spacer />
 
     <div class="hidden-sm-and-down">
-
       <v-btn
         variant="text"
         color="default"
@@ -63,7 +62,6 @@ async function logOut() {
           </v-list>
         </v-menu>
       </v-btn>
-
 
       <v-btn
         variant="text"
