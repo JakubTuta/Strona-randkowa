@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useFaculties } from '~/composables/faculties'
+import { useFieldsOfStudies } from '~/composables/fieldsOfStudies'
 import type { UserModel } from '~/models/user'
 import { useGenders } from '~/composables/genders'
 import type { TGender } from '~/types/gender'
@@ -23,6 +24,7 @@ const { isShow, userData } = toRefs(props)
 
 const { facultiesList } = useFaculties()
 const { mappedGenders } = useGenders()
+const { fieldsOfStudies } = useFieldsOfStudies()
 
 const newDataUser = ref<UserModel | null>(userData.value)
 const isShowRef = ref<boolean>()

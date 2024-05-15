@@ -18,7 +18,7 @@ const index = ref<string>('')
 const gender = ref<string>('')
 const birthDate = ref < string >('')
 const faculty = ref<string>('')
-// const fieldOfStudy = ref<string>('')
+const fieldOfStudy = ref<string>('')
 const preferredGender = ref<string>('')
 const lookingFor = ref<string>('')
 const hobbies = ref<THobby[]>()
@@ -51,7 +51,7 @@ function setData() {
     birthDate.value = setDateString(currentUser.dateBirth)
     gender.value = currentUser.gender
     faculty.value = currentUser.faculty
-    // fieldOfStudy.value = currentUser.fieldOfStudy
+    fieldOfStudy.value = currentUser.fieldOfStudy
     preferredGender.value = currentUser.preferredGender
     lookingFor.value = currentUser.lookingFor
     hobbies.value = currentUser.hobbies
@@ -168,7 +168,7 @@ onMounted(() => {
               <v-text-field v-model="faculty" :label="t('profile.faculty')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field :label="t('profile.fieldOfStudy')" readonly />
+              <v-text-field v-model="fieldOfStudy" :label="t('profile.fieldOfStudy')" readonly />
             </v-col>
           </v-row>
 
