@@ -27,7 +27,7 @@ const { current } = useTheme()
 const { mappedGenders, mappedGendersPreferences } = useGenders()
 const { mappedRelationships } = useRelationship()
 const { facultiesList } = useFaculties()
-const { fielsdOfStudies } = useFieldsOfStudies()
+const { fieldsOfStudies } = useFieldsOfStudies()
 
 const { form, valid, isValid } = formValidation()
 
@@ -198,8 +198,8 @@ const isDark = computed(() => {
                         />
 
                         <v-select
-                          v-model="fieldOfStudy" :label="t('registration.fieldOfStudy')" :items="fielsdOfStudies"
-                          color="secondary" variant="outlined" density="comfortable"
+                          v-model="fieldOfStudy" :label="t('registration.fieldOfStudy')"
+                          :items="fieldsOfStudies" color="secondary" variant="outlined" density="comfortable"
                         />
 
                         <v-select

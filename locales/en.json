@@ -88,5 +88,14 @@
     "editProfile": "Edit data",
     "editPreferences": "Edit preferences",
     "nothingToShow": "Nothing to show"
+  },
+  "fieldsOfStudies": {
+    "computerScience": "Computer Science",
+    "automaticsAndRobotics": "Automatics and Robotics",
+    "logistics": "Logistics",
+    "maths": "Maths",
+    "physics": "Physics",
+    "architecture": "Architecture",
+    "other": "other"
   }
 }

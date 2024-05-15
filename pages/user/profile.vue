@@ -168,7 +168,10 @@ onMounted(() => {
               <v-text-field v-model="faculty" :label="t('profile.faculty')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="fieldOfStudy" :label="t('profile.fieldOfStudy')" readonly />
+              <v-text-field
+                v-model="fieldOfStudy" :value="t(`fieldsOfStudies.${fieldOfStudy}`)" :label="t('profile.fieldOfStudy')"
+                readonly
+              />
             </v-col>
           </v-row>
 

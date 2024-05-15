@@ -135,6 +135,7 @@ export const useAppStore = defineStore('app', () => {
       lastName: newUser?.lastName,
       description: newUser?.description,
       faculty: newUser?.faculty,
+      fieldOfStudy: newUser?.fieldOfStudy,
       gender: newUser?.gender,
       lookingFor: newUser?.lookingFor,
       preferredGender: newUser?.preferredGender,
