@@ -86,5 +86,10 @@
     "editProfile": "Edytuj dane",
     "editPreferences": "Edytuj preferencje",
     "nothingToShow": "Brak zainteresowań"
+  },
+  "uploadImage": {
+    "image": "Zdjęcie",
+    "removeImage": "Usuń zdjęcie",
+    "uploadImage": "Dodaj zdjęcie"
   }
 }
