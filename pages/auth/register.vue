@@ -47,6 +47,7 @@ const index = ref('')
 const dateBirth = ref(null)
 const preferredGender = ref(null)
 const lookingFor = ref(null)
+const image = ref('')
 
 const isPasswordShown = ref(false)
 
@@ -69,7 +70,7 @@ function prepareNewAccount() {
       elo: 0,
       preferred_gender: preferredGender.value || 'any',
       looking_for: lookingFor.value || 'other',
-      photos: [],
+      photos: [image.value],
       blocked_profiles: [],
       hobbies: [],
     },
@@ -78,7 +79,7 @@ function prepareNewAccount() {
 }
 
 async function createAccount() {
-  if (!await isValid())
+  if (!await isValid() || !image.value)
     return
 
   if (index.value.length !== 6) {
@@ -110,6 +111,10 @@ async function checkStepCondition(next: () => void) {
 const isDark = computed(() => {
   return current.value.dark
 })
+
+function setImage(url: string) {
+  image.value = url
+}
 </script>
 
 <template>
@@ -294,6 +299,8 @@ const isDark = computed(() => {
                             class="mb-4"
                             @keyup.enter="createAccount"
                           />
+
+                          <UploadImage :image="image" class="my-2" @set-image="setImage" />
                         </div>
                       </v-form>
 

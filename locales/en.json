@@ -87,5 +87,10 @@
     "editProfile": "Edit data",
     "editPreferences": "Edit preferences",
     "nothingToShow": "Nothing to show"
+  },
+  "uploadImage": {
+    "image": "Photo",
+    "removeImage": "Remove photo",
+    "uploadImage": "Upload photo"
   }
 }
