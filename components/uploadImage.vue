@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = defineProps({
+  image: String,
   valid: {
     type: Boolean,
     default: true,
@@ -12,9 +13,11 @@ const props = defineProps({
   },
 })
 
-const image = defineModel<string | null>('image', { default: null })
+const emit = defineEmits<{
+  (e: 'setImage', url: string): void
+}>()
 
-const { valid, label } = toRefs(props)
+const { valid, label, image } = toRefs(props)
 
 const value = ref(null)
 const inputUpload: Ref<null | { click: () => void }> = ref(null)
@@ -40,7 +43,7 @@ function uploadImage(event: { target: any }) {
   const file = event.target.files[0]
 
   const fileRun = (fileInBase64: any) => {
-    image.value = fileInBase64
+    emit('setImage', fileInBase64)
     value.value = null
   }
 
@@ -52,7 +55,7 @@ function addDropFile(data: { dataTransfer: any }) {
 }
 
 function removeImage() {
-  image.value = null
+  emit('setImage', '')
 }
 
 function onButtonClick() {
