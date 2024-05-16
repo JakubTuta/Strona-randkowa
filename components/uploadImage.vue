@@ -1,8 +1,16 @@
 <script setup lang="ts">
-const props = defineProps<{
-  valid?: boolean
-  label?: string | null
-}>()
+const props = defineProps({
+  valid: {
+    type: Boolean,
+    default: true,
+    required: false,
+  },
+  label: {
+    type: String,
+    default: '',
+    required: false,
+  },
+})
 
 const image = defineModel<string | null>('image', { default: null })
 
@@ -32,7 +40,6 @@ function uploadImage(event: { target: any }) {
   const file = event.target.files[0]
 
   const fileRun = (fileInBase64: any) => {
-    // emit('setImage', { fileInBase64 })
     image.value = fileInBase64
     value.value = null
   }
@@ -45,7 +52,6 @@ function addDropFile(data: { dataTransfer: any }) {
 }
 
 function removeImage() {
-  // emit('setImage', null)
   image.value = null
 }
 

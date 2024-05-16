@@ -294,6 +294,8 @@ const isDark = computed(() => {
                             class="mb-4"
                             @keyup.enter="createAccount"
                           />
+
+                          <UploadImage class="my-2" />
                         </div>
                       </v-form>
 
