@@ -80,6 +80,10 @@ onMounted(() => {
   setData()
 },
 )
+
+function setImage(url: string) {
+  // dodać zdjęcie do profilu
+}
 </script>
 
 <template>
@@ -134,6 +138,8 @@ onMounted(() => {
             </v-row>
           </v-col>
         </v-row>
+
+        <UploadImage class="my-2" @set-image="setImage" />
       </v-sheet>
     </v-col>
 

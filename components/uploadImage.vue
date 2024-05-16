@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const props = defineProps({
-  image: String,
+  image: {
+    type: String,
+    default: '',
+    required: false,
+  },
   valid: {
     type: Boolean,
     default: true,
@@ -23,7 +27,7 @@ const value = ref(null)
 const inputUpload: Ref<null | { click: () => void }> = ref(null)
 const isSelecting = ref(false)
 
-const labelStyle = computed(() => ((valid.value || image.value)
+const labelStyle = computed(() => ((valid.value || image?.value)
   ? ''
   : 'color: red'))
 
