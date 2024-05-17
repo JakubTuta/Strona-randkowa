@@ -21,12 +21,19 @@
       "durationTime": "Kiedy będzie?",
       "addEvent": "Dodaj wydarzenie",
       "error": "Podano nieprawidłowe dane"
+    },
+    "index": {
+      "myEvents": "Moje wydarzenia",
+      "editEvent": "Edytuj wydarzenie"
     }
   },
   "universal": {
     "emailExists": "Email już istnieje",
     "saved": "Zapisano",
-    "passwordsNotMatch": "Hasła nie są takie same"
+    "passwordsNotMatch": "Hasła nie są takie same",
+    "form": {
+      "close": "Zamknij"
+    }
   },
   "registration": {
     "step": "Krok {step}",

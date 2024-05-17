@@ -19,16 +19,30 @@ export const useEventsStore = defineStore("events", () => {
             .catch(sharedStore.failureSnackbar)
     }
 
+    const getFutureEvents = async () => {
+        sharedStore.init()
+
+        const onSuccess = (data: QuerySnapshot) => {
+            events.value = data.docs.map(mapEvent)
+            sharedStore.success()
+        }
+
+        getDocs(query(eventsCollection, where('endDate', '>', new Date())))
+            .then(onSuccess)
+            .catch(sharedStore.failureSnackbar)
+    }
+
     const getUserEvents = async (userRef: DocumentReference) => {
         sharedStore.init()
 
         const onSuccess = (data: QuerySnapshot) => {
-            console.log(data.docs)
             userEvents.value = data.docs.map(mapEvent)
             sharedStore.success()
         }
 
-        getDocs(query(eventsCollection, where('createdBy', '==', userRef)))
+        getDocs(query(eventsCollection,
+            where('createdBy', '==', userRef),
+            where('endDate', '>', new Date())))
             .then(onSuccess)
             .catch(sharedStore.failureSnackbar)
     }
@@ -38,5 +52,6 @@ export const useEventsStore = defineStore("events", () => {
         userEvents,
         addEvent,
         getUserEvents,
+        getFutureEvents,
     }
 })
