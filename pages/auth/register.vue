@@ -11,15 +11,15 @@ import type { TGender } from '~/types/gender'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 let createdUserRef: DocumentReference | null = null
+const { t } = useI18n()
 
 useHead({
-  title: 'Rejestracja - Randki+',
+  title: `${t('registration.register')} - ${t('appName')}`,
 })
 
 const appStore = useAppStore()
 const sharedStore = useSharedStore()
 
-const { t } = useI18n()
 const router = useRouter()
 const { current } = useTheme()
 
@@ -47,6 +47,7 @@ const index = ref('')
 const dateBirth = ref(null)
 const preferredGender = ref(null)
 const lookingFor = ref(null)
+const image = ref('')
 
 const isPasswordShown = ref(false)
 
@@ -69,7 +70,7 @@ function prepareNewAccount() {
       elo: 0,
       preferred_gender: preferredGender.value || 'any',
       looking_for: lookingFor.value || 'other',
-      photos: [],
+      photos: [image.value],
       blocked_profiles: [],
       hobbies: [],
     },
@@ -78,7 +79,7 @@ function prepareNewAccount() {
 }
 
 async function createAccount() {
-  if (!await isValid())
+  if (!await isValid() || !image.value)
     return
 
   if (index.value.length !== 6) {
@@ -110,6 +111,10 @@ async function checkStepCondition(next: () => void) {
 const isDark = computed(() => {
   return current.value.dark
 })
+
+function setImage(url: string) {
+  image.value = url
+}
 </script>
 
 <template>
@@ -129,7 +134,7 @@ const isDark = computed(() => {
         <v-col cols="12" sm="12" md="10">
           <div class="d-flex flex-column align-center justify-center h-100 mx-2 py-4">
             <div class="text-h4 my-2">
-              Rejestracja
+              {{ t('registration.register') }}
             </div>
 
             <v-col cols="12" md="10" lg="8">
@@ -137,7 +142,7 @@ const isDark = computed(() => {
                 <template #default="{ prev, next }">
                   <v-stepper-header>
                     <v-stepper-item
-                      :title="$t('registration.step', { step: 1 })"
+                      :title="t('registration.step', { step: 1 })"
                       value="1"
                       color="secondary"
                     />
@@ -145,8 +150,8 @@ const isDark = computed(() => {
                     <v-divider />
 
                     <v-stepper-item
-                      :title="$t('registration.step', { step: 2 })"
-                      :subtitle="$t('registration.optional')"
+                      :title="t('registration.step', { step: 2 })"
+                      :subtitle="t('registration.optional')"
                       value="2"
                       color="secondary"
                     />
@@ -154,7 +159,7 @@ const isDark = computed(() => {
                     <v-divider />
 
                     <v-stepper-item
-                      :title="$t('registration.step', { step: 3 })"
+                      :title="t('registration.step', { step: 3 })"
                       value="3"
                       color="secondary"
                     />
@@ -167,7 +172,10 @@ const isDark = computed(() => {
                       <v-form ref="credentialsForm" @submit.prevent="createAccount">
                         <div class="py-4">
                           <v-text-field
-                            v-model="email" label="Adres Email" placeholder="example@mail.com" type="email"
+                            v-model="email"
+                            :label="t('registration.email')"
+                            placeholder="example@mail.com"
+                            type="email"
                             :rules="[requiredRule(), emailRule()]" prepend-inner-icon="mdi-email"
                             density="comfortable"
                             color="secondary"
@@ -176,7 +184,7 @@ const isDark = computed(() => {
 
                           <v-text-field
                             v-model="password1"
-                            label="Hasło"
+                            :label="t('registration.password')"
                             color="secondary"
                             :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
                             :type="isPasswordShown ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
@@ -189,7 +197,7 @@ const isDark = computed(() => {
                             v-model="password2"
                             prepend-inner-icon="mdi-lock"
                             color="secondary"
-                            label="Powtórz hasło"
+                            :label="t('registration.repeatPassword')"
                             :append-inner-icon="isPasswordShown ? 'mdi-eye' : 'mdi-eye-off'"
                             :type="isPasswordShown ? 'text' : 'password'" :rules="[requiredRule(), passwordRule()]"
                             density="comfortable" @keyup.enter="checkStepCondition(next)"
@@ -208,14 +216,14 @@ const isDark = computed(() => {
                           class="mb-6"
                           :dark="isDark"
                           auto-apply
-                          placeholder="Podaj datę urodzenia"
+                          :placeholder="t('registration.giveBirthDate')"
                           :enable-time-picker="false"
                           position="left"
                         />
 
                         <v-select
                           v-model="gender"
-                          label="Płeć"
+                          :label="t('registration.sex')"
                           :items="mappedGenders"
                           color="secondary"
                           variant="outlined"
@@ -224,7 +232,7 @@ const isDark = computed(() => {
 
                         <v-select
                           v-model="faculty"
-                          label="Wydział"
+                          :label="t('registration.faculty')"
                           :items="facultiesList"
                           color="secondary"
                           variant="outlined"
@@ -233,7 +241,7 @@ const isDark = computed(() => {
 
                         <v-select
                           v-model="preferredGender"
-                          label="Poszukiwana płeć do relacji"
+                          :label="t('registration.preferredGender')"
                           :items="mappedGendersPreferences"
                           color="secondary"
                           variant="outlined"
@@ -242,7 +250,7 @@ const isDark = computed(() => {
 
                         <v-select
                           v-model="lookingFor"
-                          label="Aktualnie moja poszukiwana relacja to: "
+                          :label="t('registration.lookingFor')"
                           :items="mappedRelationships"
                           color="secondary"
                           variant="outlined"
@@ -257,22 +265,32 @@ const isDark = computed(() => {
                       <v-form ref="form" v-model="valid" @submit.prevent="createAccount">
                         <div class="py-4">
                           <v-text-field
-                            v-model="name" label="Imię" type="text"
+                            v-model="name"
+                            :label="t('registration.name')"
+                            type="text"
                             :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" density="comfortable"
                             color="secondary"
                             @keyup.enter="createAccount"
                           />
 
                           <v-text-field
-                            v-model="surname" label="Nazwisko" type="text"
+                            v-model="surname"
+                            :label="t('registration.surname')"
+                            type="text"
                             :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" density="comfortable"
                             color="secondary"
                             @keyup.enter="createAccount"
                           />
-                          <v-checkbox v-model="rules" color="secondary" class="mt-n4 mb-2 " label="Akceptuję regulamin" :rules="[requiredRule()]" />
+                          <v-checkbox
+                            v-model="rules"
+                            color="secondary"
+                            class="mt-n4 mb-2 "
+                            :label="t('registration.acceptPolicy')"
+                            :rules="[requiredRule()]"
+                          />
 
                           <span>
-                            Indeks uczelniany
+                            {{ t('registration.studentIndex') }}
                           </span>
 
                           <v-otp-input
@@ -281,11 +299,13 @@ const isDark = computed(() => {
                             class="mb-4"
                             @keyup.enter="createAccount"
                           />
+
+                          <UploadImage :image="image" class="my-2" @set-image="setImage" />
                         </div>
                       </v-form>
 
                       <v-btn variant="elevated" color="secondary" @click="createAccount">
-                        Zarejestruj się
+                        {{ t('registration.registerYourself') }}
                       </v-btn>
                     </v-stepper-window-item>
                   </v-stepper-window>

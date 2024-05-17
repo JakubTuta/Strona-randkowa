@@ -1,4 +1,13 @@
 {
+  "appName": "Randki+",
+  "login": {
+    "login": "Logowanie",
+    "email": "Adres Email",
+    "password": "Hasło",
+    "signUp": "Zaloguj",
+    "doYouHaveAccount": "Nie masz jeszcze konta?",
+    "register": "Zarejestruj się"
+  },
   "navBar": {
     "login": "Logowanie",
     "logout": "Wyloguj",
@@ -38,7 +47,21 @@
   },
   "registration": {
     "step": "Krok {step}",
-    "optional": "Opcjonalny"
+    "optional": "Opcjonalny",
+    "register": "Rejestracja",
+    "email": "Adres Email",
+    "password": "Hasło",
+    "repeatPassword": "Powtórz hasło",
+    "giveBirthDate": "Podaj datę urodzenia",
+    "sex": "Płeć",
+    "faculty": "Wydział",
+    "preferredGender": "Poszukiwana płeć do relacji",
+    "lookingFor": "Aktualnie moja poszukiwana relacja to: ",
+    "name": "Imię",
+    "surname": "Nazwisko",
+    "acceptPolicy": "Akceptuję regulamin",
+    "studentIndex": "Indeks uczelniany",
+    "registerYourself": "Zarejestruj się"
   },
   "authErrors": {
     "invalidEmailOrPassword": "Nieprawidłowy email lub hasło",
@@ -56,6 +79,33 @@
       "relationship": "Związek",
       "studyPartner": "Partner do nauki",
       "other": "Inna"
+    },
+    "hobbies": {
+      "gym": "Siłownia",
+      "studyPartner": "Pomoc studencka",
+      "beer": "Piwo"
     }
+  },
+  "profile": {
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "description": "Opis",
+    "dateBirth": "Data urodzenia",
+    "gender": "Płeć",
+    "faculty": "Wydział",
+    "fieldOfStudy": "Kierunek",
+    "index": "Indeks",
+    "prefferedGender": "Preferowana płeć",
+    "lookingFor": "Czego szukam",
+    "hobbies": "Zainteresowania",
+    "yourPreferences": "Twoje preferencje i hobby",
+    "editProfile": "Edytuj dane",
+    "editPreferences": "Edytuj preferencje",
+    "nothingToShow": "Brak zainteresowań"
+  },
+  "uploadImage": {
+    "image": "Zdjęcie",
+    "removeImage": "Usuń zdjęcie",
+    "uploadImage": "Dodaj zdjęcie"
   }
 }

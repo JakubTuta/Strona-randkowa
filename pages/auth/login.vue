@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { useDisplay } from 'vuetify'
 import formValidation from '~/helpers/formValidation'
 
+const { t } = useI18n()
+
 useHead({
-  title: 'Logowanie - Randki+',
+  title: `${t('login.login')} - ${t('appName')}`,
 })
 
 const email = ref('')
@@ -38,7 +39,7 @@ async function logIn() {
       <v-row justify="center">
         <v-col cols="12" sm="12" md="6">
           <div class="text-h4 my-2">
-            Logowanie
+            {{ t('login.login') }}
           </div>
           <div class="d-flex flex-column align-center justify-center h-100">
             <v-form
@@ -49,7 +50,7 @@ async function logIn() {
             >
               <v-text-field
                 v-model="email"
-                label="Adres Email"
+                :label="t('login.email')"
                 placeholder="example@mail.com"
                 type="email"
                 prepend-inner-icon="mdi-email"
@@ -60,7 +61,7 @@ async function logIn() {
               <v-text-field
                 v-model="password"
                 prepend-inner-icon="mdi-lock"
-                label="Hasło"
+                :label="t('login.password')"
                 :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="showPassword ? 'text' : 'password'"
                 bg-color="rgba(255, 255, 255, 0.10)"
@@ -70,17 +71,17 @@ async function logIn() {
 
               <v-row class="justify-center my-1">
                 <v-btn class="mx-2 mb-2" color="secondary" variant="elevated" @click="logIn">
-                  Zaloguj
+                  {{ t('login.signUp') }}
                 </v-btn>
               </v-row>
             </v-form>
 
             <p class="my-5">
-              Nie masz jeszcze konta?
+              {{ t('login.doYouHaveAccount') }}
             </p>
 
             <v-btn to="/auth/register" variant="elevated">
-              Zarejestruj się
+              {{ t('login.register') }}
             </v-btn>
           </div>
         </v-col>
