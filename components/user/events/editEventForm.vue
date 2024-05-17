@@ -6,6 +6,7 @@ import formValidation from "~/helpers/formValidation";
 import {useTheme} from "vuetify";
 import type {Timestamp} from "firebase/firestore";
 import '@vuepic/vue-datepicker/dist/main.css';
+import {useEventsStore} from "~/stores/eventsStore";
 
 const props = defineProps<{
   event: EventModel | null
@@ -21,6 +22,10 @@ const emit = defineEmits<{
 const { form, valid, isValid } = formValidation()
 const {t} = useI18n()
 const { current } = useTheme()
+const eventStore = useEventsStore()
+const appStore = useAppStore()
+const { userData } = storeToRefs(appStore)
+const sharedStore = useSharedStore()
 
 const isDark = computed(() => {
   return current.value.dark
@@ -34,8 +39,19 @@ function close() {
 }
 
 async function editEvent() {
-  if (await isValid()) {
-
+  if (await isValid() && userData.value && userData.value.reference && durationTime.value && event.value?.reference) {
+    await eventStore.editEvent(new EventModel({
+      name: name.value,
+      comments: [],
+      createdBy: userData.value.reference,
+      photo: '',
+      startDate: durationTime.value[0],
+      endDate: durationTime.value[1]
+    }, event.value?.reference))
+    close()
+  }
+  else {
+    sharedStore.failureSnackbar({ code: String(t('events.add.error')) })
   }
 }
 
@@ -92,7 +108,15 @@ watch(event, () => {
             variant="text"
             @click="close"
         >
-          {{ $t('universal.form.close') }}
+          {{ t('universal.form.close') }}
+        </v-btn>
+
+        <v-btn
+            class="mr-1"
+            variant="text"
+            @click="editEvent"
+        >
+          {{ t('universal.form.save') }}
         </v-btn>
       </v-card-actions>
     </v-card>

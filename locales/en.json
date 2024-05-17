@@ -33,7 +33,8 @@
     "saved": "Saved",
     "passwordsNotMatch": "Passwords do not match",
     "form": {
-      "close": "Close"
+      "close": "Close",
+      "save": "Save"
     }
   },
   "registration": {

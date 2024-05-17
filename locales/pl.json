@@ -32,7 +32,8 @@
     "saved": "Zapisano",
     "passwordsNotMatch": "Hasła nie są takie same",
     "form": {
-      "close": "Zamknij"
+      "close": "Zamknij",
+      "save": "Zapisz"
     }
   },
   "registration": {

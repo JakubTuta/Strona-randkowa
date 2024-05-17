@@ -1,6 +1,15 @@
 import {EventModel, mapEvent} from "~/models/event";
 import {useSharedStore} from "~/stores/sharedStore";
-import {addDoc, collection, DocumentReference, getDocs, QuerySnapshot, where, query} from 'firebase/firestore';
+import {
+    addDoc,
+    collection,
+    DocumentReference,
+    getDocs,
+    QuerySnapshot,
+    where,
+    query,
+    updateDoc
+} from 'firebase/firestore';
 import type {Ref} from "vue";
 
 export const useEventsStore = defineStore("events", () => {
@@ -14,9 +23,31 @@ export const useEventsStore = defineStore("events", () => {
 
     const addEvent = async (newEvent: EventModel) => {
         sharedStore.init()
+
+        const onSuccess = () => {
+            userEvents.value = [...userEvents.value, newEvent]
+            sharedStore.success()
+        }
+
         await addDoc(eventsCollection, newEvent.toMap())
-            .then(sharedStore.successSnackbar)
+            .then(onSuccess)
             .catch(sharedStore.failureSnackbar)
+    }
+
+    const editEvent = async (editEvent: EventModel) => {
+        sharedStore.init()
+
+        const onSuccess = () => {
+            userEvents.value = [...userEvents.value, editEvent]
+            sharedStore.success()
+        }
+
+        if (editEvent.reference)
+            await updateDoc(editEvent.reference, editEvent.toMap())
+                .then(onSuccess)
+                .catch(sharedStore.failureSnackbar)
+        else
+            sharedStore.failure({code: String("Wrong event")})
     }
 
     const getFutureEvents = async () => {
@@ -51,6 +82,7 @@ export const useEventsStore = defineStore("events", () => {
         events,
         userEvents,
         addEvent,
+        editEvent,
         getUserEvents,
         getFutureEvents,
     }
