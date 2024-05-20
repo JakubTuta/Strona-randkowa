@@ -25,10 +25,26 @@
 
     }
   },
+  "events": {
+    "add": {
+      "eventName": "Event name",
+      "durationTime": "When?",
+      "addEvent": "Add event",
+      "error": "Incorrect data"
+    },
+    "index": {
+      "myEvents": "My events",
+      "editEvent": "Edit event"
+    }
+  },
   "universal": {
     "emailExists": "Email already exists",
     "saved": "Saved",
-    "passwordsNotMatch": "Passwords do not match"
+    "passwordsNotMatch": "Passwords do not match",
+    "form": {
+      "close": "Close",
+      "save": "Save"
+    }
   },
   "registration": {
     "step": "Step {step}",
