@@ -49,13 +49,13 @@ async function logOut() {
         <v-menu activator="parent" @update:model-value="changeIcon">
           <v-list class="justify-center">
             <v-list-item
-              to="user/events/add"
+              to="/user/events/add"
               prepend-icon="mdi-plus"
               :title="t('navBar.user.events.add')"
             />
 
             <v-list-item
-              to="user/events"
+              to="/user/events"
               prepend-icon="mdi-party-popper"
               :title="t('navBar.user.events.browse')"
             />
