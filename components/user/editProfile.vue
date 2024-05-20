@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useFaculties } from '~/composables/faculties'
+import { useFieldsOfStudies } from '~/composables/fieldsOfStudies'
 import type { UserModel } from '~/models/user'
 import { useGenders } from '~/composables/genders'
 import type { TGender } from '~/types/gender'
@@ -23,6 +24,7 @@ const { isShow, userData } = toRefs(props)
 
 const { facultiesList } = useFaculties()
 const { mappedGenders } = useGenders()
+const { mappedFieldsOfStudies } = useFieldsOfStudies()
 
 const newDataUser = ref<UserModel | null>(userData.value)
 const isShowRef = ref<boolean>()
@@ -31,6 +33,7 @@ const currentName = ref<string>('')
 const currentSurname = ref<string>('')
 const currentDescription = ref<string>('')
 const currentFaculty = ref<string>('')
+const currentFieldOfStudy = ref<string>('')
 const currentGender = ref<TGender>()
 // const currentDate = ref<Date>(newDataUser.value?.dateBirth)
 
@@ -41,6 +44,7 @@ function setCurrentStudentData() {
   if (newDataUser.value != null) {
     currentDescription.value = newDataUser.value.description
     currentFaculty.value = newDataUser.value.faculty
+    currentFieldOfStudy.value = newDataUser.value.fieldOfStudy
     currentGender.value = newDataUser.value.gender
     currentName.value = newDataUser.value.firstName
     currentSurname.value = newDataUser.value.lastName
@@ -57,6 +61,7 @@ async function saveData() {
     newDataUser.value.lastName = currentSurname.value
     newDataUser.value.description = currentDescription.value
     newDataUser.value.faculty = currentFaculty.value
+    newDataUser.value.fieldOfStudy = currentFieldOfStudy.value
     newDataUser.value.gender = currentGender.value
     appStore.editUser(newDataUser.value)
     emit('onSave')
@@ -84,6 +89,10 @@ watch(isShow, () => isShowRef.value = isShow.value)
           />
 
           <v-select v-model="currentFaculty" :label="$t('profile.faculty')" :items="facultiesList" variant="outlined" />
+          <v-select
+            v-model="currentFieldOfStudy" :label="$t('profile.fieldOfStudy')" :items="mappedFieldsOfStudies"
+            variant="outlined"
+          />
           <v-select v-model="currentGender" :label="$t('profile.gender')" :items="mappedGenders" variant="outlined" />
 
           <!-- <VueDatePicker

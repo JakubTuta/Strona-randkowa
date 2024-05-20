@@ -58,7 +58,8 @@ export const useAppStore = defineStore('app', () => {
       return createdUserRef
     }
     catch (caughtError) {
-      sharedStore.failureSnackbar({ code: String(t('universal.emailExists')),
+      sharedStore.failureSnackbar({
+        code: String(t('universal.emailExists')),
       })
       return null
     }
@@ -134,6 +135,7 @@ export const useAppStore = defineStore('app', () => {
       lastName: newUser?.lastName,
       description: newUser?.description,
       faculty: newUser?.faculty,
+      fieldOfStudy: newUser?.fieldOfStudy,
       gender: newUser?.gender,
       lookingFor: newUser?.lookingFor,
       preferredGender: newUser?.preferredGender,
