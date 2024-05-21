@@ -9,11 +9,8 @@ definePageMeta({
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
-// const { t } = useI18n()
 
 const currentUser = ref<UserModel>()
-
-// const showDetails = ref<boolean>(false)
 
 function setData() {
   if (userData.value != null)

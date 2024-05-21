@@ -2,7 +2,7 @@
 import type { UserModel } from '~/models/user'
 
 const props = defineProps<{
-  user: UserModel | undefined
+  user: UserModel
 }>()
 
 const { user } = toRefs(props)
@@ -12,8 +12,7 @@ const nameString = ref<string>()
 const showDetails = ref<boolean>(false)
 
 function setUpData() {
-  if (user.value !== undefined)
-    nameString.value = `${user.value?.firstName} ${user.value?.lastName}, ${countAge(user.value?.dateBirth)}`
+  nameString.value = `${user.value?.firstName} ${user.value?.lastName}, ${countAge(user.value?.dateBirth)}`
 }
 
 function countAge(dateBirth: Date) {
@@ -73,8 +72,37 @@ onMounted(() => setUpData())
       </v-row>
     </v-img>
 
-    <v-card-text class="pt-4 text-h5 text-center" style="font-style: italic;">
+    <v-card-text class="pt-4 text-h4 text-center" style="font-style: italic;">
       {{ user?.description }}
+    </v-card-text>
+    <v-card-text class="pt-4 text-h6 text-center">
+      <v-row justify="center" cols="12">
+        <v-col md="4" sm="12">
+          <v-icon left>
+            mdi-gender-male-female
+          </v-icon>
+          <div style="margin-left: 10px;">
+            {{ t(`user.sex.${user?.gender}`) }}
+          </div>
+        </v-col>
+
+        <v-col md="4" sm="6">
+          <v-icon left>
+            mdi-account-search
+          </v-icon>
+          <div style="margin-left: 10px;">
+            {{ t(`user.sex.${user?.preferredGender}`) }}
+          </div>
+        </v-col>
+        <v-col md="4" sm="12">
+          <v-icon left>
+            mdi-magnify
+          </v-icon>
+          <div style="margin-left: 10px;">
+            {{ t(`user.prefferedRelationship.${user?.lookingFor}`) }}
+          </div>
+        </v-col>
+      </v-row>
     </v-card-text>
 
     <v-card-actions>
@@ -86,36 +114,25 @@ onMounted(() => setUpData())
         <v-divider />
 
         <v-card-text>
-          <v-row justify="center">
-            <v-icon left>
-              mdi-account
-            </v-icon>
-            <div style="margin-left: 10px;">
-              {{ t(`user.prefferedRelationship.${user?.lookingFor}`) }}
-            </div>
-          </v-row>
-
           <v-row justify="center" class="justify-center">
             <v-icon left>
               mdi-book-open-page-variant
             </v-icon>
             <div style="margin-left: 10px;">
-              {{ t(`fieldsOfStudies.${user?.fieldOfStudy}`) }}
+              {{ `${t(`fieldsOfStudies.${user?.fieldOfStudy}`)}, ${user?.faculty}` }}
             </div>
           </v-row>
-          <v-row justify="center">
-            <v-icon left>
-              mdi-book-open-page-variant
-            </v-icon>
-            <div style="margin-left: 10px;">
-              {{ t(`fieldsOfStudies.${user?.fieldOfStudy}`) }}
-            </div>
+
+          <v-row class="justify-center">
+            <v-chip-group v-if="user?.hobbies" justiy-center>
+              <v-chip v-for="element in user?.hobbies" :key="element" size="large" draggable>
+                {{ t(`user.hobbies.${element}`) }}
+              </v-chip>
+            </v-chip-group>
           </v-row>
-          <v-chip-group v-if="user?.hobbies" justiy-center>
-            <v-chip v-for="element in user?.hobbies" :key="element" size="large" draggable>
-              {{ t(`user.hobbies.${element}`) }}
-            </v-chip>
-          </v-chip-group>
+          <v-row class="justify-center">
+            reszta zdjęć
+          </v-row>
         </v-card-text>
       </div>
     </v-expand-transition>
