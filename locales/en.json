@@ -118,5 +118,9 @@
     "image": "Photo",
     "removeImage": "Remove photo",
     "uploadImage": "Upload photo"
+  },
+  "matchingView": {
+    "discard": "Discard",
+    "accept": "Like"
   }
 }
