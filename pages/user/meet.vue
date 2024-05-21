@@ -37,7 +37,7 @@ onMounted(() => setData())
 <template>
   <v-sheet class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1000" rounded>
     <v-card v-if="currentUser" class="mx-auto">
-      <v-img width="500" height="" src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" cover />
+      <v-img width="500" src="/testPerson3.jpg" cover />
 
       <v-card-title>
         {{ `${currentUser?.firstName} ${currentUser?.lastName}` }}
@@ -46,16 +46,12 @@ onMounted(() => setData())
       <v-card-subtitle>
         {{ `${countAge(currentUser?.dateBirth)}, ${t(`fieldsOfStudies.${currentUser?.fieldOfStudy}`)}` }}
       </v-card-subtitle>
+      <v-card-text>
+        {{ currentUser?.description }}
+      </v-card-text>
 
       <v-card-actions>
-        <v-btn color="orange-lighten-2" text="Rozwiń" />
-
-        <v-spacer />
-
-        <v-btn
-          text="Rozwiń" :icon="showDetails ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-          @click="showDetails = !showDetails"
-        />
+        <v-btn color="primary" text="Rozwiń" @click="showDetails = !showDetails" />
       </v-card-actions>
 
       <v-expand-transition>
@@ -63,7 +59,9 @@ onMounted(() => setData())
           <v-divider />
 
           <v-card-text>
-            {{ currentUser?.description }}
+            <div>
+              tutaj będą wszystkie wiadomości o profilu 
+            </div>
           </v-card-text>
         </div>
       </v-expand-transition>
