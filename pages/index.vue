@@ -36,7 +36,7 @@
           :width="466"
           aspect-ratio="4/3"
           cover
-          src="/public/LandingOne.jpeg"
+          src="/public/LandingOne.jpg"
         />
       </v-col>
       <v-col cols="12" sm="12" md="6">

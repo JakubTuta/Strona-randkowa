@@ -24,7 +24,7 @@ async function logIn() {
 
 <template>
   <v-img
-    src="/public/landingTwo.jpeg"
+    src="/public/landingTwo.jpg"
     cover
     gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
     class="d-flex justify-center  flex-wrap w-100 h-100"
