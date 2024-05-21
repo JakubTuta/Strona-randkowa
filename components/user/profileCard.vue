@@ -73,32 +73,51 @@ onMounted(() => setUpData())
       </v-row>
     </v-img>
 
-    <v-card-subtitle class="pt-4">
+    <v-card-text class="pt-4 text-h5 text-center" style="font-style: italic;">
       {{ user?.description }}
-    </v-card-subtitle>
-
-    <v-card-text>
-      <v-row justify="center">
-        <v-icon left>
-          mdi-account
-        </v-icon>
-        <div style="margin-left: 10px;">
-          {{ t(`user.prefferedRelationship.${user?.lookingFor}`) }}
-        </div>
-      </v-row>
-
-      <v-row justify="center">
-        <v-icon left>
-          mdi-book-open-page-variant
-        </v-icon>
-        <div style="margin-left: 10px;">
-          {{ t(`fieldsOfStudies.${user?.fieldOfStudy}`) }}
-        </div>
-      </v-row>
     </v-card-text>
 
     <v-card-actions>
-      <v-btn append-icon="mdi-chevron-double-down" color="primary" block />
+      <v-btn append-icon="mdi-chevron-double-down" color="primary" block @click="showDetails = !showDetails" />
     </v-card-actions>
+
+    <v-expand-transition>
+      <div v-show="showDetails">
+        <v-divider />
+
+        <v-card-text>
+          <v-row justify="center">
+            <v-icon left>
+              mdi-account
+            </v-icon>
+            <div style="margin-left: 10px;">
+              {{ t(`user.prefferedRelationship.${user?.lookingFor}`) }}
+            </div>
+          </v-row>
+
+          <v-row justify="center" class="justify-center">
+            <v-icon left>
+              mdi-book-open-page-variant
+            </v-icon>
+            <div style="margin-left: 10px;">
+              {{ t(`fieldsOfStudies.${user?.fieldOfStudy}`) }}
+            </div>
+          </v-row>
+          <v-row justify="center">
+            <v-icon left>
+              mdi-book-open-page-variant
+            </v-icon>
+            <div style="margin-left: 10px;">
+              {{ t(`fieldsOfStudies.${user?.fieldOfStudy}`) }}
+            </div>
+          </v-row>
+          <v-chip-group v-if="user?.hobbies" justiy-center>
+            <v-chip v-for="element in user?.hobbies" :key="element" size="large" draggable>
+              {{ t(`user.hobbies.${element}`) }}
+            </v-chip>
+          </v-chip-group>
+        </v-card-text>
+      </div>
+    </v-expand-transition>
   </v-card>
 </template>

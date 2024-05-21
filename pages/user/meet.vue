@@ -24,7 +24,7 @@ onMounted(() => setData())
 </script>
 
 <template>
-  <v-sheet class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1000" rounded>
+  <v-sheet class="mx-auto my-10 px-4" elevation="4" max-width="700" rounded>
     <profile-card :user="currentUser" />
   </v-sheet>
 </template>
