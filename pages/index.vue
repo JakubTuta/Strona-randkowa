@@ -3,7 +3,7 @@
 
 <template>
   <v-img
-    src="/public/landingThree.jpg"
+    src="/landingThree.jpg"
     cover
     gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
   >
@@ -36,7 +36,7 @@
           :width="466"
           aspect-ratio="4/3"
           cover
-          src="/public/LandingOne.jpg"
+          src="/LandingOne.jpg"
         />
       </v-col>
       <v-col cols="12" sm="12" md="6">
