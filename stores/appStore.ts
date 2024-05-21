@@ -7,6 +7,7 @@ import { collection, doc, setDoc, updateDoc } from 'firebase/firestore'
 import type { DocumentReference } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut as signoutFirebase } from 'firebase/auth'
 import { useSharedStore } from './sharedStore'
+import { useError } from '@/composables/error'
 import { type IUser, UserModel } from '~/models/user'
 
 export const useAppStore = defineStore('app', () => {
