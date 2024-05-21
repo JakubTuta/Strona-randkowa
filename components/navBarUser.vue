@@ -31,51 +31,26 @@ async function logOut() {
     <v-spacer />
 
     <div class="hidden-sm-and-down">
-      <v-btn
-        variant="text"
-        color="default"
-        prepend-icon="mdi-account-group"
-      >
+      <v-btn variant="text" color="default" prepend-icon="mdi-account-group">
         {{ t('navBar.user.communities') }}
       </v-btn>
 
-      <v-btn
-        variant="text"
-        color="default"
-        prepend-icon="mdi-calendar-multiple"
-        :append-icon="eventMenuIcon"
-      >
+      <v-btn variant="text" color="default" prepend-icon="mdi-calendar-multiple" :append-icon="eventMenuIcon">
         {{ t('navBar.user.events.events') }}
         <v-menu activator="parent" @update:model-value="changeIcon">
           <v-list class="justify-center">
-            <v-list-item
-              to="/user/events/add"
-              prepend-icon="mdi-plus"
-              :title="t('navBar.user.events.add')"
-            />
+            <v-list-item to="/user/events/add" prepend-icon="mdi-plus" :title="t('navBar.user.events.add')" />
 
-            <v-list-item
-              to="/user/events"
-              prepend-icon="mdi-party-popper"
-              :title="t('navBar.user.events.browse')"
-            />
+            <v-list-item to="/user/events" prepend-icon="mdi-party-popper" :title="t('navBar.user.events.browse')" />
           </v-list>
         </v-menu>
       </v-btn>
 
-      <v-btn
-        variant="text"
-        color="default"
-        prepend-icon="mdi-heart"
-      >
+      <v-btn to="/user/meet" variant="text" color="default" prepend-icon="mdi-heart">
         {{ t('navBar.user.meet') }}
       </v-btn>
 
-      <v-btn
-        variant="text"
-        color="default"
-        prepend-icon="mdi-chat"
-      >
+      <v-btn variant="text" color="default" prepend-icon="mdi-chat">
         {{ t('navBar.user.chat') }}
       </v-btn>
     </div>
