@@ -43,7 +43,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   nitro: {
-    baseURL: 'http://localhost:3000',
+    static: true,
     prerender: {
       crawlLinks: true,
       failOnError: false,
