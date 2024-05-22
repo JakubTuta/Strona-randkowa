@@ -9,6 +9,7 @@ import type { TRole } from '~/types/role'
 export interface IUser {
   photos: string[]
   firstName: string
+  email: string
   description: string
   faculty: string
   fieldOfStudy: string
@@ -28,6 +29,7 @@ export interface IUser {
 export class UserModel implements IUser {
   photos: string[]
   firstName: string
+  email: string
   description: string
   faculty: string
   fieldOfStudy: string
@@ -48,6 +50,7 @@ export class UserModel implements IUser {
   constructor(data: IUser, reference: DocumentReference | null) {
     this.photos = data.photos || ''
     this.firstName = data.firstName || ''
+    this.email = data.email || ''
     this.description = data.description || ''
     this.faculty = data.faculty || ''
     this.fieldOfStudy = data.fieldOfStudy || ''
@@ -70,6 +73,7 @@ export class UserModel implements IUser {
     return {
       photos: this.photos,
       firstName: this.firstName,
+      email: this.email,
       faculty: this.faculty,
       fieldOfStudy: this.fieldOfStudy,
       description: this.description,
