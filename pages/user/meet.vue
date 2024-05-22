@@ -7,15 +7,18 @@ definePageMeta({
   layout: 'user',
 })
 
-const appStore = useAppStore()
-const { userData } = storeToRefs(appStore)
-
 const currentUser = ref<UserModel>()
 
 function setData() {
-  if (userData.value != null)
+  const appStore = useAppStore()
+  const { userData } = storeToRefs(appStore)
+  if (userData.value !== undefined)
     currentUser.value = userData.value
 }
+watch(currentUser, (oldUser, newUser) => {
+  currentUser.value = newUser
+  setData()
+})
 
 onMounted(() => setData())
 </script>

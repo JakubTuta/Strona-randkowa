@@ -30,6 +30,9 @@ function countAge(dateBirth: Date) {
     console.log(e)
   }
 }
+watch(user, (oldUser, newUser) => {
+  nameString.value = `${newUser.firstName} ${newUser.lastName}, ${countAge(newUser.dateBirth)}`
+})
 
 onMounted(() => setUpData())
 </script>
@@ -46,8 +49,13 @@ onMounted(() => setUpData())
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
       cover
     >
-      <v-card-title class="text-white" style="font-weight: bold;">
-        {{ nameString }}
+      <v-card-title class="text-white">
+        <div style="font-weight: bold;" class="text-h4">
+          {{ nameString }}
+        </div>
+        <div style="font-family:sans-serif; font-style:italic;">
+          {{ t(`user.sex.${user?.gender}`) }}
+        </div>
       </v-card-title>
       <v-row>
         <v-col>
@@ -77,15 +85,6 @@ onMounted(() => setUpData())
     </v-card-text>
     <v-card-text class="pt-4 text-h6 text-center">
       <v-row justify="center" cols="12">
-        <v-col md="4" sm="12">
-          <v-icon left>
-            mdi-gender-male-female
-          </v-icon>
-          <div style="margin-left: 10px;">
-            {{ t(`user.sex.${user?.gender}`) }}
-          </div>
-        </v-col>
-
         <v-col md="4" sm="6">
           <v-icon left>
             mdi-account-search
