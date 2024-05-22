@@ -121,6 +121,8 @@
   },
   "matchingView": {
     "discard": "Discard",
-    "accept": "Like"
+    "accept": "Like",
+    "endTitle": "That's all!",
+    "endMessage": "You can see your partners below:"
   }
 }

@@ -119,6 +119,8 @@
   },
   "matchingView": {
     "discard": "Odrzuć",
-    "accept": "Polub"
+    "accept": "Polub",
+    "endTitle": "To wszystko!",
+    "endMessage": "Możesz przejrzeć swoje pary niżej:"
   }
 }

@@ -5,6 +5,12 @@ const props = defineProps<{
   user: UserModel
 }>()
 
+const emit = defineEmits(['dislike'])
+
+async function dislike() {
+  emit('dislike')
+}
+
 const { user } = toRefs(props)
 const { t } = useI18n()
 
@@ -55,6 +61,7 @@ function countAge(dateBirth: Date) {
             :text="t('matchingView.discard')"
             variant="outlined"
             block
+            @click="dislike()"
           />
         </v-col>
 
@@ -65,6 +72,7 @@ function countAge(dateBirth: Date) {
             :text="t('matchingView.accept')"
             variant="outlined"
             block
+            @click="dislike()"
           />
         </v-col>
       </v-row>
