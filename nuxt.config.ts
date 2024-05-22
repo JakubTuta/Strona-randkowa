@@ -41,7 +41,7 @@ export default defineNuxtConfig({
     vueI18n: './i18n.config.ts',
   },
   devtools: { enabled: true },
-  ssr: true,
+  ssr: false,
   nitro: {
     baseURL: 'http://localhost:3000',
     prerender: {
