@@ -9,11 +9,14 @@ definePageMeta({
 
 const currentUser = ref<UserModel>()
 
-function setData() {
+async function setData() {
   const appStore = useAppStore()
   const { userData } = storeToRefs(appStore)
-  if (userData.value !== undefined)
-    currentUser.value = userData.value
+  await appStore.currentUser().then(
+    currentUser.value = userData.value,
+  )
+  const allUsers = await appStore.getAllUsers()
+  console.log(allUsers)
 }
 watch(currentUser, (oldUser, newUser) => {
   currentUser.value = newUser
