@@ -7,7 +7,14 @@ import numpy as np
 from RecommendationAlgorithm import RecommendationAlgorithm
 
 app = flask.Flask(__name__)
-flask_cors.CORS(app)
+flask_cors.CORS(
+    app,
+    origins=[
+        "http://localhost:3000",
+        "https://strona-randkowa.web.app",
+        "https://strona-randkowa.firebaseapp.com",
+    ],
+)
 
 
 @app.route("/matches-api", methods=["POST"])

@@ -2,9 +2,8 @@
 import type { DocumentReference } from 'firebase/firestore'
 import { useTheme } from 'vuetify'
 import VueDatePicker from '@vuepic/vue-datepicker'
-import { Timestamp } from 'firebase/firestore'
 import formValidation, { validateForm } from '~/helpers/formValidation'
-import { emailRule, lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
+import { lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
 import { UserModel } from '~/models/user'
 import type { TGender } from '~/types/gender'
 import { useFieldsOfStudies } from '~/composables/fieldsOfStudies'
@@ -37,7 +36,12 @@ const credentialsForm: Ref<null | {
   validate: () => Promise<{ valid: boolean }>
 }> = ref(null)
 
-const email = ref('')
+const infoForm: Ref<null | {
+  resetValidation: () => void
+  reset: () => void
+  validate: () => Promise<{ valid: boolean }>
+}> = ref(null)
+
 const name = ref('')
 const surname = ref('')
 const gender: Ref<TGender | null> = ref(null)
@@ -53,6 +57,7 @@ const lookingFor = ref(null)
 const image = ref('')
 
 const isPasswordShown = ref(false)
+const currentStep = ref('1')
 
 function verifyPassword() {
   return password1.value === password2.value
@@ -63,7 +68,8 @@ function prepareNewAccount() {
     {
       firstName: name.value,
       lastName: surname.value,
-      dateBirth: dateBirth.value ? Timestamp.fromDate(dateBirth.value) : null,
+      email: `${index.value}@edu.p.lodz.pl`,
+      dateBirth: dateBirth.value ? dateBirth.value : new Date(),
       index: Number.parseInt(index.value),
       gender: gender.value || 'other',
       faculty: faculty.value || '',
@@ -72,10 +78,10 @@ function prepareNewAccount() {
       description: '',
       score: 0,
       elo: 0,
-      preferred_gender: preferredGender.value || 'any',
-      looking_for: lookingFor.value || 'other',
+      preferredGender: preferredGender.value || 'any',
+      lookingFor: lookingFor.value || 'other',
       photos: [image.value],
-      blocked_profiles: [],
+      blockedProfiles: [],
       hobbies: [],
     },
     createdUserRef,
@@ -83,33 +89,53 @@ function prepareNewAccount() {
 }
 
 async function createAccount() {
-  if (!await isValid() || !image.value)
-    return
+  let canCreateAccount = true
 
-  if (index.value.length !== 6) {
-    sharedStore.failureSnackbar({ code: String('Nie podano indeksu') })
-    return
+  if (!await isValid())
+    canCreateAccount = false
+
+  if (!image.value) {
+    sharedStore.failureSnackbar({ code: String(t('registration.noPhoto')) })
+    canCreateAccount = false
   }
 
-  createdUserRef = await appStore.registerWithPassword(email.value, password1.value)
+  if (!dateBirth.value) {
+    sharedStore.failureSnackbar({ code: String(t('registration.noBirthDate')) })
+    canCreateAccount = false
+  }
 
-  if (createdUserRef) {
-    await appStore.createUser(prepareNewAccount())
-    sharedStore.successSnackbar()
-    router.push('/')
+  if (canCreateAccount) {
+    createdUserRef = await appStore.registerWithPassword(`${index.value}@edu.p.lodz.pl`, password1.value)
+
+    if (createdUserRef) {
+      await appStore.createUser(prepareNewAccount())
+      sharedStore.successSnackbar()
+      router.push('/')
+    }
   }
 }
 
 async function checkStepCondition(next: () => void) {
-  if (!credentialsForm.value || !await validateForm(credentialsForm.value))
-    return
+  let canProceedToNextStep = true
+
+  if (index.value.length !== 6) {
+    sharedStore.failureSnackbar({ code: String(t('registration.invalidIndex')) })
+    canProceedToNextStep = false
+  }
 
   if (!verifyPassword()) {
     sharedStore.failureSnackbar({ code: String(t('universal.passwordsNotMatch')) })
-    return
+    canProceedToNextStep = false
   }
 
-  next()
+  if (currentStep.value === '1' && (!credentialsForm.value || !await validateForm(credentialsForm.value)))
+    canProceedToNextStep = false
+
+  if (currentStep.value === '2' && (!infoForm.value || !await validateForm(infoForm.value)))
+    canProceedToNextStep = false
+
+  if (canProceedToNextStep)
+    next()
 }
 
 const isDark = computed(() => {
@@ -123,7 +149,7 @@ function setImage(url: string) {
 
 <template>
   <v-img
-    src="/public/landingTwo.jpeg" cover gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
+    src="/landingTwo.jpg" cover gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
     class="d-flex justify-center flex-wrap w-100 h-100"
   >
     <v-card
@@ -138,7 +164,7 @@ function setImage(url: string) {
             </div>
 
             <v-col cols="12" md="10" lg="8">
-              <v-stepper class="stepper w-100" elevation="8">
+              <v-stepper v-model="currentStep" class="stepper w-100" elevation="8">
                 <template #default="{ prev, next }">
                   <v-stepper-header>
                     <v-stepper-item :title="t('registration.step', { step: 1 })" value="1" color="secondary" />
@@ -146,7 +172,7 @@ function setImage(url: string) {
                     <v-divider />
 
                     <v-stepper-item
-                      :title="t('registration.step', { step: 2 })" :subtitle="t('registration.optional')"
+                      :title="t('registration.step', { step: 2 })"
                       value="2" color="secondary"
                     />
 
@@ -157,13 +183,19 @@ function setImage(url: string) {
 
                   <v-stepper-window>
                     <v-stepper-window-item value="1">
-                      <v-form ref="credentialsForm" @submit.prevent="createAccount">
+                      <v-form ref="credentialsForm">
                         <div class="py-4">
-                          <v-text-field
-                            v-model="email" :label="t('registration.email')" placeholder="example@mail.com"
-                            type="email" :rules="[requiredRule(), emailRule()]" prepend-inner-icon="mdi-email"
-                            density="comfortable" color="secondary" @keyup.enter="checkStepCondition(next)"
-                          />
+                          <div>
+                            <span>
+                              {{ t('registration.studentIndex') }}
+                            </span>
+                            <v-otp-input
+                              v-model="index"
+                              type="number"
+                              class="mb-4"
+                              @keyup.enter="createAccount"
+                            />
+                          </div>
 
                           <v-text-field
                             v-model="password1" :label="t('registration.password')" color="secondary"
@@ -186,43 +218,51 @@ function setImage(url: string) {
                     </v-stepper-window-item>
 
                     <v-stepper-window-item value="2">
-                      <div class="py-4">
-                        <VueDatePicker
-                          v-model="dateBirth" class="mb-6" :dark="isDark" auto-apply
-                          :placeholder="t('registration.giveBirthDate')" :enable-time-picker="false" position="left"
-                        />
+                      <v-form ref="infoForm">
+                        <div class="py-4">
+                          <v-select
+                            v-model="gender" :label="t('registration.sex')" :items="mappedGenders"
+                            color="secondary" variant="outlined" density="comfortable"
+                            :rules="[requiredRule()]"
+                          />
 
-                        <v-select
-                          v-model="gender" :label="t('registration.sex')" :items="mappedGenders"
-                          color="secondary" variant="outlined" density="comfortable"
-                        />
+                          <v-select
+                            v-model="faculty" :label="t('registration.faculty')" :items="facultiesList"
+                            color="secondary" variant="outlined" density="comfortable"
+                            :rules="[requiredRule()]"
+                          />
 
-                        <v-select
-                          v-model="faculty" :label="t('registration.faculty')" :items="facultiesList"
-                          color="secondary" variant="outlined" density="comfortable"
-                        />
+                          <v-select
+                            v-model="fieldOfStudy" :label="t('registration.fieldOfStudy')"
+                            :items="fieldsOfStudies" color="secondary" variant="outlined" density="comfortable"
+                            :rules="[requiredRule()]"
+                          />
 
-                        <v-select
-                          v-model="fieldOfStudy" :label="t('registration.fieldOfStudy')"
-                          :items="fieldsOfStudies" color="secondary" variant="outlined" density="comfortable"
-                        />
+                          <v-select
+                            v-model="preferredGender" :label="t('registration.preferredGender')"
+                            :items="mappedGendersPreferences" color="secondary" variant="outlined"
+                            density="comfortable"
+                            :rules="[requiredRule()]"
+                          />
 
-                        <v-select
-                          v-model="preferredGender" :label="t('registration.preferredGender')"
-                          :items="mappedGendersPreferences" color="secondary" variant="outlined"
-                          density="comfortable"
-                        />
-
-                        <v-select
-                          v-model="lookingFor" :label="t('registration.lookingFor')"
-                          :items="mappedRelationships" color="secondary" variant="outlined" density="comfortable"
-                        />
-                      </div>
+                          <v-select
+                            v-model="lookingFor" :label="t('registration.lookingFor')"
+                            :items="mappedRelationships" color="secondary" variant="outlined" density="comfortable"
+                            :rules="[requiredRule()]"
+                          />
+                        </div>
+                      </v-form>
                     </v-stepper-window-item>
 
                     <v-stepper-window-item value="3">
                       <v-form ref="form" v-model="valid" @submit.prevent="createAccount">
                         <div class="py-4">
+                          <VueDatePicker
+                            v-model="dateBirth" class="mb-6" :dark="isDark" auto-apply
+                            :placeholder="t('registration.giveBirthDate')" :enable-time-picker="false" position="left"
+                            :max-date="new Date()"
+                          />
+
                           <v-text-field
                             v-model="name" :label="t('registration.name')" type="text"
                             :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" density="comfortable"
@@ -234,20 +274,10 @@ function setImage(url: string) {
                             :rules="[requiredRule(), lengthRuleShort(), lengthRule()]" density="comfortable"
                             color="secondary" @keyup.enter="createAccount"
                           />
+
                           <v-checkbox
                             v-model="rules" color="secondary" class="mt-n4 mb-2 "
                             :label="t('registration.acceptPolicy')" :rules="[requiredRule()]"
-                          />
-
-                          <span>
-                            {{ t('registration.studentIndex') }}
-                          </span>
-
-                          <v-otp-input
-                            v-model="index"
-                            type="number"
-                            class="mb-4"
-                            @keyup.enter="createAccount"
                           />
 
                           <UploadImage :image="image" class="my-2" @set-image="setImage" />
@@ -259,7 +289,7 @@ function setImage(url: string) {
                       </v-btn>
                     </v-stepper-window-item>
                   </v-stepper-window>
-                  <v-stepper-actions @click:prev="prev" @click:next="checkStepCondition(next)" />
+                  <v-stepper-actions :next-text="$t('registration.nextStep')" :prev-text="$t('registration.prevStep')" @click:prev="prev" @click:next="checkStepCondition(next)" />
                 </template>
               </v-stepper>
             </v-col>
