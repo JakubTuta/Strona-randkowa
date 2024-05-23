@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - run: echo "API_KEY=${{ secrets.API_KEY }}" > .env
       - run: npm install
       - run: npm run generate
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          API_KEY: ${{ secrets.API_KEY }}
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STRONA_RANDKOWA }}
           channelId: live
