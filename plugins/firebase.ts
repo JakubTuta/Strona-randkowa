@@ -7,9 +7,6 @@ import { getStorage } from 'firebase/storage'
 export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig()
 
-  console.log(config.public)
-  console.log('xpp')
-
   const firebaseConfig = {
     apiKey: config.public.apiKey,
     authDomain: config.public.authDomain,
