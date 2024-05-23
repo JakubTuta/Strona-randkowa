@@ -33,6 +33,7 @@ export const useRestStore = defineStore('rest', () => {
       headers: {
         'Content-Type': 'application/json',
       },
+      mode: 'cors',
       body: JSON.stringify({ reference_id: userData.reference?.id || '', max_users: maxUsers }),
     })
       .then((response) => {

@@ -1,5 +1,6 @@
 import dataclasses
 import datetime
+import inspect
 import typing
 
 from google.cloud import firestore
@@ -7,12 +8,13 @@ from google.cloud import firestore
 
 @dataclasses.dataclass(kw_only=True, frozen=True)
 class UserModel:
-    userName: str = ""
     photos: typing.List[str] = dataclasses.field(
         default_factory=list, compare=False, hash=False, repr=False
     )
     firstName: str = ""
+    email: str = ""
     faculty: str = ""
+    fieldOfStudy: str = ""
     lastName: str = ""
     dateBirth: datetime.datetime = datetime.datetime.now()
     gender: str = ""
@@ -37,3 +39,13 @@ class UserModel:
         del data["reference"]
 
         return data
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            **{
+                key: value
+                for key, value in data.items()
+                if key in inspect.signature(cls).parameters
+            }
+        )

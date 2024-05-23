@@ -18,15 +18,16 @@ def get_user(
         return None
 
     document = reference.get()
-    user = UserModel(**document.to_dict(), reference=document.reference)
+
+    user = UserModel.from_dict({**document.to_dict(), "reference": document.reference})
 
     return user
 
 
 def get_user_data(reference: firestore.DocumentReference) -> UserModel:
-    document_data = reference.get()
+    document = reference.get()
 
-    user = UserModel(**document_data.to_dict(), reference=document_data.reference)
+    user = UserModel.from_dict({**document.to_dict(), "reference": document.reference})
 
     return user
 
@@ -34,7 +35,10 @@ def get_user_data(reference: firestore.DocumentReference) -> UserModel:
 def get_all_users() -> typing.List[firestore.DocumentReference]:
     docs = collection_users.stream()
 
-    users = [UserModel(**doc.to_dict(), reference=doc.reference) for doc in docs]
+    users = [
+        UserModel.from_dict({**doc.to_dict(), "reference": doc.reference})
+        for doc in docs
+    ]
 
     return users
 
@@ -51,7 +55,10 @@ def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]
 
     docs = query.stream()
 
-    users = [UserModel(**doc.to_dict(), reference=doc.reference) for doc in docs]
+    users = [
+        UserModel.from_dict({**doc.to_dict(), "reference": doc.reference})
+        for doc in docs
+    ]
 
     return users
 
@@ -68,7 +75,10 @@ def get_likes_for_user(
     query = collection_likes.where(filter=FieldFilter("likedProfile", "==", user_ref))
     docs = query.stream()
 
-    likes = [LikeModel(**doc.to_dict(), reference=doc.reference) for doc in docs]
+    likes = [
+        LikeModel.from_dict({**doc.to_dict(), "reference": doc.reference})
+        for doc in docs
+    ]
 
     return likes
 
