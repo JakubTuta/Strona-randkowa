@@ -16,7 +16,6 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           API_KEY: ${{ secrets.API_KEY }}
-          AUTH_DOMAIN: ${{ variables.AUTH_DOMAIN }}
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STRONA_RANDKOWA }}
           channelId: live
