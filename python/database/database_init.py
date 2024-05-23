@@ -2,7 +2,7 @@ import os
 
 import dotenv
 import firebase_admin
-from firebase_admin import firestore
+from firebase_admin import firestore, storage
 
 dotenv.load_dotenv()
 
@@ -24,3 +24,4 @@ credentials = firebase_admin.credentials.Certificate(config)
 firebase_admin.initialize_app(credentials)
 
 firestore_client = firestore.client()
+storage_bucket = storage.bucket()
