@@ -8,7 +8,6 @@ export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig()
 
   console.log(config.public)
-  console.log('xdd')
 
   const firebaseConfig = {
     apiKey: config.public.apiKey,
