@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { Timestamp } from 'firebase/firestore'
 import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
 import profileCard from '~/components/user/profileCard.vue'
@@ -21,16 +22,15 @@ const counter = ref<number>(0)
 // }
 
 async function setData() {
-  const appStore = useAppStore()
   try {
+    const appStore = useAppStore()
     allUsers = await appStore.getAllUsers()
     currentUser = allUsers[0]
-    console.log(currentUser)
-    isReady.value = true
   }
   catch (e) {
-    console.log(e)
+    // console.log(e)
   }
+  isReady.value = true
 }
 
 function thankYouNext() {
@@ -44,10 +44,6 @@ function thankYouNext() {
     endFlag.value = true
   }
 }
-// watch(currentUser, (oldUser, newUser) => {
-//   currentUser.value = newUser
-//   setData()
-// })
 
 onMounted(() => setData())
 </script>
@@ -75,9 +71,9 @@ onMounted(() => setData())
     </v-card>
   </v-sheet>
 
-  <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
+  <!-- <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
     <liked-card :user="currentUser" />
-  </v-sheet>
+  </v-sheet> -->
 </template>
 
 <style>

@@ -42,6 +42,7 @@ function setDateString(date: Date) {
 }
 
 function setData() {
+  console.log(currentUser)
   if (currentUser != null) {
     description.value = currentUser.description
     surname.value = currentUser.lastName

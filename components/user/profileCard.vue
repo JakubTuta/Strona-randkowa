@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { Timestamp } from 'firebase/firestore'
 import type { UserModel } from '~/models/user'
 
 const props = defineProps<{
@@ -7,6 +8,24 @@ const props = defineProps<{
 
 const emit = defineEmits(['dislike'])
 
+const showDetails = ref<boolean>(false)
+const userAge = ref<string>()
+
+function countAge(dateBirth: Timestamp) {
+  const today = new Date()
+  const convertedDate = new Date(dateBirth.seconds * 1000)
+  try {
+    let age = today.getFullYear() - convertedDate.getFullYear()
+    const m = today.getMonth() - convertedDate.getMonth()
+    if (m < 0 || (m === 0 && today.getDate() < convertedDate.getDate()))
+      age--
+    userAge.value = age.toString()
+  }
+  catch (e) {
+    console.log(e)
+  }
+}
+
 async function dislike() {
   emit('dislike')
 }
@@ -14,23 +33,13 @@ async function dislike() {
 const { user } = toRefs(props)
 const { t } = useI18n()
 
-const showDetails = ref<boolean>(false)
+watch(user, (oldUser, newUser) => {
+  countAge(user.value.dateBirth)
+})
 
-function countAge(dateBirth: Date) {
-  const today = new Date()
-
-  try {
-    let age = today.getFullYear() - dateBirth.getFullYear()
-    const m = today.getMonth() - dateBirth.getMonth()
-    if (m < 0 || (m === 0 && today.getDate() < dateBirth.getDate()))
-      age--
-
-    return age.toString()
-  }
-  catch (e) {
-    console.log(e)
-  }
-}
+onMounted(() => {
+  countAge(user.value.dateBirth)
+})
 </script>
 
 <template>
@@ -47,7 +56,7 @@ function countAge(dateBirth: Date) {
     >
       <v-card-title class="text-white">
         <div style="font-weight: bold;" class="text-h4">
-          {{ `${user?.firstName} ${user?.lastName}, ${countAge(user?.dateBirth)}` }}
+          {{ `${user?.firstName} ${user?.lastName}, ${userAge}` }}
         </div>
         <div style="font-family:sans-serif; font-style:italic;">
           {{ t(`user.sex.${user?.gender}`) }}
