@@ -13,12 +13,12 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
       .join('')
   }
 
-  const createAndUploadImage = async (userRef: DocumentReference, imgData: { dataUrl: string }) => {
+  const createAndUploadImage = async (userRef: DocumentReference, imgData: string) => {
     const imagePath = `${userRef.id}/${generateRandomText()}`
 
     const uploadedData = await uploadString(
       ref(storage, imagePath),
-      imgData.dataUrl,
+      imgData,
       'data_url',
     )
 

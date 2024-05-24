@@ -1,4 +1,5 @@
 import dataclasses
+import inspect
 import typing
 
 from google.cloud import firestore
@@ -16,3 +17,13 @@ class LikeModel:
         del data["reference"]
 
         return data
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            **{
+                key: value
+                for key, value in data.items()
+                if key in inspect.signature(cls).parameters
+            }
+        )

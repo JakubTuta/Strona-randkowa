@@ -56,12 +56,18 @@
     "sex": "Płeć",
     "faculty": "Wydział",
     "preferredGender": "Poszukiwana płeć do relacji",
+    "fieldOfStudy": "Kierunek studiów",
     "lookingFor": "Aktualnie moja poszukiwana relacja to: ",
     "name": "Imię",
     "surname": "Nazwisko",
     "acceptPolicy": "Akceptuję regulamin",
     "studentIndex": "Indeks uczelniany",
-    "registerYourself": "Zarejestruj się"
+    "registerYourself": "Zarejestruj się",
+    "invalidIndex": "Nie podano lub podano niepoprawny nr indeksu",
+    "noPhoto": "Nie dodano zdjęcia profilowego",
+    "noBirthDate": "Nie podano daty urodzenia",
+    "nextStep": "Następny krok",
+    "prevStep": "Poprzedni krok"
   },
   "authErrors": {
     "invalidEmailOrPassword": "Nieprawidłowy email lub hasło",

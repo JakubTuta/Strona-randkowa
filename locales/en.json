@@ -22,7 +22,6 @@
       },
       "meet": "Meet people",
       "chat": "Chat"
-
     }
   },
   "events": {
@@ -63,7 +62,12 @@
     "surname": "Surname",
     "acceptPolicy": "I accept the regulations",
     "studentIndex": "University Index",
-    "registerYourself": "Register"
+    "registerYourself": "Register",
+    "invalidIndex": "No or incorrect index number was provided",
+    "noPhoto": "No profile picture added",
+    "noBirthDate": "No date of birth given",
+    "nextStep": "Next step",
+    "prevStep": "Previous step"
   },
   "authErrors": {
     "invalidEmailOrPassword": "Invalid email or password",
