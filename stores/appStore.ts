@@ -37,9 +37,9 @@ export const useAppStore = defineStore('app', () => {
   const createUser = async (newUser: UserModel) => {
     const userReference = doc(usersCollection, newUser?.reference?.id)
 
-    const image = (await uploadImageStore.createAndUploadImage(userReference, newUser.photos[0])).imageUrl
+    const imageUrl = (await uploadImageStore.createAndUploadImage(userReference, newUser.photos[0])).imageUrl
 
-    newUser.photos[0] = image
+    newUser.photos[0] = imageUrl
 
     await setDoc(userReference, newUser.toMap())
   }

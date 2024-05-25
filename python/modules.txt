@@ -3,3 +3,6 @@ firebase
 firebase-admin
 flask
 flask-cors
+tensorflow
+deepface
+numpy
