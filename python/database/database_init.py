@@ -2,26 +2,35 @@ import os
 
 import dotenv
 import firebase_admin
-from firebase_admin import firestore, storage
+from firebase_admin import firestore
 
 dotenv.load_dotenv()
 
-config = {
-    "type": os.getenv("type"),
-    "project_id": os.getenv("project_id"),
-    "private_key_id": os.getenv("private_key_id"),
-    "private_key": os.getenv("private_key").replace(r"\n", "\n"),
-    "client_email": os.getenv("client_email"),
-    "client_id": os.getenv("client_id"),
-    "auth_uri": os.getenv("auth_uri"),
-    "token_uri": os.getenv("token_uri"),
-    "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
-    "client_x509_cert_url": os.getenv("client_x509_cert_url"),
-    "universe_domain": os.getenv("universe_domain"),
+service_account = {
+    "type": os.getenv("TYPE"),
+    "project_id": os.getenv("PROJECT_ID"),
+    "private_key_id": os.getenv("PRIVATE_KEY_ID"),
+    "private_key": os.getenv("PRIVATE_KEY").replace(r"\n", "\n"),
+    "client_email": os.getenv("CLIENT_EMAIL"),
+    "client_id": os.getenv("CLIENT_ID"),
+    "auth_uri": os.getenv("AUTH_URI"),
+    "token_uri": os.getenv("TOKEN_URI"),
+    "auth_provider_x509_cert_url": os.getenv("AUTH_PROVIDER_X509_CERT_URL"),
+    "client_x509_cert_url": os.getenv("CLIENT_X509_CERT_URL"),
+    "universe_domain": os.getenv("UNIVERSE_DOMAIN"),
 }
 
-credentials = firebase_admin.credentials.Certificate(config)
-firebase_admin.initialize_app(credentials)
+config = {
+    "apiKey": os.getenv("API_KEY"),
+    "authDomain": os.getenv("AUTH_DOMAIN"),
+    "projectId": os.getenv("PROJECT_ID"),
+    "storageBucket": os.getenv("STORAGE_BUCKET"),
+    "messagingSenderId": os.getenv("MESSAGING_SENDER_ID"),
+    "appId": os.getenv("APP_ID"),
+    "measurementId": os.getenv("MEASUREMENT_ID"),
+}
+
+credentials = firebase_admin.credentials.Certificate(service_account)
+app = firebase_admin.initialize_app(credentials, config)
 
 firestore_client = firestore.client()
-storage_bucket = storage.bucket()

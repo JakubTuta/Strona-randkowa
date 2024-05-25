@@ -1,6 +1,5 @@
 import database.database_functions as db_functions
 import database.database_init as db_init
-import FaceRecognitionAlgorithm
 import flask
 import flask_cors
 import numpy as np
@@ -42,28 +41,6 @@ def matches():
     users_references_ids = users_references_ids[:max_users]
 
     return flask.jsonify(users_references_ids), 200
-
-
-@app.route("/verify-image", methods=["POST"])
-def verify_image():
-    try:
-        data = flask.request.get_json(force=True)
-
-        image_url = data["image_url"]
-
-    except KeyError:
-        return flask.jsonify({"error": "Nie podano image_url"}), 400
-
-    except Exception as e:
-        print(e)
-        return flask.jsonify({"error": str(e)}), 400
-
-    blob = db_init.storage_bucket(image_url)
-    image = np.frombuffer(blob.download_as_string(), np.uint8)
-
-    print(image)
-
-    print(FaceRecognitionAlgorithm.analyze_image(image))
 
 
 if __name__ == "__main__":
