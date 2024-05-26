@@ -1,4 +1,7 @@
+import type { DocumentReference } from 'firebase/firestore'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import axios from 'axios'
+import { httpsCallable } from 'firebase/functions'
 import type { UserModel } from '~/models/user'
 import { mapUser } from '~/models/user'
 
@@ -8,7 +11,6 @@ export const useRestStore = defineStore('rest', () => {
   const users = ref<UserModel[]>([])
 
   const collectionUsers = collection(firestore, 'users')
-  const serverUrl = 'http://localhost:2137'
 
   const mapIdsToUsers = async (referenceIds: string[]) => {
     try {
@@ -28,11 +30,18 @@ export const useRestStore = defineStore('rest', () => {
     if (!userData)
       return
 
-    fetch(`${serverUrl}/matches-api`, {
+    const matchesFunctionUrl = 'https://get-matches-2akj7aa2pq-lm.a.run.app'
+
+    const HEADERS_FIREBASE = {
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'POST',
+      'Access-Control-Allow-Origin': 'http://localhost:3000',
+      'Content-Type': 'application/json',
+    }
+
+    fetch(matchesFunctionUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: HEADERS_FIREBASE,
       mode: 'cors',
       body: JSON.stringify({ reference_id: userData.reference?.id || '', max_users: maxUsers }),
     })

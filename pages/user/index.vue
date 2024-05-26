@@ -2,6 +2,14 @@
 definePageMeta({
   layout: 'user',
 })
+
+const restStore = useRestStore()
+
+const { userData } = storeToRefs(useAppStore())
+
+function call() {
+  restStore.getTopUsers(userData.value, 3)
+}
 </script>
 
 <template>
@@ -13,6 +21,10 @@ definePageMeta({
         </h1>
       </v-col>
     </v-row>
+
+    <v-btn @click="call">
+      call
+    </v-btn>
 
     <v-row justify="center">
       <v-col cols="12" md="8">

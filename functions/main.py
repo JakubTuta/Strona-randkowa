@@ -1,12 +1,26 @@
 import src.database.database_functions as db_functions
 import src.database.database_init as db_init
 import src.RecommendationAlgorithm as RecommendationAlgorithm
-from firebase_functions import https_fn
+from firebase_functions import https_fn, options
 
 db_init.initialize_app()
 
+cors_options = options.CorsOptions(
+    cors_methods=["POST"],
+    cors_origins=[
+        "http://localhost:3000",
+        "https://strona-randkowa.web.app",
+        "https://strona-randkowa.firebaseapp.com",
+    ],
+)
 
-@https_fn.on_request(region="europe-central2")
+
+@https_fn.on_request(region="europe-central2", cors=cors_options)
+def on_request_example(req: https_fn.Request) -> https_fn.Response:
+    return https_fn.Response("Hello world!")
+
+
+@https_fn.on_request(region="europe-central2", cors=cors_options)
 def get_matches(req: https_fn.Request) -> https_fn.Response:
     try:
         data = req.json()
