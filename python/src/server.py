@@ -1,8 +1,8 @@
+import os
+
 import database.database_functions as db_functions
-import database.database_init as db_init
 import flask
 import flask_cors
-import numpy as np
 from RecommendationAlgorithm import RecommendationAlgorithm
 
 app = flask.Flask(__name__)
@@ -44,4 +44,6 @@ def matches():
 
 
 if __name__ == "__main__":
-    app.run(port=2137, debug=True)
+    app.run(
+        port=int(os.environ.get("PORT", 2137)), host=os.environ.get("HOST", "0.0.0.0")
+    )
