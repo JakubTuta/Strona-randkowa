@@ -2,13 +2,10 @@ import typing
 
 from google.cloud import firestore
 from google.cloud.firestore_v1.base_query import FieldFilter
-from models.like import LikeModel
-from models.user import UserModel
+from src.models.like import LikeModel
+from src.models.user import UserModel
 
-from .database_init import firestore_client as fc
-
-collection_users = fc.collection("users")
-collection_likes = fc.collection("likes")
+from .database_init import collections
 
 
 def get_user(
@@ -33,7 +30,7 @@ def get_user_data(reference: firestore.DocumentReference) -> UserModel:
 
 
 def get_all_users() -> typing.List[firestore.DocumentReference]:
-    docs = collection_users.stream()
+    docs = collections["users"].stream()
 
     users = [
         UserModel.from_dict({**doc.to_dict(), "reference": doc.reference})
@@ -44,7 +41,7 @@ def get_all_users() -> typing.List[firestore.DocumentReference]:
 
 
 def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]:
-    query = collection_users.where(
+    query = collections["users"].where(
         filter=FieldFilter(
             "__name__", "not-in", [user.reference, *user.blockedProfiles]
         )
@@ -64,7 +61,7 @@ def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]
 
 
 def get_reference_from_id(doc_id: str) -> firestore.DocumentReference:
-    doc_ref = collection_users.document(doc_id)
+    doc_ref = collections["users"].document(doc_id)
 
     return doc_ref
 
@@ -72,7 +69,9 @@ def get_reference_from_id(doc_id: str) -> firestore.DocumentReference:
 def get_likes_for_user(
     user_ref: firestore.DocumentReference,
 ) -> typing.Iterable[LikeModel]:
-    query = collection_likes.where(filter=FieldFilter("likedProfile", "==", user_ref))
+    query = collections["likes"].where(
+        filter=FieldFilter("likedProfile", "==", user_ref)
+    )
     docs = query.stream()
 
     likes = [
@@ -86,9 +85,11 @@ def get_likes_for_user(
 def check_if_other_likes_user(
     user_ref: firestore.DocumentReference, other_ref: firestore.DocumentReference
 ) -> bool:
-    query = collection_likes.where(
-        filter=FieldFilter("whoLiked", "==", other_ref)
-    ).where(filter=FieldFilter("likedProfile", "==", user_ref))
+    query = (
+        collections["likes"]
+        .where(filter=FieldFilter("whoLiked", "==", other_ref))
+        .where(filter=FieldFilter("likedProfile", "==", user_ref))
+    )
     docs = query.stream()
 
     is_like = len(list(docs)) > 0

@@ -30,7 +30,17 @@ config = {
     "measurementId": os.getenv("MEASUREMENT_ID"),
 }
 
-credentials = firebase_admin.credentials.Certificate(service_account)
-app = firebase_admin.initialize_app(credentials, config)
 
-firestore_client = firestore.client()
+collections = {}
+
+
+def initialize_app():
+    credentials = firebase_admin.credentials.Certificate(service_account)
+    app = firebase_admin.initialize_app(credentials, config)
+
+    firestore_client = firestore.client(app)
+
+    collections["users"] = firestore_client.collection("users")
+    collections["likes"] = firestore_client.collection("likes")
+
+    return app

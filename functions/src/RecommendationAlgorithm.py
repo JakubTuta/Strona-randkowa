@@ -1,7 +1,7 @@
 import typing
 
-import database.database_functions as db_functions
-from models.user import UserModel
+import src.database.database_functions as db_functions
+from src.models.user import UserModel
 
 
 class RecommendationAlgorithm:
