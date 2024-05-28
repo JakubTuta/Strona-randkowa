@@ -14,11 +14,11 @@ export class LikeModel implements ILike {
   reference: DocumentReference | null
 
   constructor(data: ILike, reference: DocumentReference | null) {
-    this.whoLiked = data.whoLiked
-    this.likedProfile = data.likedProfile
-    this.date = data.date
+    this.whoLiked = data.whoLiked || null
+    this.likedProfile = data.likedProfile || null
+    this.date = data.date || null
 
-    this.reference = reference
+    this.reference = reference || null
   }
 
   toMap() {

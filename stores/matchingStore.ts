@@ -41,8 +41,7 @@ export const useMatchingStore = defineStore('matches', () => {
   }
 
   const addLike = async (newLike: LikeModel) => {
-    const docData = mapLike(newLike)
-    await addDoc(likesCollection, docData)
+    await addDoc(likesCollection, newLike.toMap())
     allLikes.value.push(newLike)
   }
 

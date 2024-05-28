@@ -6,7 +6,7 @@ const props = defineProps<{
   user: UserModel
 }>()
 
-const emit = defineEmits(['dislike'])
+const emit = defineEmits(['dislike', 'like'])
 
 const showDetails = ref<boolean>(false)
 const userAge = ref<string>()
@@ -28,6 +28,9 @@ function countAge(dateBirth: Timestamp) {
 
 async function dislike() {
   emit('dislike')
+}
+async function like() {
+  emit('like')
 }
 
 const { user } = toRefs(props)
@@ -81,7 +84,7 @@ onMounted(() => {
             :text="t('matchingView.accept')"
             variant="outlined"
             block
-            @click="dislike()"
+            @click="like()"
           />
         </v-col>
       </v-row>
