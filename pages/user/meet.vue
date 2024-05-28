@@ -26,6 +26,11 @@ async function setData() {
     const appStore = useAppStore()
     allUsers = await appStore.getAllUsers()
     currentUser = allUsers[0]
+
+    // const matchingStore = useMatchingStore()
+    // await matchingStore.getAllLikes()
+    // const { allLikes } = storeToRefs(matchingStore)
+    // console.log(allLikes)
   }
   catch (e) {
     // console.log(e)
