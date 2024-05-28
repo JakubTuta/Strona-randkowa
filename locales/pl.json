@@ -122,5 +122,11 @@
     "image": "Zdjęcie",
     "removeImage": "Usuń zdjęcie",
     "uploadImage": "Dodaj zdjęcie"
+  },
+  "matchingView": {
+    "discard": "Odrzuć",
+    "accept": "Polub",
+    "endTitle": "To wszystko!",
+    "endMessage": "Możesz przejrzeć swoje pary niżej:"
   }
 }
