@@ -11,9 +11,9 @@ const emit = defineEmits(['dislike', 'like'])
 const showDetails = ref<boolean>(false)
 const userAge = ref<string>()
 
-function countAge(dateBirth: Timestamp) {
+function countAge(dateBirth: Date) {
   const today = new Date()
-  const convertedDate = new Date(dateBirth.seconds * 1000)
+  const convertedDate = dateBirth
   try {
     let age = today.getFullYear() - convertedDate.getFullYear()
     const m = today.getMonth() - convertedDate.getMonth()
@@ -22,7 +22,7 @@ function countAge(dateBirth: Timestamp) {
     userAge.value = age.toString()
   }
   catch (e) {
-    console.log(e)
+    // console.log(e)
   }
 }
 

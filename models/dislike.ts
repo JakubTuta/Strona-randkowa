@@ -14,9 +14,9 @@ export class DislikeModel implements IDislike {
   reference: DocumentReference | null
 
   constructor(data: IDislike, reference: DocumentReference | null) {
-    this.whoDisliked = data.whoDisliked
-    this.dislikedProfile = data.dislikedProfile
-    this.date = data.date
+    this.whoDisliked = data.whoDisliked || null
+    this.dislikedProfile = data.dislikedProfile || null
+    this.date = data.date || null
 
     this.reference = reference
   }

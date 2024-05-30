@@ -5,6 +5,7 @@ import type { UserModel } from '~/models/user'
 import profileCard from '~/components/user/profileCard.vue'
 import likedCard from '~/components/user/likedCard.vue'
 import { LikeModel } from '~/models/like'
+import { DislikeModel } from '~/models/dislike'
 
 definePageMeta({
   layout: 'user',
@@ -32,7 +33,6 @@ async function setData() {
   try {
     allUsers = await appStore.getAllUsers()
     currentDisplayUser = allUsers[0]
-    console.log(currentDisplayUser)
   }
   catch (e) {
     // console.log(e)
@@ -44,6 +44,8 @@ function setNewUser() {
   if (counter.value !== allUsers.length - 1) {
     isReady.value = false
     currentDisplayUser = allUsers[counter.value + 1]
+    console.log(currentUser)
+    console.log(currentDisplayUser)
     counter.value += 1
     isReady.value = true
   }
@@ -53,19 +55,21 @@ function setNewUser() {
 }
 
 function thankYouNext() {
-  if (counter.value !== allUsers.length - 1) {
-    isReady.value = false
-    currentDisplayUser = allUsers[counter.value + 1]
-    counter.value += 1
-    isReady.value = true
+  const newDislike = new DislikeModel({
+    whoDisliked: currentUser?.reference,
+    dislikedProfile: currentDisplayUser.reference,
+    date: new Date(),
+  }, null)
+  try {
+    matchingStore.addDislike(newDislike)
+    setNewUser()
   }
-  else {
-    endFlag.value = true
+  catch (e) {
+    console.log(e)
   }
 }
 
 function likeProfile() {
-  console.log(currentDisplayUser)
   const newLike = new LikeModel({
     whoLiked: currentUser?.reference,
     likedProfile: currentDisplayUser.reference,
@@ -80,7 +84,10 @@ function likeProfile() {
   }
 }
 
-onMounted(() => setData())
+onMounted(() => {
+  console.log(currentUser)
+  setData()
+})
 </script>
 
 <template>

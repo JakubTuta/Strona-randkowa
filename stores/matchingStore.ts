@@ -45,10 +45,16 @@ export const useMatchingStore = defineStore('matches', () => {
     allLikes.value.push(newLike)
   }
 
+  const addDislike = async (newDislike: DislikeModel) => {
+    await addDoc(dislikesCollection, newDislike.toMap())
+    allDislikes.value.push(newDislike)
+  }
+
   return {
     allLikes,
     getAllLikes,
     getAllDislikes,
     addLike,
+    addDislike,
   }
 })
