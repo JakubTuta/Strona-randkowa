@@ -1,4 +1,6 @@
+import type { DocumentReference } from 'firebase/firestore'
 import { collection, getDocs, query, where } from 'firebase/firestore'
+import axios from 'axios'
 import type { UserModel } from '~/models/user'
 import { mapUser } from '~/models/user'
 
@@ -8,14 +10,30 @@ export const useRestStore = defineStore('rest', () => {
   const users = ref<UserModel[]>([])
 
   const collectionUsers = collection(firestore, 'users')
-  const serverUrl = 'http://localhost:2137'
+
+  const baseURL = 'https://europe-central2-strona-randkowa.cloudfunctions.net'
+  const HEADERS_FIREBASE = {
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Origin': '*',
+  }
+
+  function getAxiosFirebase(userReference: DocumentReference) {
+    return axios.create({
+      baseURL,
+      headers: {
+        ...HEADERS_FIREBASE,
+        collection: 'users',
+        uid: userReference.id,
+      },
+    })
+  }
 
   const mapIdsToUsers = async (referenceIds: string[]) => {
     try {
       const documents = await getDocs(query(collectionUsers, where('__name__', 'in', referenceIds)))
       const mappedUsers = documents.docs.map(mapUser)
 
-      return mappedUsers
+      return mappedUsers as UserModel[]
     }
     catch (error) {
       console.error(error)
@@ -24,24 +42,24 @@ export const useRestStore = defineStore('rest', () => {
     }
   }
 
-  const getTopUsers = (userData: UserModel | null, maxUsers: number = 1000) => {
-    if (!userData)
+  const getTopUsers = async (userData: UserModel | null, maxUsers: number = 1000) => {
+    if (!userData || !userData.reference)
       return
 
-    fetch(`${serverUrl}/matches-api`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-      body: JSON.stringify({ reference_id: userData.reference?.id || '', max_users: maxUsers }),
-    })
-      .then((response) => {
-        if (response.ok)
-          return response.json()
-      })
-      .then(async data => users.value = await mapIdsToUsers(data))
-      .catch(error => console.error(error))
+    const requestData = {
+      reference_id: userData.reference.id,
+      max_users: maxUsers,
+    }
+
+    try {
+      const data = await getAxiosFirebase(userData.reference)
+        .post('/get_matches', requestData)
+
+      users.value = await mapIdsToUsers(data.data)
+    }
+    catch (error) {
+      console.error(error)
+    }
   }
 
   return {
