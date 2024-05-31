@@ -31,7 +31,15 @@ const counter = ref<number>(0)
 
 async function setData() {
   try {
-    allUsers = await appStore.getAllUsers()
+    // allUsers = await appStore.getAllUsers()
+    // currentDisplayUser = allUsers[0]
+
+    const restStore = useRestStore()
+    await restStore.getTopUsers(currentUser)
+    const { users } = storeToRefs(restStore)
+    console.log(users)
+
+    allUsers = users.value
     currentDisplayUser = allUsers[0]
   }
   catch (e) {
