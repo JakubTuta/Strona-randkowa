@@ -2,3 +2,7 @@ python-dotenv
 firebase
 firebase-admin
 firebase-functions
+numpy
+tensorflow
+keras
+deepface

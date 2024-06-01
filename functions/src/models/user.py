@@ -16,7 +16,7 @@ class UserModel:
     faculty: str = ""
     fieldOfStudy: str = ""
     lastName: str = ""
-    dateBirth: datetime.datetime = datetime.datetime.now()
+    dateBirth: datetime.datetime = datetime.datetime.now(datetime.timezone.utc)
     gender: str = ""
     index: int = 0
     role: str = ""
@@ -29,6 +29,7 @@ class UserModel:
         default_factory=list, compare=False, hash=False, repr=False
     )
     hobbies: typing.List[str] = dataclasses.field(default_factory=list)
+    verifiedImages: int = 0
 
     reference: firestore.DocumentReference = dataclasses.field(
         default=None, compare=False, hash=False, repr=False

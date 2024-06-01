@@ -24,6 +24,7 @@ export interface IUser {
   lookingFor: TLookingFor
   blockedProfiles: DocumentReference[]
   hobbies: THobby[]
+  verifiedImages: number
 }
 
 export class UserModel implements IUser {
@@ -44,6 +45,7 @@ export class UserModel implements IUser {
   lookingFor: TLookingFor
   blockedProfiles: DocumentReference[]
   hobbies: THobby[]
+  verifiedImages: number
 
   reference: DocumentReference | null
 
@@ -65,6 +67,7 @@ export class UserModel implements IUser {
     this.lookingFor = data.lookingFor || ''
     this.blockedProfiles = data.blockedProfiles || []
     this.hobbies = data.hobbies || []
+    this.verifiedImages = data.verifiedImages || 0
 
     this.reference = reference
   }
@@ -88,6 +91,7 @@ export class UserModel implements IUser {
       lookingFor: this.lookingFor,
       blockedProfiles: this.blockedProfiles,
       hobbies: this.hobbies,
+      verifiedImages: this.verifiedImages,
     }
   }
 }
