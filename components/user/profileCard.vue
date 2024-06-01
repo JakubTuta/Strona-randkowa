@@ -53,7 +53,7 @@ onMounted(() => {
       class="align-end"
       height="400"
       weight="400"
-      src="/testPerson3.jpg"
+      :src="user.photos[0]"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
       cover
     >
