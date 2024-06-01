@@ -3,7 +3,7 @@ import type {
 
 } from 'firebase/auth'
 
-import { collection, doc, setDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import type { DocumentReference } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut as signoutFirebase } from 'firebase/auth'
 import { useSharedStore } from './sharedStore'
@@ -19,6 +19,7 @@ export const useAppStore = defineStore('app', () => {
   const router = useRouter()
 
   const sharedStore = useSharedStore()
+  const uploadImageStore = useUploadImageStore()
 
   const user: Ref<User | null> = ref(null)
   const userData: Ref<UserModel | null> = ref(null)
@@ -35,6 +36,11 @@ export const useAppStore = defineStore('app', () => {
 
   const createUser = async (newUser: UserModel) => {
     const userReference = doc(usersCollection, newUser?.reference?.id)
+
+    const imageUrl = (await uploadImageStore.createAndUploadImage(userReference, newUser.photos[0])).imageUrl
+
+    newUser.photos[0] = imageUrl
+
     await setDoc(userReference, newUser.toMap())
   }
 
@@ -146,6 +152,18 @@ export const useAppStore = defineStore('app', () => {
       updateDoc(newUser.reference, data)
   }
 
+  const getAllUsers = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(firestore, 'users'))
+      const users = querySnapshot.docs.map(doc => doc.data())
+      return users
+    }
+    catch (error) {
+      console.error('Error fetching users:', error)
+      return []
+    }
+  }
+
   return {
     user,
     userData,
@@ -155,5 +173,6 @@ export const useAppStore = defineStore('app', () => {
     createUser,
     currentUser,
     editUser,
+    getAllUsers,
   }
 })

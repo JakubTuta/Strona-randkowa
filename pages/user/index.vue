@@ -13,7 +13,6 @@ definePageMeta({
         </h1>
       </v-col>
     </v-row>
-
     <v-row justify="center">
       <v-col cols="12" md="8">
         <v-carousel class="rounded-xl" cycle :interval="5000">
