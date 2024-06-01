@@ -2,7 +2,7 @@ import json
 
 import src.database.database_functions as db_functions
 import src.database.database_init as db_init
-from firebase_functions import https_fn, options
+from firebase_functions import https_fn, options, scheduler_fn
 from src.RecommendationAlgorithm import RecommendationAlgorithm
 
 db_init.initialize_app()
@@ -11,11 +11,6 @@ cors_options = options.CorsOptions(
     cors_methods=["POST", "OPTIONS"],
     cors_origins="*",
 )
-
-
-@https_fn.on_request(region="europe-central2", cors=cors_options)
-def test_functions_cors(req: https_fn.Request) -> https_fn.Response:
-    return https_fn.Response("", 200)
 
 
 @https_fn.on_request(region="europe-central2", cors=cors_options)
@@ -54,3 +49,8 @@ def get_matches(req: https_fn.Request) -> https_fn.Response:
         json.dumps(users_references_ids),
         status=200,
     )
+
+
+@scheduler_fn.on_schedule(schedule="every day 00:00")
+def delete_old_dislikes(event: scheduler_fn.ScheduledEvent) -> None:
+    db_functions.delete_older_dislikes()

@@ -1,3 +1,4 @@
+import datetime
 import typing
 
 from google.cloud import firestore
@@ -95,3 +96,14 @@ def check_if_other_likes_user(
     is_like = len(list(docs)) > 0
 
     return is_like
+
+
+def delete_older_dislikes():
+    cutout_date = datetime.datetime.now() - datetime.timedelta(weeks=1)
+
+    query = collections["dislikes"].where("date", "<", cutout_date)
+
+    docs = query.stream()
+
+    for doc in docs:
+        doc.reference.delete()

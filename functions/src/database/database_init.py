@@ -42,5 +42,6 @@ def initialize_app():
 
     collections["users"] = firestore_client.collection("users")
     collections["likes"] = firestore_client.collection("likes")
+    collections["dislikes"] = firestore_client.collection("dislikes")
 
     return app
