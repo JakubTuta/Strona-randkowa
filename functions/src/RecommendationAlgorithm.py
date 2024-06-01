@@ -5,7 +5,7 @@ from src.models.user import UserModel
 
 
 class RecommendationAlgorithm:
-    # elo mieści się od 500 do 2000
+    # elo może być od 0 do 2000
     __ELO_SCORE = {
         "MIN_ORIGINAL_SCORE": 500,
         "MAX_ORIGINAL_SCORE": 2000,
@@ -23,7 +23,7 @@ class RecommendationAlgorithm:
 
     __SCORING = {
         "IS_PREFERRED_GENDER": 2.0,
-        "IS_PHOTO": 1.0,
+        "IS_PHOTO": 0.25,
         "IS_DESCRIPTION": 1.0,
         "IS_LIKE": 3.0,
         "SAME_HOBBY": 0.5,
