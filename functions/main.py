@@ -1,3 +1,5 @@
+# https://firebase.google.com/docs/functions/organize-functions?gen=2nd#python
+
 import datetime
 import io
 import json
