@@ -107,11 +107,3 @@ def delete_older_dislikes():
 
     for doc in docs:
         doc.reference.delete()
-
-
-def add_verified_image(user_data: UserModel):
-    current_verified_images = user_data.verifiedImages
-
-    update_data = {"verifiedImages": current_verified_images + 1}
-
-    user_data.reference.update(update_data)
