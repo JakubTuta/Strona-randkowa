@@ -51,6 +51,8 @@ def get_matches(req: https_fn.Request) -> https_fn.Response:
     )
 
 
-@scheduler_fn.on_schedule(schedule="every day 00:00")
+@scheduler_fn.on_schedule(
+    region="europe-central2", schedule="every day 00:00", memory=128
+)
 def delete_old_dislikes(event: scheduler_fn.ScheduledEvent) -> None:
     db_functions.delete_older_dislikes()
