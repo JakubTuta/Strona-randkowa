@@ -40,7 +40,7 @@ def compare_image_with_user(user_data, facial_recognition_result):
 
 
 @storage_fn.on_object_finalized(
-    region="europe-central2", bucket="strona-randkowa.appspot.com", memory=512
+    region="europe-central2", bucket="strona-randkowa.appspot.com", memory=1024
 )
 def facial_recognition(event: storage_fn.CloudEvent[storage_fn.StorageObjectData]):
     content_type = event.data.content_type

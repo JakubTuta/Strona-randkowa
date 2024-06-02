@@ -27,3 +27,4 @@ logs
 firebase_credentials.json
 __pycache__/
 settings.json/tasks.json
+venv/
