@@ -3,6 +3,6 @@ firebase
 firebase-admin
 firebase-functions
 numpy
+tf-keras==2.16.0
 tensorflow
-keras
 deepface
