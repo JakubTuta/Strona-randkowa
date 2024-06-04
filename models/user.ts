@@ -25,6 +25,7 @@ export interface IUser {
   blockedProfiles: DocumentReference[]
   hobbies: THobby[]
   verifiedImages: number
+  matches: DocumentReference[]
 }
 
 export class UserModel implements IUser {
@@ -46,6 +47,7 @@ export class UserModel implements IUser {
   blockedProfiles: DocumentReference[]
   hobbies: THobby[]
   verifiedImages: number
+  matches: DocumentReference[]
 
   reference: DocumentReference | null
 
@@ -68,6 +70,7 @@ export class UserModel implements IUser {
     this.blockedProfiles = data.blockedProfiles || []
     this.hobbies = data.hobbies || []
     this.verifiedImages = data.verifiedImages || 0
+    this.matches = data.matches || []
 
     this.reference = reference
   }
@@ -92,6 +95,7 @@ export class UserModel implements IUser {
       blockedProfiles: this.blockedProfiles,
       hobbies: this.hobbies,
       verifiedImages: this.verifiedImages,
+      matches: this.matches,
     }
   }
 }

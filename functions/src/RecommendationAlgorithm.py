@@ -127,7 +127,9 @@ class RecommendationAlgorithm:
     @staticmethod
     def __check_if_likes(user: UserModel, other: UserModel) -> float:
         score = (
-            db_functions.check_if_other_likes_user(user.reference, other.reference)
+            bool(
+                db_functions.check_if_other_likes_user(user.reference, other.reference)
+            )
             * RecommendationAlgorithm.__SCORING["IS_LIKE"]
         )
 

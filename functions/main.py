@@ -51,6 +51,54 @@ def get_matches(req: https_fn.Request) -> https_fn.Response:
     )
 
 
+@https_fn.on_request(region="europe-central2", cors=cors_options)
+def is_match(req: https_fn.Request) -> https_fn.Response:
+    try:
+        data = req.get_json(force=True)
+
+        user_id = data["whoLiked"]
+        other_id = data["likedProfile"]
+
+    except KeyError:
+        return https_fn.Response(
+            json.dumps(
+                {
+                    "Error": "Nie podano whoLiked lub likedProfile",
+                },
+                status=400,
+            )
+        )
+
+    except Exception as e:
+        return https_fn.Response(
+            json.dumps({"Error": str(e)}),
+            status=400,
+        )
+
+    user_reference = db_functions.get_reference_from_id(user_id)
+    other_reference = db_functions.get_reference_from_id(other_id)
+
+    like_model = db_functions.check_if_other_likes_user(user_reference, other_reference)
+
+    if not like_model:
+        db_functions.add_new_like(user_reference, other_reference)
+
+        return https_fn.Response(json.dumps({"is_match": False}), 200)
+
+    like_model.reference.delete()
+
+    user_data = db_functions.get_user_data(user_reference)
+    other_data = db_functions.get_user_data(other_reference)
+
+    user_data_new_matches = {"matches": [*user_data.matches, other_reference]}
+    other_data_new_matches = {"matches": [*other_data.matches, user_reference]}
+
+    user_reference.update(user_data_new_matches)
+    other_reference.update(other_data_new_matches)
+
+    return https_fn.Response(json.dumps({"is_match": True}), 200)
+
+
 @scheduler_fn.on_schedule(
     region="europe-central2", schedule="every day 00:00", memory=128
 )
