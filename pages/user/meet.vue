@@ -4,13 +4,24 @@ import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
 import profileCard from '~/components/user/profileCard.vue'
 import likedCard from '~/components/user/likedCard.vue'
+import { LikeModel } from '~/models/like'
+import { DislikeModel } from '~/models/dislike'
 
 definePageMeta({
   layout: 'user',
 })
 
+const matchingStore = useMatchingStore()
+const appStore = useAppStore()
+const restStore = useRestStore()
+
+const { userData } = storeToRefs(appStore)
+const { allLikes } = storeToRefs(matchingStore)
+
+const currentUser: UserModel | null = userData.value
+
 let allUsers: UserModel[]
-let currentUser: UserModel
+let currentDisplayUser: UserModel
 const isReady = ref<boolean>(false)
 const endFlag = ref<boolean>(false)
 const counter = ref<number>(0)
@@ -23,9 +34,15 @@ const counter = ref<number>(0)
 
 async function setData() {
   try {
-    const appStore = useAppStore()
-    allUsers = await appStore.getAllUsers()
-    currentUser = allUsers[0]
+    // allUsers = await appStore.getAllUsers()
+    // currentDisplayUser = allUsers[0]
+
+    await restStore.getTopUsers(currentUser)
+    const { users } = storeToRefs(restStore)
+
+    checkMatch()
+    allUsers = users.value
+    currentDisplayUser = allUsers[0]
   }
   catch (e) {
     // console.log(e)
@@ -33,10 +50,10 @@ async function setData() {
   isReady.value = true
 }
 
-function thankYouNext() {
+function setNewUser() {
   if (counter.value !== allUsers.length - 1) {
     isReady.value = false
-    currentUser = allUsers[counter.value + 1]
+    currentDisplayUser = allUsers[counter.value + 1]
     counter.value += 1
     isReady.value = true
   }
@@ -45,12 +62,56 @@ function thankYouNext() {
   }
 }
 
-onMounted(() => setData())
+function thankYouNext() {
+  const newDislike = new DislikeModel({
+    whoDisliked: currentUser?.reference,
+    dislikedProfile: currentDisplayUser.reference,
+    date: new Date(),
+  }, null)
+  try {
+    matchingStore.addDislike(newDislike)
+    setNewUser()
+  }
+  catch (e) {
+    console.log(e)
+  }
+}
+
+function likeProfile() {
+  const newLike = new LikeModel({
+    whoLiked: currentUser?.reference,
+    likedProfile: currentDisplayUser.reference,
+    date: new Date(),
+  }, null)
+  try {
+    const checkLike = allLikes.value.find(like => like?.likedProfile.id === newLike?.whoLiked.id)
+    console.log(checkLike)
+    if (checkLike)
+      console.log(`para: ${newLike} + ${checkLike}`)
+    else
+      matchingStore.addLike(newLike)
+
+    setNewUser()
+  }
+  catch (e) {
+    console.log(e)
+  }
+}
+
+function checkMatch() {
+  console.log(allLikes)
+}
+
+onMounted(() => {
+  console.log(currentUser)
+  setData()
+  matchingStore.getAllLikes()
+})
 </script>
 
 <template>
   <v-sheet v-if="!endFlag" class="mx-auto my-10 px-4" elevation="4" max-width="700" rounded>
-    <profile-card v-if="isReady && !endFlag" :user="currentUser" @dislike="thankYouNext" />
+    <profile-card v-if="isReady && !endFlag" :user="currentDisplayUser" @dislike="thankYouNext" @like="likeProfile" />
   </v-sheet>
   <v-sheet v-else class="mx-auto my-10 px-4" elevation="4" max-width="700" rounded>
     <v-card

@@ -7,7 +7,7 @@ import { collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import type { DocumentReference } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut as signoutFirebase } from 'firebase/auth'
 import { useSharedStore } from './sharedStore'
-import { type IUser, UserModel } from '~/models/user'
+import { type IUser, UserModel, mapUser } from '~/models/user'
 
 export const useAppStore = defineStore('app', () => {
   const { firestore, auth } = useFirebase()
@@ -23,6 +23,8 @@ export const useAppStore = defineStore('app', () => {
 
   const user: Ref<User | null> = ref(null)
   const userData: Ref<UserModel | null> = ref(null)
+
+  // const allUsers: Ref<UserModel[]> = ref(null)
 
   const signOut = async () => {
     sharedStore.init()
@@ -155,7 +157,20 @@ export const useAppStore = defineStore('app', () => {
   const getAllUsers = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'users'))
-      const users = querySnapshot.docs.map(doc => doc.data())
+      const users = querySnapshot.docs.map(mapUser)
+      return users
+    }
+    catch (error) {
+      console.error('Error fetching users:', error)
+      return []
+    }
+  }
+
+  const fetchAllUsers = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(firestore, 'users'))
+      const users = querySnapshot.docs.map(doc => new UserModel(doc.data() as IUser, doc.ref))
+      // allUsers.value = users
       return users
     }
     catch (error) {
@@ -167,6 +182,7 @@ export const useAppStore = defineStore('app', () => {
   return {
     user,
     userData,
+    // allUsers,
     registerWithPassword,
     logInWithPassword,
     signOut,
@@ -174,5 +190,6 @@ export const useAppStore = defineStore('app', () => {
     currentUser,
     editUser,
     getAllUsers,
+    fetchAllUsers,
   }
 })

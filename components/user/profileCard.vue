@@ -6,14 +6,14 @@ const props = defineProps<{
   user: UserModel
 }>()
 
-const emit = defineEmits(['dislike'])
+const emit = defineEmits(['dislike', 'like'])
 
 const showDetails = ref<boolean>(false)
 const userAge = ref<string>()
 
-function countAge(dateBirth: Timestamp) {
+function countAge(dateBirth: Date) {
   const today = new Date()
-  const convertedDate = new Date(dateBirth.seconds * 1000)
+  const convertedDate = dateBirth
   try {
     let age = today.getFullYear() - convertedDate.getFullYear()
     const m = today.getMonth() - convertedDate.getMonth()
@@ -22,12 +22,15 @@ function countAge(dateBirth: Timestamp) {
     userAge.value = age.toString()
   }
   catch (e) {
-    console.log(e)
+    // console.log(e)
   }
 }
 
 async function dislike() {
   emit('dislike')
+}
+async function like() {
+  emit('like')
 }
 
 const { user } = toRefs(props)
@@ -50,7 +53,7 @@ onMounted(() => {
       class="align-end"
       height="400"
       weight="400"
-      src="/testPerson3.jpg"
+      :src="user.photos[0]"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
       cover
     >
@@ -81,7 +84,7 @@ onMounted(() => {
             :text="t('matchingView.accept')"
             variant="outlined"
             block
-            @click="dislike()"
+            @click="like()"
           />
         </v-col>
       </v-row>
