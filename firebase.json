@@ -10,7 +10,18 @@
   "functions": [
     {
       "source": "functions",
-      "codebase": "default",
+      "codebase": "function_1",
+      "ignore": [
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    },
+    {
+      "source": "function_facial_recognition",
+      "codebase": "function_2",
       "ignore": [
         "venv",
         ".git",
@@ -19,5 +30,26 @@
         "*.local"
       ]
     }
-  ]
+  ],
+  "emulators": {
+    "functions": {
+      "port": 5001
+    },
+    "hosting": {
+      "port": 5000
+    },
+    "storage": {
+      "port": 9199
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true,
+    "firestore": {
+      "port": 8080
+    }
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
 }

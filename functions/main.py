@@ -2,7 +2,7 @@ import json
 
 import src.database.database_functions as db_functions
 import src.database.database_init as db_init
-from firebase_functions import https_fn, options
+from firebase_functions import firestore_fn, https_fn, options, scheduler_fn
 from src.RecommendationAlgorithm import RecommendationAlgorithm
 
 db_init.initialize_app()
@@ -11,11 +11,6 @@ cors_options = options.CorsOptions(
     cors_methods=["POST", "OPTIONS"],
     cors_origins="*",
 )
-
-
-@https_fn.on_request(region="europe-central2", cors=cors_options)
-def test_functions_cors(req: https_fn.Request) -> https_fn.Response:
-    return https_fn.Response("", 200)
 
 
 @https_fn.on_request(region="europe-central2", cors=cors_options)
@@ -54,3 +49,48 @@ def get_matches(req: https_fn.Request) -> https_fn.Response:
         json.dumps(users_references_ids),
         status=200,
     )
+
+
+@scheduler_fn.on_schedule(
+    region="europe-central2", schedule="every day 00:00", memory=128
+)
+def delete_old_dislikes(event: scheduler_fn.ScheduledEvent) -> None:
+    db_functions.delete_older_dislikes()
+
+
+@firestore_fn.on_document_created(region="europe-central2", document="likes/{likeId}")
+def on_like_create(event: firestore_fn.Event[firestore_fn.DocumentSnapshot]) -> None:
+    document_data = event.data.to_dict()
+
+    liked_profile = document_data["likedProfile"]
+    profile_data = db_functions.get_user_data(liked_profile)
+
+    new_elo = profile_data.elo + 10
+    if new_elo > 2000:
+        new_elo = 2000
+
+    update_data = {
+        "elo": new_elo,
+    }
+
+    liked_profile.update(update_data)
+
+
+@firestore_fn.on_document_created(
+    region="europe-central2", document="dislikes/{dislikeId}"
+)
+def on_dislike_create(event: firestore_fn.Event[firestore_fn.DocumentSnapshot]) -> None:
+    document_data = event.data.to_dict()
+
+    disliked_profile = document_data["dislikedProfile"]
+    profile_data = db_functions.get_user_data(disliked_profile)
+
+    new_elo = profile_data.elo - 10
+    if new_elo < 500:
+        new_elo = 500
+
+    update_data = {
+        "elo": new_elo,
+    }
+
+    disliked_profile.update(update_data)

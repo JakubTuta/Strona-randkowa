@@ -5,7 +5,7 @@ from src.models.user import UserModel
 
 
 class RecommendationAlgorithm:
-    # elo mieści się od 500 do 2000
+    # elo może być od 0 do 2000
     __ELO_SCORE = {
         "MIN_ORIGINAL_SCORE": 500,
         "MAX_ORIGINAL_SCORE": 2000,
@@ -23,13 +23,11 @@ class RecommendationAlgorithm:
 
     __SCORING = {
         "IS_PREFERRED_GENDER": 2.0,
-        "IS_PHOTO": 1.0,
+        "VERIFIED_PHOTO": 0.25,
         "IS_DESCRIPTION": 1.0,
         "IS_LIKE": 3.0,
         "SAME_HOBBY": 0.5,
     }
-
-    __MAX_PHOTOS = 9
 
     @staticmethod
     def score_one_user(user: UserModel, other: UserModel) -> float:
@@ -38,7 +36,7 @@ class RecommendationAlgorithm:
         other_score += RecommendationAlgorithm.__calculate_preferred_gender(user, other)
         other_score += RecommendationAlgorithm.__calculate_elo_score(other)
         other_score += RecommendationAlgorithm.__calculate_rating_score(other)
-        other_score += RecommendationAlgorithm.__check_if_is_photo(other)
+        other_score += RecommendationAlgorithm.__check_verified_photos(other)
         other_score += RecommendationAlgorithm.__check_if_is_description(other)
         other_score += RecommendationAlgorithm.__check_if_likes(user, other)
         other_score += RecommendationAlgorithm.__check_hobbies(user, other)
@@ -111,10 +109,10 @@ class RecommendationAlgorithm:
         return normalized_score
 
     @staticmethod
-    def __check_if_is_photo(user: UserModel) -> float:
+    def __check_verified_photos(user: UserModel) -> float:
         score = (
-            len(user.photos) / RecommendationAlgorithm.__MAX_PHOTOS
-        ) * RecommendationAlgorithm.__SCORING["IS_PHOTO"]
+            user.verifiedImages * RecommendationAlgorithm.__SCORING["VERIFIED_PHOTO"]
+        )
 
         return score
 
