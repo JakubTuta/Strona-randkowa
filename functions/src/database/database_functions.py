@@ -9,20 +9,12 @@ from src.models.user import UserModel
 from .database_init import collections
 
 
-def get_user(
+def get_user_data(
     reference: typing.Optional[firestore.DocumentReference],
 ) -> typing.Optional[UserModel]:
     if not reference:
         return None
 
-    document = reference.get()
-
-    user = UserModel.from_dict({**document.to_dict(), "reference": document.reference})
-
-    return user
-
-
-def get_user_data(reference: firestore.DocumentReference) -> UserModel:
     document = reference.get()
 
     user = UserModel.from_dict({**document.to_dict(), "reference": document.reference})
@@ -85,7 +77,7 @@ def get_likes_for_user(
 
 def check_if_other_likes_user(
     user_ref: firestore.DocumentReference, other_ref: firestore.DocumentReference
-) -> bool:
+) -> typing.Optional[LikeModel]:
     query = (
         collections["likes"]
         .where(filter=FieldFilter("whoLiked", "==", other_ref))
@@ -93,9 +85,12 @@ def check_if_other_likes_user(
     )
     docs = query.stream()
 
-    is_like = len(list(docs)) > 0
+    if len(list(docs)):
+        like_model = LikeModel.from_dict(
+            {**docs[0].to_dict(), "reference": docs[0].reference}
+        )
 
-    return is_like
+        return like_model
 
 
 def delete_older_dislikes():
@@ -107,3 +102,11 @@ def delete_older_dislikes():
 
     for doc in docs:
         doc.reference.delete()
+
+
+def add_new_like(
+    user_ref: firestore.DocumentReference, other_ref: firestore.DocumentReference
+):
+    like_data = {"whoLiked": user_ref, "likedProfile": other_ref}
+
+    collections["likes"].add(like_data)
