@@ -15,9 +15,6 @@ cors_options = options.CorsOptions(
 
 @https_fn.on_request(region="europe-central2", cors=cors_options)
 def get_matches(req: https_fn.Request) -> https_fn.Response:
-    if req.method.lower() != "post":
-        return https_fn.Response("", 200)
-
     try:
         data = req.get_json(force=True)
 
