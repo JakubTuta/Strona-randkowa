@@ -30,8 +30,10 @@ const { userMatches } = storeToRefs(appStore)
 
 async function setData() {
   try {
+    console.log(currentUser)
     await restStore.getTopUsers(currentUser)
     const { users } = storeToRefs(restStore)
+    console.log(users)
     allUsers = users.value
     currentDisplayUser = allUsers[0]
   }
@@ -87,8 +89,10 @@ async function likeProfile() {
 }
 
 async function setUserMatches() {
-  if (currentUser?.matches !== undefined)
+  if (currentUser?.matches !== undefined) {
     await appStore.fetchLikedProfiles(currentUser?.matches)
+    console.log(userMatches)
+  }
 }
 
 onMounted(() => {
@@ -122,7 +126,7 @@ onMounted(() => {
   </v-sheet>
 
   <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
-    <v-card v-if="userMatches">
+    <v-card v-if="userMatches.length">
       <v-card-title class="d-flex justify-center align-center flex-column">
         {{ $t("matchingView.yourMatches") }}
       </v-card-title>
@@ -131,7 +135,7 @@ onMounted(() => {
       </v-card-text>
     </v-card>
     <v-card v-else>
-      <v-card-title class="text-h5">
+      <v-card-title class="d-flex justify-center align-center flex-column">
         {{ $t("matchingView.noMatches") }}
       </v-card-title>
     </v-card>
