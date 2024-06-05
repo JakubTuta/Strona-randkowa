@@ -122,12 +122,19 @@ onMounted(() => {
   </v-sheet>
 
   <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
-    <div v-if="userMatches">
-      <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
-    </div>
-    <div v-else>
-      Nothing to show.
-    </div>
+    <v-card v-if="userMatches">
+      <v-card-title class="d-flex justify-center align-center flex-column">
+        {{ $t("matchingView.yourMatches") }}
+      </v-card-title>
+      <v-card-text class="d-flex justify-center align-center flex-column">
+        <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
+      </v-card-text>
+    </v-card>
+    <v-card v-else>
+      <v-card-title class="text-h5">
+        {{ $t("matchingView.noMatches") }}
+      </v-card-title>
+    </v-card>
   </v-sheet>
 </template>
 

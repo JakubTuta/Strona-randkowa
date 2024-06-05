@@ -127,6 +127,8 @@
     "discard": "Odrzuć",
     "accept": "Polub",
     "endTitle": "To wszystko!",
-    "endMessage": "Możesz przejrzeć swoje pary niżej:"
+    "endMessage": "Możesz przejrzeć swoje pary niżej:",
+    "yourMatches": "Twoje pary:",
+    "noMatches": "Aktualnie nie posiadasz dopasowań :("
   }
 }

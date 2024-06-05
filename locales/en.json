@@ -127,6 +127,8 @@
     "discard": "Discard",
     "accept": "Like",
     "endTitle": "That's all!",
-    "endMessage": "You can see your partners below:"
+    "endMessage": "You can see your partners below:",
+    "yourMatches": "Your matches:",
+    "noMatches": "Actually you don't have any matches :("
   }
 }
