@@ -19,6 +19,7 @@ const { userData } = storeToRefs(appStore)
 const { allLikes } = storeToRefs(matchingStore)
 
 const currentUser: UserModel | null = userData.value
+// let currentUser: UserModel
 
 let allUsers: UserModel[]
 let currentDisplayUser: UserModel
@@ -36,10 +37,10 @@ async function setData() {
   try {
     // allUsers = await appStore.getAllUsers()
     // currentDisplayUser = allUsers[0]
-
+    // console.log(currentUser)
     await restStore.getTopUsers(currentUser)
     const { users } = storeToRefs(restStore)
-
+    console.log(currentUser)
     checkMatch()
     allUsers = users.value
     currentDisplayUser = allUsers[0]
@@ -84,13 +85,8 @@ function likeProfile() {
     date: new Date(),
   }, null)
   try {
-    const checkLike = allLikes.value.find(like => like?.likedProfile.id === newLike?.whoLiked.id)
-    console.log(checkLike)
-    if (checkLike)
-      console.log(`para: ${newLike} + ${checkLike}`)
-    else
-      matchingStore.addLike(newLike)
-
+    const check = restStore.checkMatches(newLike)
+    console.log(check)
     setNewUser()
   }
   catch (e) {
@@ -103,7 +99,6 @@ function checkMatch() {
 }
 
 onMounted(() => {
-  console.log(currentUser)
   setData()
   matchingStore.getAllLikes()
 })

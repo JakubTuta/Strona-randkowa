@@ -3,6 +3,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import axios from 'axios'
 import type { UserModel } from '~/models/user'
 import { mapUser } from '~/models/user'
+import type { LikeModel } from '~/models/like'
 
 export const useRestStore = defineStore('rest', () => {
   const { firestore } = useFirebase()
@@ -62,8 +63,29 @@ export const useRestStore = defineStore('rest', () => {
     }
   }
 
+  const checkMatches = async (like: LikeModel) => {
+    if (!like || !like.reference)
+      return
+
+    const requestData = {
+      whoLiked: like.whoLiked.id,
+      likedProfile: like.likedProfile.id,
+    }
+
+    try {
+      const data = await getAxiosFirebase(like.reference)
+        .post('/is_match', requestData)
+
+      return data.data.is_match
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     users,
     getTopUsers,
+    checkMatches,
   }
 })
