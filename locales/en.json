@@ -129,6 +129,7 @@
     "endTitle": "That's all!",
     "endMessage": "You can see your partners below:",
     "yourMatches": "Your matches:",
-    "noMatches": "Actually you don't have any matches :("
+    "noMatches": "Actually you don't have any matches :(",
+    "matchSnackbar": "New match!"
   }
 }

@@ -11,9 +11,12 @@ definePageMeta({
   layout: 'user',
 })
 
+const { t } = useI18n()
+
 const matchingStore = useMatchingStore()
 const appStore = useAppStore()
 const restStore = useRestStore()
+const sharedStore = useSharedStore()
 
 const { userData } = storeToRefs(appStore)
 // const { allLikes } = storeToRefs(matchingStore)
@@ -81,6 +84,10 @@ async function likeProfile() {
     console.log(newLike)
     const check = await restStore.checkMatches(currentUser, newLike)
     console.log(check)
+    if (check) {
+      const textToShow = t('matchingView.matchSnackbar')
+      sharedStore.customTextSnackbar(textToShow)
+    }
     setNewUser()
   }
   catch (e) {

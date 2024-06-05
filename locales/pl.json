@@ -129,6 +129,7 @@
     "endTitle": "To wszystko!",
     "endMessage": "Możesz przejrzeć swoje pary niżej:",
     "yourMatches": "Twoje pary:",
-    "noMatches": "Aktualnie nie posiadasz dopasowań :("
+    "noMatches": "Aktualnie nie posiadasz dopasowań :(",
+    "matchSnackbar": "Masz nową parę!"
   }
 }
