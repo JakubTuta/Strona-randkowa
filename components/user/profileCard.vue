@@ -51,11 +51,12 @@ onMounted(() => {
   >
     <v-img
       class="align-end"
-      height="400"
+      height="1000"
       weight="400"
       :src="user.photos[0]"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
       cover
+      max-height="1000"
     >
       <v-card-title class="text-white">
         <div style="font-weight: bold;" class="text-h4">
