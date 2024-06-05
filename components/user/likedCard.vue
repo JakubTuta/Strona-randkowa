@@ -20,26 +20,25 @@ function countAge(dateBirth: Date) {
     return age.toString()
   }
   catch (e) {
-    console.log(e)
+    // console.log(e)
   }
 }
 onMounted(() => {
-//   age.value = countAge(user?.value.dateBirth)
+  age.value = countAge(user?.value.dateBirth)
 })
 </script>
 
 <template>
   <v-card color="primary" max-height="300" max-width="310" class="rounded-xl pt-2 cursor-pointer grow ma-3">
     <v-card-title class="width-100 d-flex justify-space-between">
-      <span>{{ user?.firstName }},</span>
-      <span>{{ age }}</span>
+      <span>{{ user?.firstName }} {{ user?.lastName }}, {{ age }}</span>
     </v-card-title>
 
     <v-card-subtitle class="mt-n2 mb-2 font-weight-bold">
-      <span> {{ user?.fieldOfStudy }}</span>
+      <span> {{ user?.description }}</span>
     </v-card-subtitle>
 
-    <v-img src="/testPerson2.jpg" />
+    <v-img :src="user.photos[0]" />
   </v-card>
 </template>
 

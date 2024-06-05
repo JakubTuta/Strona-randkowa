@@ -16,10 +16,9 @@ const appStore = useAppStore()
 const restStore = useRestStore()
 
 const { userData } = storeToRefs(appStore)
-const { allLikes } = storeToRefs(matchingStore)
+// const { allLikes } = storeToRefs(matchingStore)
 
 const currentUser: UserModel | null = userData.value
-// let currentUser: UserModel
 
 let allUsers: UserModel[]
 let currentDisplayUser: UserModel
@@ -27,21 +26,12 @@ const isReady = ref<boolean>(false)
 const endFlag = ref<boolean>(false)
 const counter = ref<number>(0)
 
-// async function oldSetData() {
-//   const appStore = useAppStore()
-//   const { userData } = storeToRefs(appStore)
-//   currentUser = userData
-// }
+const { userMatches } = storeToRefs(appStore)
 
 async function setData() {
   try {
-    // allUsers = await appStore.getAllUsers()
-    // currentDisplayUser = allUsers[0]
-    // console.log(currentUser)
     await restStore.getTopUsers(currentUser)
     const { users } = storeToRefs(restStore)
-    console.log(currentUser)
-    checkMatch()
     allUsers = users.value
     currentDisplayUser = allUsers[0]
   }
@@ -74,7 +64,7 @@ function thankYouNext() {
     setNewUser()
   }
   catch (e) {
-    console.log(e)
+    // console.log(e)
   }
 }
 
@@ -96,13 +86,15 @@ async function likeProfile() {
   }
 }
 
-function checkMatch() {
-  console.log(allLikes)
+async function setUserMatches() {
+  if (currentUser?.matches !== undefined)
+    await appStore.fetchLikedProfiles(currentUser?.matches)
 }
 
 onMounted(() => {
   setData()
   matchingStore.getAllLikes()
+  setUserMatches()
 })
 </script>
 
@@ -129,9 +121,14 @@ onMounted(() => {
     </v-card>
   </v-sheet>
 
-  <!-- <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
-    <liked-card :user="currentUser" />
-  </v-sheet> -->
+  <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
+    <div v-if="userMatches">
+      <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
+    </div>
+    <div v-else>
+      Nothing to show.
+    </div>
+  </v-sheet>
 </template>
 
 <style>
