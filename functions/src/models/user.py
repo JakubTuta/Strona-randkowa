@@ -20,7 +20,9 @@ class UserModel:
     gender: str = ""
     index: int = 0
     role: str = ""
-    score: float = 0
+    score: typing.Dict[str, float] = dataclasses.field(
+        default_factory=lambda: {"count": 0, "average": 0.0}
+    )
     elo: int = 0
     preferredGender: str = ""
     lookingFor: str = ""

@@ -36,7 +36,7 @@ def get_all_users() -> typing.List[firestore.DocumentReference]:
 def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]:
     query = collections["users"].where(
         filter=FieldFilter(
-            "__name__", "not-in", [user.reference, *user.blockedProfiles]
+            "__name__", "not-in", [user.reference, *user.blockedProfiles, *user.matches]
         )
     )
 

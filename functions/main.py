@@ -96,6 +96,56 @@ def is_match(req: https_fn.Request) -> https_fn.Response:
     return https_fn.Response(json.dumps({"is_match": True}), 200)
 
 
+@https_fn.on_request(region="europe-central2", cors=cors_options)
+def add_score(req: https_fn.Request) -> https_fn.Response:
+    try:
+        data = req.get_json(force=True)
+
+        user_reference_id = data["reference_id"]
+        score = data["score"]
+
+    except KeyError:
+        return https_fn.Response(
+            json.dumps(
+                {
+                    "Error": "Nie podano reference_id lub score",
+                },
+                status=400,
+            )
+        )
+
+    except Exception as e:
+        return https_fn.Response(
+            json.dumps({"Error": str(e)}),
+            status=400,
+        )
+
+    try:
+        user_reference = db_functions.get_reference_from_id(user_reference_id)
+        user_data = db_functions.get_user_data(user_reference)
+
+        new_average = (
+            (user_data.score["count"] * user_data.score["average"]) + score
+        ) / user_data.score["count"]
+
+        update_data = {
+            "score": {
+                "average": new_average,
+                "count": user_data.score["count"],
+            }
+        }
+
+        user_reference.update(update_data)
+
+    except Exception as e:
+        return https_fn.Response(
+            json.dumps({"Error": str(e)}),
+            status=400,
+        )
+
+    return https_fn.Response("ok", status=200)
+
+
 @scheduler_fn.on_schedule(
     region="europe-central2", schedule="every day 00:00", memory=128
 )
