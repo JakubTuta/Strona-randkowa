@@ -83,9 +83,9 @@ def check_if_other_likes_user(
         .where(filter=FieldFilter("whoLiked", "==", other_ref))
         .where(filter=FieldFilter("likedProfile", "==", user_ref))
     )
-    docs = query.stream()
+    docs = list(query.stream())
 
-    if len(list(docs)):
+    if len(docs):
         like_model = LikeModel.from_dict(
             {**docs[0].to_dict(), "reference": docs[0].reference}
         )
