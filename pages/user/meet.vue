@@ -78,14 +78,16 @@ function thankYouNext() {
   }
 }
 
-function likeProfile() {
+async function likeProfile() {
   const newLike = new LikeModel({
     whoLiked: currentUser?.reference,
     likedProfile: currentDisplayUser.reference,
     date: new Date(),
   }, null)
   try {
-    const check = restStore.checkMatches(newLike)
+    console.log(currentUser)
+    console.log(newLike)
+    const check = await restStore.checkMatches(currentUser, newLike)
     console.log(check)
     setNewUser()
   }

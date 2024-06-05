@@ -63,17 +63,17 @@ export const useRestStore = defineStore('rest', () => {
     }
   }
 
-  const checkMatches = async (like: LikeModel) => {
-    if (!like || !like.reference)
+  const checkMatches = async (userData: UserModel | null, like: LikeModel) => {
+    if (!like || !userData || !userData.reference)
       return
 
     const requestData = {
-      whoLiked: like.whoLiked.id,
       likedProfile: like.likedProfile.id,
+      whoLiked: like.whoLiked.id,
     }
 
     try {
-      const data = await getAxiosFirebase(like.reference)
+      const data = await getAxiosFirebase(userData.reference)
         .post('/is_match', requestData)
 
       return data.data.is_match
@@ -81,6 +81,7 @@ export const useRestStore = defineStore('rest', () => {
     catch (error) {
       console.error(error)
     }
+    return false
   }
 
   return {
