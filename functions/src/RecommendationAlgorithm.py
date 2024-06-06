@@ -92,7 +92,7 @@ class RecommendationAlgorithm:
 
     @staticmethod
     def __calculate_rating_score(user: UserModel) -> float:
-        user_score = user.score
+        user_score = user.score["average"]
 
         normalized_score = (
             (user_score - RecommendationAlgorithm.__RATING_SCORE["MIN_ORIGINAL_SCORE"])
