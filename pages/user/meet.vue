@@ -115,57 +115,59 @@ onMounted(() => {
 </script>
 
 <template>
-  <v-sheet v-if="!endFlag" class="mx-auto my-10 px-4" elevation="4" max-width="700" rounded>
-    <profile-card v-if="isReady && !endFlag" :user="currentDisplayUser" @dislike="thankYouNext" @like="likeProfile" />
-  </v-sheet>
-  <v-sheet v-else class="mx-auto my-10 px-4" elevation="4" max-width="700" rounded>
-    <v-card
-      class="mx-auto"
-    >
-      <v-img
-        class="align-end text-white"
-        src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        cover
-      >
-        <v-card-title class="text-h4">
-          {{ $t("matchingView.endTitle") }}
-        </v-card-title>
-      </v-img>
-      <v-card-text class="text-h6">
-        <div>{{ $t("matchingView.endMessage") }}</div>
-      </v-card-text>
-    </v-card>
-  </v-sheet>
+  <v-row cols="12">
+    <v-col md="6" sm="12">
+      <v-sheet v-if="!endFlag" class="mx-auto my-10 px-4" elevation="4" rounded>
+        <profile-card v-if="isReady && !endFlag" :user="currentDisplayUser" @dislike="thankYouNext" @like="likeProfile" />
+      </v-sheet>
+      <v-sheet v-else class="mx-auto my-10 px-4" elevation="4" max-width="600" rounded>
+        <v-card
+          class="mx-auto"
+        >
+          <v-img
+            class="align-end text-white"
+            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+            cover
+          >
+            <v-card-title class="text-h4">
+              {{ $t("matchingView.endTitle") }}
+            </v-card-title>
+          </v-img>
+          <v-card-text class="text-h6">
+            <div>{{ $t("matchingView.endMessage") }}</div>
+          </v-card-text>
+        </v-card>
+      </v-sheet>
+    </v-col>
 
-  <v-sheet class="mx-auto my-10 px-4 justify-center align-center" elevation="4" rounded>
-    <v-alert
-      v-model="matchFlag"
-      class="mx-auto my-10 px-4"
-      border="start"
-      :text="newPairInfo"
-      :title="$t('matchingView.matchSnackbar')"
-      type="success"
-      closable
-    />
+    <v-col md="6" sm="12">
+      <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
+        <v-alert
+          v-model="matchFlag"
+          class="mx-auto my-10 px-4"
+          border="start"
+          :text="newPairInfo"
+          :title="$t('matchingView.matchSnackbar')"
+          type="success"
+          closable
+        />
 
-    <v-card v-if="userMatches.length">
-      <v-card-title class="text-h5 d-flex justify-center align-center flex-column">
-        {{ $t("matchingView.yourMatches") }}
-      </v-card-title>
-      <v-card-text class="d-flex justify-center align-center flex-column">
-        <v-row>
-          <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
-        </v-row>
-      </v-card-text>
-    </v-card>
-    <v-card v-else>
-      <v-card-title class="d-flex justify-center align-center flex-column">
-        {{ $t("matchingView.noMatches") }}
-      </v-card-title>
-    </v-card>
-  </v-sheet>
+        <v-card v-if="userMatches.length">
+          <v-card-title class="text-h5 d-flex justify-center align-center flex-column">
+            {{ $t("matchingView.yourMatches") }}
+          </v-card-title>
+          <v-card-text class="d-flex justify-center align-center flex-column">
+            <v-row>
+              <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
+            </v-row>
+          </v-card-text>
+        </v-card>
+        <v-card v-else>
+          <v-card-title class="d-flex justify-center align-center flex-column">
+            {{ $t("matchingView.noMatches") }}
+          </v-card-title>
+        </v-card>
+      </v-sheet>
+    </v-col>
+  </v-row>
 </template>
-
-<style>
-
-</style>
