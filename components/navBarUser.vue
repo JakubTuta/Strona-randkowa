@@ -5,9 +5,11 @@ import { toggleTheme } from '~/helpers/theme'
 const theme = useTheme()
 const router = useRouter()
 const appStore = useAppStore()
-const { userData } = storeToRefs(appStore)
+const { userData, allUsers } = storeToRefs(appStore)
 const { t } = useI18n()
 
+const search = ref<string>()
+const showSearch = ref<boolean>(false)
 const drawer = defineModel({ default: false })
 
 const eventMenuIcon = ref('mdi-menu-down')
@@ -30,7 +32,12 @@ async function logOut() {
 
     <v-spacer />
 
-    <div class="hidden-sm-and-down">
+    <v-text-field v-if="showSearch" v-model="search" prepend-icon="mdi-magnify" label="Wyszukaj użytkownika" single-line hide-details />
+    <v-btn variant="text" color="default" prepend-icon="mdi-magnify" @click="showSearch = !showSearch">
+      {{ showSearch ? 'Zamknij' : 'Szukaj' }}
+    </v-btn>
+
+    <div v-if="!showSearch" class="hidden-sm-and-down">
       <v-btn variant="text" color="default" prepend-icon="mdi-account-group">
         {{ t('navBar.user.communities') }}
       </v-btn>
