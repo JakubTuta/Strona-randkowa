@@ -120,7 +120,7 @@ onMounted(() => {
       <v-sheet v-if="!endFlag" class="mx-auto my-10 px-4" elevation="4" rounded>
         <profile-card v-if="isReady && !endFlag" :user="currentDisplayUser" @dislike="thankYouNext" @like="likeProfile" />
       </v-sheet>
-      <v-sheet v-else class="mx-auto my-10 px-4" elevation="4" max-width="600" rounded>
+      <v-sheet v-else class="mx-auto my-10 px-4" elevation="4" rounded>
         <v-card
           class="mx-auto"
         >
@@ -157,7 +157,7 @@ onMounted(() => {
             {{ $t("matchingView.yourMatches") }}
           </v-card-title>
           <v-card-text class="d-flex justify-center align-center flex-column">
-            <v-row>
+            <v-row cols="12" class="d-flex justify-center align-center">
               <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
             </v-row>
           </v-card-text>

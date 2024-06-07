@@ -43,7 +43,7 @@ export const useRestStore = defineStore('rest', () => {
     }
   }
 
-  const getTopUsers = async (userData: UserModel | null, maxUsers: number = 1000) => {
+  const getTopUsers = async (userData: UserModel, maxUsers: number = 1000) => {
     if (!userData || !userData.reference)
       return
 
