@@ -50,12 +50,14 @@ onMounted(() => {
     class="mx-auto"
   >
     <v-img
-      class="align-end"
+      class="align-end fill-height"
       height="400"
       weight="400"
       :src="user.photos[0]"
       gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
       cover
+      :aspect-ratio="1"
+      max-height="600"
     >
       <v-card-title class="text-white">
         <div style="font-weight: bold;" class="text-h4">
@@ -90,28 +92,8 @@ onMounted(() => {
       </v-row>
     </v-img>
 
-    <v-card-text class="pt-4 text-h4 text-center" style="font-style: italic;">
+    <v-card-text v-if="user?.description" class="pt-4 text-h4 text-center" style="font-style: italic;">
       {{ user?.description }}
-    </v-card-text>
-    <v-card-text class="pt-4 text-h6 text-center">
-      <v-row justify="center" cols="12">
-        <v-col md="4" sm="6">
-          <v-icon left>
-            mdi-account-search
-          </v-icon>
-          <div style="margin-left: 10px;">
-            {{ t(`user.sex.${user?.preferredGender}`) }}
-          </div>
-        </v-col>
-        <v-col md="4" sm="12">
-          <v-icon left>
-            mdi-magnify
-          </v-icon>
-          <div style="margin-left: 10px;">
-            {{ t(`user.prefferedRelationship.${user?.lookingFor}`) }}
-          </div>
-        </v-col>
-      </v-row>
     </v-card-text>
 
     <v-card-actions>
@@ -122,6 +104,26 @@ onMounted(() => {
       <div v-show="showDetails">
         <v-divider />
 
+        <v-card-text class="pt-4 text-h6 text-center">
+          <v-row justify="center" cols="12">
+            <v-col md="4" sm="6">
+              <v-icon left>
+                mdi-account-search
+              </v-icon>
+              <div style="margin-left: 10px;">
+                {{ t(`user.sex.${user?.preferredGender}`) }}
+              </div>
+            </v-col>
+            <v-col md="4" sm="12">
+              <v-icon left>
+                mdi-magnify
+              </v-icon>
+              <div style="margin-left: 10px;">
+                {{ t(`user.prefferedRelationship.${user?.lookingFor}`) }}
+              </div>
+            </v-col>
+          </v-row>
+        </v-card-text>
         <v-card-text>
           <v-row justify="center" class="justify-center">
             <v-icon left>

@@ -3,7 +3,7 @@ import type {
 
 } from 'firebase/auth'
 
-import { collection, doc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import type { DocumentReference } from 'firebase/firestore'
 import { createUserWithEmailAndPassword, onAuthStateChanged, sendEmailVerification, signInWithEmailAndPassword, signOut as signoutFirebase } from 'firebase/auth'
 import { useSharedStore } from './sharedStore'
@@ -24,7 +24,8 @@ export const useAppStore = defineStore('app', () => {
   const user: Ref<User | null> = ref(null)
   const userData: Ref<UserModel | null> = ref(null)
 
-  // const allUsers: Ref<UserModel[]> = ref(null)
+  const allUsers: Ref<UserModel[]> = ref([])
+  const userMatches: Ref<UserModel[]> = ref([])
 
   const signOut = async () => {
     sharedStore.init()
@@ -170,8 +171,8 @@ export const useAppStore = defineStore('app', () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'users'))
       const users = querySnapshot.docs.map(doc => new UserModel(doc.data() as IUser, doc.ref))
-      // allUsers.value = users
-      return users
+      allUsers.value = users
+      // return users
     }
     catch (error) {
       console.error('Error fetching users:', error)
@@ -179,10 +180,28 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
+  const fetchLikedProfiles = async (likedUserRefs: DocumentReference[]) => {
+    try {
+      const likedUsers = []
+      for (const ref of likedUserRefs) {
+        const docSnapshot = await getDoc(ref)
+        if (docSnapshot.exists()) {
+          const user = new UserModel(docSnapshot.data() as IUser, docSnapshot.ref)
+          likedUsers.push(user)
+        }
+      }
+      userMatches.value = likedUsers
+    }
+    catch (error) {
+      console.error('Error fetching liked users:', error)
+    }
+  }
+
   return {
     user,
     userData,
-    // allUsers,
+    allUsers,
+    userMatches,
     registerWithPassword,
     logInWithPassword,
     signOut,
@@ -191,5 +210,6 @@ export const useAppStore = defineStore('app', () => {
     editUser,
     getAllUsers,
     fetchAllUsers,
+    fetchLikedProfiles,
   }
 })

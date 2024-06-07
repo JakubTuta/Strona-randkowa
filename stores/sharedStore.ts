@@ -50,6 +50,11 @@ export const useSharedStore = defineStore('shared', () => {
     successCopyingSnackbar()
   }
 
+  const customTextSnackbar = (text: string) => {
+    snackbarStore.showSnackbarCustom('primary', text)
+    loading.value = false
+  }
+
   return {
     loading,
     error,
@@ -62,5 +67,6 @@ export const useSharedStore = defineStore('shared', () => {
     successRemovalSnackbar,
     successCopyingSnackbar,
     copyCodeToClipboard,
+    customTextSnackbar,
   }
 })
