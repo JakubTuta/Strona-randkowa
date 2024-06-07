@@ -1,12 +1,15 @@
 import type { DocumentReference } from 'firebase/firestore'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import axios from 'axios'
+import { getFunctions, httpsCallable } from 'firebase/functions'
 import type { UserModel } from '~/models/user'
 import { mapUser } from '~/models/user'
 import type { LikeModel } from '~/models/like'
 
 export const useRestStore = defineStore('rest', () => {
-  const { firestore } = useFirebase()
+  const { firestore, firebaseApp } = useFirebase()
+
+  const functions = getFunctions(firebaseApp, 'europe-central2')
 
   const users = ref<UserModel[]>([])
 
@@ -84,9 +87,21 @@ export const useRestStore = defineStore('rest', () => {
     return false
   }
 
+  const searchEngine = async (text: string) => {
+    const searchFunction = httpsCallable(functions, 'search_engine')
+    try {
+      const response = await searchFunction({ text })
+      console.log(response)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
+
   return {
     users,
     getTopUsers,
     checkMatches,
+    searchEngine,
   }
 })

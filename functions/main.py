@@ -96,7 +96,7 @@ def is_match(req: https_fn.Request) -> https_fn.Response:
     return https_fn.Response(json.dumps({"is_match": True}), 200)
 
 
-@https_fn.on_request(region="europe-central2", cors=cors_options)
+@https_fn.on_request(region="europe-central2", cors=cors_options, memory=128)
 def add_score(req: https_fn.Request) -> https_fn.Response:
     try:
         data = req.get_json(force=True)
@@ -153,7 +153,9 @@ def delete_old_dislikes(event: scheduler_fn.ScheduledEvent) -> None:
     db_functions.delete_older_dislikes()
 
 
-@firestore_fn.on_document_created(region="europe-central2", document="likes/{likeId}")
+@firestore_fn.on_document_created(
+    region="europe-central2", document="likes/{likeId}", memory=128
+)
 def on_like_create(event: firestore_fn.Event[firestore_fn.DocumentSnapshot]) -> None:
     document_data = event.data.to_dict()
 
@@ -172,7 +174,7 @@ def on_like_create(event: firestore_fn.Event[firestore_fn.DocumentSnapshot]) -> 
 
 
 @firestore_fn.on_document_created(
-    region="europe-central2", document="dislikes/{dislikeId}"
+    region="europe-central2", document="dislikes/{dislikeId}", memory=128
 )
 def on_dislike_create(event: firestore_fn.Event[firestore_fn.DocumentSnapshot]) -> None:
     document_data = event.data.to_dict()

@@ -104,9 +104,16 @@ onMounted(() => {
   setData()
   matchingStore.getAllLikes()
 })
+
+function print() {
+  restStore.searchEngine('em')
+}
 </script>
 
 <template>
+  <v-btn @click="print">
+    xdd
+  </v-btn>
   <v-sheet v-if="!endFlag" class="mx-auto my-10 px-4" elevation="4" max-width="700" rounded>
     <profile-card v-if="isReady && !endFlag" :user="currentDisplayUser" @dislike="thankYouNext" @like="likeProfile" />
   </v-sheet>
