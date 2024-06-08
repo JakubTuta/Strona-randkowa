@@ -36,7 +36,8 @@
       "myEvents": "My events",
       "editEvent": "Edit event",
       "upcomingEvents": "Upcoming events",
-      "showEvent": "Show more"
+      "showEvent": "Show more",
+      "noEvents": "No events to show"
     }
   },
   "universal": {

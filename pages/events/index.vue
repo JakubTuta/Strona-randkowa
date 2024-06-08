@@ -36,8 +36,8 @@ onMounted(async () => {
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-col cols="12" md="8">
-        <v-carousel class="rounded-xl" cycle :interval="5000">
+      <v-col cols="12" md="8" justify="center" class="text-center">
+        <v-carousel v-if="events.length" class="rounded-xl" cycle :interval="5000">
           <template v-for="(item, index) in events" :key="index" :item="item">
             <v-carousel-item
                 src="/testEvent.jpg"
@@ -60,6 +60,9 @@ onMounted(async () => {
             </v-carousel-item>
           </template>
         </v-carousel>
+        <h1 v-else>
+          {{ t('events.index.noEvents') }}
+        </h1>
       </v-col>
     </v-row>
   </v-container>
