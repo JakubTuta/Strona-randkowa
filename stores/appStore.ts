@@ -185,8 +185,8 @@ export const useAppStore = defineStore('app', () => {
         user.photos.splice(index, 1)
 
         await setDoc(userReference, user.toMap())
-
-        await uploadImageStore.deleteImage(userReference, photoUrl)
+        const photoPath = appStore.getPhotoPath(photoUrl)
+        await uploadImageStore.deleteImage(userReference, photoPath)
       }
     }
     catch (e) {
@@ -236,6 +236,21 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
+  const getPhotoPath = (photoUrl: string) => {
+    const url = new URL(photoUrl)
+
+    let path = url.pathname
+
+    if (path.startsWith('/'))
+      path = path.substring(1)
+
+    const prefix = 'v0/b/strona-randkowa.appspot.com/o/'
+    if (path.startsWith(prefix))
+      path = path.substring(prefix.length)
+
+    return decodeURIComponent(path)
+  }
+
   return {
     user,
     userData,
@@ -252,5 +267,6 @@ export const useAppStore = defineStore('app', () => {
     fetchLikedProfiles,
     addImage,
     removeImage,
+    getPhotoPath,
   }
 })

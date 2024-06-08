@@ -1,5 +1,5 @@
 import type { DocumentReference } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadString } from 'firebase/storage'
+import { deleteObject, getDownloadURL, ref, refFromURL, uploadString } from 'firebase/storage'
 
 export const useUploadImageStore = defineStore('uploadImage', () => {
   const { storage } = useFirebase()
@@ -33,7 +33,10 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
 
   const deleteImage = async (userRef: DocumentReference, imagePath: string) => {
     try {
-      const imageRef = ref(storage, imagePath)
+      // const pictureRef = storage.refFromURL(imagePath)
+      // const fullImageRef = `${userRef.id}/${pictureRef}`
+
+      const imageRef = ref(storage, fullImageRef)
 
       await deleteObject(imageRef)
 

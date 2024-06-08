@@ -28,6 +28,7 @@ const lookingFor = ref<string>('')
 const hobbies = ref<THobby[]>()
 
 const photoAddFlag = ref<boolean>(true)
+const editPhotosFlag = ref<boolean>(false)
 
 const image = ref('')
 
@@ -78,6 +79,10 @@ function changePreferencesEditFlag() {
   editPreferencesFlag.value = !editPreferencesFlag.value
 }
 
+function changeEditPhotosFlag() {
+  editPhotosFlag.value = !editPhotosFlag.value
+}
+
 watch(currentUser, async (newUser, oldUser) => {
   setData()
 })
@@ -95,9 +100,11 @@ function setImage(url: string) {
 }
 
 function deleteImage(url: string) {
-  console.log(url)
+  const string = appStore.getPhotoPath(url)
+  console.log(string)
   if (currentUser != null)
     appStore.removeImage(currentUser, url)
+  editPhotosFlag.value = false
 }
 </script>
 
@@ -132,7 +139,7 @@ function deleteImage(url: string) {
                   class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
                   :src="photo"
                 />
-                <v-btn @click="deleteImage(photo)">
+                <v-btn v-if="editPhotosFlag" @click="deleteImage(photo)">
                   Usuń
                 </v-btn>
               </v-col>
@@ -141,6 +148,13 @@ function deleteImage(url: string) {
 
           <v-row v-if="photoAddFlag" justify="center">
             <UploadImage class="my-2" @set-image="setImage" />
+
+            <v-btn v-if="!editPhotosFlag" @click="changeEditPhotosFlag">
+              Zarządzaj
+            </v-btn>
+            <v-btn v-else @click="changeEditPhotosFlag">
+              Zamknij
+            </v-btn>
           </v-row>
         </v-col>
       </v-sheet>
