@@ -35,7 +35,8 @@
     "index": {
       "myEvents": "Moje wydarzenia",
       "editEvent": "Edytuj wydarzenie",
-      "upcomingEvents": "Nadchodzące wydarzenia"
+      "upcomingEvents": "Nadchodzące wydarzenia",
+      "showEvent": "Pokaż więcej"
     }
   },
   "universal": {

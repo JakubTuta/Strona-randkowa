@@ -1,9 +1,25 @@
 <script setup lang="ts">
 import {useEventsStore} from "~/stores/eventsStore";
+import type {EventModel} from "~/models/event";
+import type {Ref} from "vue";
+import ShowEventDialog from "~/components/user/events/showEventDialog.vue";
 
 const { t } = useI18n()
 const eventStore = useEventsStore()
 const { events } = storeToRefs(eventStore)
+
+const showForm = ref(false)
+const showedEvent: Ref<EventModel | null> = ref(null)
+
+function showEventForm(event: EventModel) {
+  showForm.value = true
+  showedEvent.value = event
+}
+
+function closeForm() {
+  showedEvent.value = null
+  showForm.value = false
+}
 
 onMounted(async () => {
   await eventStore.getFutureEvents()
@@ -34,11 +50,11 @@ onMounted(async () => {
                     {{ item.name }}
                   </div>
 
-<!--                  <div class="d-flex fill-height justify-center align-center">-->
-<!--                    <v-btn variant="elevated" size="large" color="secondary" @click="showEditForm(item)">-->
-<!--                      {{ t('events.index.editEvent') }}-->
-<!--                    </v-btn>-->
-<!--                  </div>-->
+                  <div class="d-flex fill-height justify-center align-center">
+                    <v-btn variant="elevated" size="large" color="secondary" @click="showEventForm(item)">
+                      {{ t('events.index.showEvent') }}
+                    </v-btn>
+                  </div>
                 </v-col>
               </v-row>
             </v-carousel-item>
@@ -47,5 +63,7 @@ onMounted(async () => {
       </v-col>
     </v-row>
   </v-container>
+
+  <ShowEventDialog :event="showedEvent" :is-show="showForm" @on-close="closeForm" />
 
 </template>
