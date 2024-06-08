@@ -22,6 +22,7 @@ const fieldOfStudy = ref<string>('')
 const preferredGender = ref<string>('')
 const lookingFor = ref<string>('')
 const hobbies = ref<THobby[]>()
+const image = ref('')
 
 // const hobbyArray: THobby [] = ['gym', 'studyPartner', 'beer']
 
@@ -83,7 +84,9 @@ onMounted(() => {
 )
 
 function setImage(url: string) {
-  // dodać zdjęcie do profilu
+  image.value = url
+  if (currentUser != null)
+    appStore.addImage(currentUser, url)
 }
 </script>
 
@@ -104,35 +107,17 @@ function setImage(url: string) {
             <div>
               <v-img
                 class="mx-auto my-5 elevation-5" rounded="xl" :width="400" :height="400" cover
-                src="/testPerson3.jpg"
+                :src="userData?.photos[0]"
               />
             </div>
 
             <!-- ZMIENIĆ NA PĘTLE WYŚWIETLANIE ZDJĘĆ W ZALEŻNOŚCI OD DŁUGOŚCI TABLICY PHOTOS W USERZE -->
             <v-row justify="center">
-              <div>
+              <div v-for="(photo, index) in userData?.photos" :key="index" :value="photo">
                 <v-col>
                   <v-img
                     class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
-                  />
-                </v-col>
-              </div>
-
-              <div>
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
-                  />
-                </v-col>
-              </div>
-
-              <div>
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
+                    :src="photo"
                   />
                 </v-col>
               </div>
@@ -140,7 +125,9 @@ function setImage(url: string) {
           </v-col>
         </v-row>
 
-        <UploadImage class="my-2" @set-image="setImage" />
+        <v-row justify="center">
+          <UploadImage class="my-2" @set-image="setImage" />
+        </v-row>
       </v-sheet>
     </v-col>
 
