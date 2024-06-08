@@ -63,7 +63,7 @@ watch(userData, async () => {
             >
               <v-row justify="center">
                 <v-col>
-                  <div class="d-flex fill-height justify-center align-center text-h4 bg-grey-darken-4">
+                  <div class="d-flex fill-height justify-center align-center py-2 text-h4 bg-grey-darken-4">
                     {{ item.name }}
                   </div>
 
