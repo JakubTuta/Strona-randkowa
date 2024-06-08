@@ -122,18 +122,17 @@ onMounted(() => {
                 {{ t(`user.prefferedRelationship.${user?.lookingFor}`) }}
               </div>
             </v-col>
+            <v-col>
+              <v-icon left>
+                mdi-book-open-page-variant
+              </v-icon>
+              <div style="margin-left: 10px;">
+                {{ `${t(`fieldsOfStudies.${user?.fieldOfStudy}`)}, ${user?.faculty}` }}
+              </div>
+            </v-col>
           </v-row>
         </v-card-text>
         <v-card-text>
-          <v-row justify="center" class="justify-center">
-            <v-icon left>
-              mdi-book-open-page-variant
-            </v-icon>
-            <div style="margin-left: 10px;">
-              {{ `${t(`fieldsOfStudies.${user?.fieldOfStudy}`)}, ${user?.faculty}` }}
-            </div>
-          </v-row>
-
           <v-row class="justify-center">
             <v-chip-group v-if="user?.hobbies" justiy-center>
               <v-chip v-for="element in user?.hobbies" :key="element" size="large" draggable>
@@ -142,7 +141,14 @@ onMounted(() => {
             </v-chip-group>
           </v-row>
           <v-row class="justify-center">
-            reszta zdjęć
+            <div v-for="(photo, index) in user?.photos.slice(1)" :key="index" :value="photo">
+              <v-col>
+                <v-img
+                  class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                  :src="photo"
+                />
+              </v-col>
+            </div>
           </v-row>
         </v-card-text>
       </div>
