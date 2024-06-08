@@ -12,6 +12,7 @@
     "login": "Login",
     "logout": "Log out",
     "changeTheme": "Change theme",
+    "events": "Events",
     "user": {
       "myProfile": "My profile",
       "communities": "Communities",

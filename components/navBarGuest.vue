@@ -20,8 +20,12 @@ const theme = useTheme()
     <v-spacer />
 
     <div class="hidden-sm-and-down">
-      <v-btn variant="elevated" color="primary" to="/auth/login">
+      <v-btn variant="elevated" class="mx-2" color="primary" to="/auth/login">
         {{ t("navBar.login") }}
+      </v-btn>
+
+      <v-btn variant="elevated" class="mx-2" color="primary" to="/events">
+        {{ t("navBar.events") }}
       </v-btn>
 
       <v-btn variant="text" color="white" icon="mdi-theme-light-dark" @click="toggleTheme(theme)" />
@@ -34,6 +38,10 @@ const theme = useTheme()
           <v-list class="justify-center">
             <v-list-item to="/auth/login">
               <v-list-item-title> {{ t("navBar.login") }} </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item to="/events">
+              <v-list-item-title> {{ t("navBar.events") }} </v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
