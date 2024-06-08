@@ -12,6 +12,7 @@
     "login": "Login",
     "logout": "Log out",
     "changeTheme": "Change theme",
+    "events": "Events",
     "user": {
       "myProfile": "My profile",
       "communities": "Communities",
@@ -33,7 +34,10 @@
     },
     "index": {
       "myEvents": "My events",
-      "editEvent": "Edit event"
+      "editEvent": "Edit event",
+      "upcomingEvents": "Upcoming events",
+      "showEvent": "Show more",
+      "noEvents": "No events to show"
     }
   },
   "universal": {

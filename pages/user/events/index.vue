@@ -53,8 +53,8 @@ watch(userData, async () => {
       </v-col>
     </v-row>
     <v-row justify="center">
-      <v-col cols="12" md="8">
-        <v-carousel class="rounded-xl" cycle :interval="5000">
+      <v-col cols="12" md="8" justify="center" class="text-center">
+        <v-carousel v-if="userEvents.length" class="rounded-xl" cycle :interval="5000">
           <template v-for="(item, index) in userEvents" :key="index" :item="item">
             <v-carousel-item
               src="/testEvent.jpg"
@@ -63,7 +63,7 @@ watch(userData, async () => {
             >
               <v-row justify="center">
                 <v-col>
-                  <div class="d-flex fill-height justify-center align-center text-h4 bg-grey-darken-4">
+                  <div class="d-flex fill-height justify-center align-center py-2 text-h4 bg-grey-darken-4">
                     {{ item.name }}
                   </div>
 
@@ -77,6 +77,9 @@ watch(userData, async () => {
             </v-carousel-item>
           </template>
         </v-carousel>
+        <h1 v-else>
+          {{ t('events.index.noEvents') }}
+        </h1>
       </v-col>
     </v-row>
   </v-container>

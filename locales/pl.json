@@ -12,6 +12,7 @@
     "login": "Logowanie",
     "logout": "Wyloguj",
     "changeTheme": "Zmień motyw",
+    "events": "Wydarzenia",
     "user": {
       "myProfile": "Mój profil",
       "communities": "Społeczności",
@@ -33,7 +34,10 @@
     },
     "index": {
       "myEvents": "Moje wydarzenia",
-      "editEvent": "Edytuj wydarzenie"
+      "editEvent": "Edytuj wydarzenie",
+      "upcomingEvents": "Nadchodzące wydarzenia",
+      "showEvent": "Pokaż więcej",
+      "noEvents": "Brak wydarzeń do pokazania"
     }
   },
   "universal": {
