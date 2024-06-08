@@ -164,6 +164,8 @@ export const useAppStore = defineStore('app', () => {
       const index = user.photos.length
       if (index < 4)
         user.photos.push(imageUrl)
+      else
+        user.photos[0] = imageUrl
 
       await setDoc(userReference, user.toMap())
     }

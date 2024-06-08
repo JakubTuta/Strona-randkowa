@@ -80,6 +80,7 @@ watch(currentUser, async (newUser, oldUser) => {
 
 onMounted(() => {
   setData()
+  console.log(currentUser?.photos.length)
 },
 )
 
@@ -91,43 +92,44 @@ function setImage(url: string) {
 </script>
 
 <template>
-  <v-row justify="center">
-    <v-col cols="12" sm="12" md="6">
+  <v-row justify="center" cols="12">
+    <v-col sm="12" md="6">
       <v-sheet
         class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-height="1200"
         max-width="1100" rounded
       >
-        <v-row justify="center">
-          <v-col cols="12" sm="12" md="12">
-            <div>
-              <v-card-title class="text-h4 my-2">
-                Twoje profilowe:
-              </v-card-title>
-            </div>
-            <div>
-              <v-img
-                class="mx-auto my-5 elevation-5" rounded="xl" :width="400" :height="400" cover
-                :src="userData?.photos[0]"
-              />
-            </div>
-
-            <!-- ZMIENIĆ NA PĘTLE WYŚWIETLANIE ZDJĘĆ W ZALEŻNOŚCI OD DŁUGOŚCI TABLICY PHOTOS W USERZE -->
-            <v-row justify="center">
-              <div v-for="(photo, index) in userData?.photos" :key="index" :value="photo">
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    :src="photo"
-                  />
-                </v-col>
+        <v-col>
+          <v-row justify="center">
+            <v-col sm="12" md="12">
+              <div>
+                <v-card-title class="text-h4 my-2">
+                  Twoje profilowe:
+                </v-card-title>
               </div>
-            </v-row>
-          </v-col>
-        </v-row>
+              <div>
+                <v-img
+                  class="mx-auto my-5 elevation-5" rounded="xl" :width="400" :height="400" cover
+                  :src="userData?.photos[0]"
+                />
+              </div>
+            </v-col>
+          </v-row>
 
-        <v-row justify="center">
-          <UploadImage class="my-2" @set-image="setImage" />
-        </v-row>
+          <v-row justify="center">
+            <div v-for="(photo, index) in userData?.photos" :key="index" :value="photo">
+              <v-col>
+                <v-img
+                  class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                  :src="photo"
+                />
+              </v-col>
+            </div>
+          </v-row>
+
+          <v-row justify="center">
+            <UploadImage class="my-2" @set-image="setImage" />
+          </v-row>
+        </v-col>
       </v-sheet>
     </v-col>
 
