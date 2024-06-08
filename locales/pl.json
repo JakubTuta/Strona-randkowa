@@ -22,7 +22,10 @@
       },
       "meet": "Poznawaj",
       "chat": "Czat"
-    }
+    },
+    "search": "Szukaj",
+    "close": "Zamknij",
+    "findTextField": "Wyszukaj użytkownika"
   },
   "events": {
     "add": {

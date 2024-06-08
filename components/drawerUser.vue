@@ -29,7 +29,6 @@ const drawer = defineModel({ default: false })
             append-icon="mdi-party-popper"
             :title="$t('navBar.user.events.browse')"
           />
-
         </v-list>
       </v-menu>
     </v-list-item>

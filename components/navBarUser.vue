@@ -30,18 +30,16 @@ async function logOut() {
       {{ t("appName") }}
     </v-btn>
 
-    <v-spacer />
-
-    <v-text-field v-if="showSearch" v-model="search" prepend-icon="mdi-magnify" label="Wyszukaj użytkownika" single-line hide-details />
-    <v-btn variant="text" color="default" prepend-icon="mdi-magnify" @click="showSearch = !showSearch">
-      {{ showSearch ? 'Zamknij' : 'Szukaj' }}
+    <v-text-field v-model="search" :label="t('navBar.findTextField')" single-line hide-details />
+    <!-- <v-btn v-if="!showSearch" variant="text" color="default" prepend-icon="mdi-magnify" @click="showSearch = !showSearch">
+      {{ t('navBar.search') }}
     </v-btn>
+    <v-btn v-else density="compact" color="default" @click="showSearch = !showSearch">
+      X
+    </v-btn> -->
+    <!-- <v-spacer /> -->
 
-    <div v-if="!showSearch" class="hidden-sm-and-down">
-      <v-btn variant="text" color="default" prepend-icon="mdi-account-group">
-        {{ t('navBar.user.communities') }}
-      </v-btn>
-
+    <div class="hidden-sm-and-down" style="display: flex; justify-content: flex-end;">
       <v-btn variant="text" color="default" prepend-icon="mdi-calendar-multiple" :append-icon="eventMenuIcon">
         {{ t('navBar.user.events.events') }}
         <v-menu activator="parent" @update:model-value="changeIcon">
@@ -65,7 +63,7 @@ async function logOut() {
     <v-spacer />
 
     <div class="hidden-xs">
-      <v-btn v-if="userData" class=" mr-2" color="default" prepend-icon="mdi-account">
+      <v-btn v-if="userData" class="mr-2" color="default" prepend-icon="mdi-account">
         {{ `${userData.firstName} ${userData.lastName}` }}
         <v-menu activator="parent">
           <v-list class="justify-center">
