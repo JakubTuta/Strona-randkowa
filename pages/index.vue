@@ -49,7 +49,7 @@
             Przygotowaliśmy specjalnie dla ciebie krótki opis jak działa nasza aplikacja.
           </p>
 
-          <v-btn class="my-4" to="/auth/login" variant="elevated" color="primary">
+          <v-btn class="my-4" to="/about" variant="elevated" color="primary">
             Przejdź
           </v-btn>
         </div>
