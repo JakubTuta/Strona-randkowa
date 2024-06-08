@@ -3,6 +3,11 @@ import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
 import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
+import PhotosManager from '~/components/user/photosManager.vue'
+
+definePageMeta({
+  layout: 'user',
+})
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
@@ -22,9 +27,9 @@ const fieldOfStudy = ref<string>('')
 const preferredGender = ref<string>('')
 const lookingFor = ref<string>('')
 const hobbies = ref<THobby[]>()
-const image = ref('')
 
-// const hobbyArray: THobby [] = ['gym', 'studyPartner', 'beer']
+const image = ref('')
+const photosManagerFlag = ref<boolean>(false)
 
 function countAge(dateBirth: Date) {
   const today = new Date()
@@ -70,9 +75,10 @@ function changeProfileEditFlag() {
 function changePreferencesEditFlag() {
   editPreferencesFlag.value = !editPreferencesFlag.value
 }
-definePageMeta({
-  layout: 'user',
-})
+
+function changePhotosManagerFlag() {
+  photosManagerFlag.value = !photosManagerFlag.value
+}
 
 watch(currentUser, async (newUser, oldUser) => {
   setData()
@@ -128,6 +134,9 @@ function setImage(url: string) {
 
           <v-row justify="center">
             <UploadImage class="my-2" @set-image="setImage" />
+            <v-btn @click="changePhotosManagerFlag()">
+              Zarządzaj
+            </v-btn>
           </v-row>
         </v-col>
       </v-sheet>
@@ -222,6 +231,7 @@ function setImage(url: string) {
     </v-col>
   </v-row>
 
+  <PhotosManager :is-show="photosManagerFlag" :user-photos="userData?.photos" @on-close="changePhotosManagerFlag" />
   <EditProfile :is-show="editProfileFlag" :user-data="currentUser" @on-close="changeProfileEditFlag" />
   <EditPreferences :is-show="editPreferencesFlag" :user-data="currentUser" @on-close="changePreferencesEditFlag" />
 </template>
