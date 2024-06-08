@@ -107,7 +107,9 @@
     "yourPreferences": "Your preferences and hobbies",
     "editProfile": "Edit data",
     "editPreferences": "Edit preferences",
-    "nothingToShow": "Nothing to show"
+    "nothingToShow": "Nothing to show",
+    "yourMainPhoto": "Your profile picture:",
+    "configuration": "Configure"
   },
   "fieldsOfStudies": {
     "computerScience": "Computer Science",

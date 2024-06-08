@@ -129,7 +129,7 @@ function setMainPhoto(url: string) {
                   <v-icon left class="mr-2">
                     mdi-face-man-shimmer
                   </v-icon>
-                  Twoje profilowe:
+                  {{ t('profile.yourMainPhoto') }}
                 </v-card-title>
               </div>
               <div>
@@ -159,10 +159,10 @@ function setMainPhoto(url: string) {
 
             <v-col>
               <v-btn v-if="!editPhotosFlag" append-icon="mdi-grease-pencil" color="secondary" @click="changeEditPhotosFlag">
-                Zarządzaj
+                {{ t('profile.configuration') }}
               </v-btn>
               <v-btn v-else @click="changeEditPhotosFlag">
-                Zamknij
+                {{ t('universal.form.close') }}
               </v-btn>
             </v-col>
           </v-row>
