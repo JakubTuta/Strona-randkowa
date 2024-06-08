@@ -162,15 +162,35 @@ export const useAppStore = defineStore('app', () => {
       const imageUrl = (await uploadImageStore.createAndUploadImage(userReference, photoUrl)).imageUrl
 
       const index = user.photos.length
-      if (index < 4)
-        user.photos.push(imageUrl)
-      else
-        user.photos[0] = imageUrl
+      if (index < 4) { user.photos.push(imageUrl) }
+      else {
+        user.photos.unshift(imageUrl)
+        user.photos.pop()
+      }
 
       await setDoc(userReference, user.toMap())
     }
     catch (e) {
-      console.log(e)
+      // console.log(e)
+    }
+  }
+
+  const removeImage = async (user: UserModel, photoUrl: string) => {
+    try {
+      const userReference = doc(usersCollection, user?.reference?.id)
+
+      const index = user.photos.indexOf(photoUrl)
+
+      if (index > -1) {
+        user.photos.splice(index, 1)
+
+        await setDoc(userReference, user.toMap())
+
+        await uploadImageStore.deleteImage(userReference, photoUrl)
+      }
+    }
+    catch (e) {
+      // console.log(e)
     }
   }
 
@@ -231,5 +251,6 @@ export const useAppStore = defineStore('app', () => {
     fetchAllUsers,
     fetchLikedProfiles,
     addImage,
+    removeImage,
   }
 })

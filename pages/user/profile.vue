@@ -3,7 +3,6 @@ import EditProfile from '~/components/user/editProfile.vue'
 import EditPreferences from '~/components/user/editPreferences.vue'
 import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
-import PhotosManager from '~/components/user/photosManager.vue'
 
 definePageMeta({
   layout: 'user',
@@ -28,8 +27,9 @@ const preferredGender = ref<string>('')
 const lookingFor = ref<string>('')
 const hobbies = ref<THobby[]>()
 
+const photoAddFlag = ref<boolean>(true)
+
 const image = ref('')
-const photosManagerFlag = ref<boolean>(false)
 
 function countAge(dateBirth: Date) {
   const today = new Date()
@@ -62,6 +62,8 @@ function setData() {
     preferredGender.value = currentUser.preferredGender
     lookingFor.value = currentUser.lookingFor
     hobbies.value = currentUser.hobbies
+    if (currentUser.photos.length > 4)
+      photoAddFlag.value = false
   }
 }
 
@@ -74,10 +76,6 @@ function changeProfileEditFlag() {
 
 function changePreferencesEditFlag() {
   editPreferencesFlag.value = !editPreferencesFlag.value
-}
-
-function changePhotosManagerFlag() {
-  photosManagerFlag.value = !photosManagerFlag.value
 }
 
 watch(currentUser, async (newUser, oldUser) => {
@@ -94,6 +92,12 @@ function setImage(url: string) {
   image.value = url
   if (currentUser != null)
     appStore.addImage(currentUser, url)
+}
+
+function deleteImage(url: string) {
+  console.log(url)
+  if (currentUser != null)
+    appStore.removeImage(currentUser, url)
 }
 </script>
 
@@ -128,15 +132,15 @@ function setImage(url: string) {
                   class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
                   :src="photo"
                 />
+                <v-btn @click="deleteImage(photo)">
+                  Usuń
+                </v-btn>
               </v-col>
             </div>
           </v-row>
 
-          <v-row justify="center">
+          <v-row v-if="photoAddFlag" justify="center">
             <UploadImage class="my-2" @set-image="setImage" />
-            <v-btn @click="changePhotosManagerFlag()">
-              Zarządzaj
-            </v-btn>
           </v-row>
         </v-col>
       </v-sheet>
@@ -231,7 +235,6 @@ function setImage(url: string) {
     </v-col>
   </v-row>
 
-  <PhotosManager :is-show="photosManagerFlag" :user-photos="userData?.photos" @on-close="changePhotosManagerFlag" />
   <EditProfile :is-show="editProfileFlag" :user-data="currentUser" @on-close="changeProfileEditFlag" />
   <EditPreferences :is-show="editPreferencesFlag" :user-data="currentUser" @on-close="changePreferencesEditFlag" />
 </template>

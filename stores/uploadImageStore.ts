@@ -31,7 +31,24 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
     }
   }
 
+  const deleteImage = async (userRef: DocumentReference, imagePath: string) => {
+    try {
+      const imageRef = ref(storage, imagePath)
+
+      await deleteObject(imageRef)
+
+      return {
+        message: 'Zdjęcie zostało pomyślnie usunięte',
+        imagePath,
+      }
+    }
+    catch (e) {
+      // console.log(e)
+    }
+  }
+
   return {
     createAndUploadImage,
+    deleteImage,
   }
 })
