@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import EditProfile from '~/components/user/editProfile.vue'
-import EditPreferences from '~/components/user/editPreferences.vue'
+import EditProfile from '~/components/user/profile/editProfile.vue'
+import EditPreferences from '~/components/user/profile/editPreferences.vue'
 import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
 
