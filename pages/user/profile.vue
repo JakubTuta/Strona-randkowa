@@ -63,7 +63,7 @@ function setData() {
     preferredGender.value = currentUser.preferredGender
     lookingFor.value = currentUser.lookingFor
     hobbies.value = currentUser.hobbies
-    if (currentUser.photos.length > 4)
+    if (currentUser.photos.length > 3)
       photoAddFlag.value = false
   }
 }
@@ -105,6 +105,12 @@ function deleteImage(url: string) {
   if (currentUser != null)
     appStore.removeImage(currentUser, url)
   editPhotosFlag.value = false
+  photoAddFlag.value = true
+}
+
+function setMainPhoto(url: string) {
+  if (currentUser != null)
+    appStore.editMainPhoto(currentUser, url)
 }
 </script>
 
@@ -120,6 +126,9 @@ function deleteImage(url: string) {
             <v-col sm="12" md="12">
               <div>
                 <v-card-title class="text-h4 my-2">
+                  <v-icon left class="mr-2">
+                    mdi-face-man-shimmer
+                  </v-icon>
                   Twoje profilowe:
                 </v-card-title>
               </div>
@@ -133,28 +142,29 @@ function deleteImage(url: string) {
           </v-row>
 
           <v-row justify="center">
-            <div v-for="(photo, index) in userData?.photos" :key="index" :value="photo">
+            <div v-for="(photo, index) in userData?.photos.slice(1)" :key="index" :value="photo">
               <v-col>
                 <v-img
                   class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
                   :src="photo"
                 />
-                <v-btn v-if="editPhotosFlag" @click="deleteImage(photo)">
-                  Usuń
-                </v-btn>
+                <v-btn v-if="editPhotosFlag" size="small" color="primary" icon="mdi-face-man-shimmer" class="mr-2" @click="setMainPhoto(photo)" />
+                <v-btn v-if="editPhotosFlag" size="small" color="error" icon="mdi-delete" class="ml-2" @click="deleteImage(photo)" />
               </v-col>
             </div>
           </v-row>
 
-          <v-row v-if="photoAddFlag" justify="center">
-            <UploadImage class="my-2" @set-image="setImage" />
+          <v-row justify="center">
+            <UploadImage v-if="photoAddFlag" class="my-2" @set-image="setImage" />
 
-            <v-btn v-if="!editPhotosFlag" @click="changeEditPhotosFlag">
-              Zarządzaj
-            </v-btn>
-            <v-btn v-else @click="changeEditPhotosFlag">
-              Zamknij
-            </v-btn>
+            <v-col>
+              <v-btn v-if="!editPhotosFlag" append-icon="mdi-grease-pencil" color="secondary" @click="changeEditPhotosFlag">
+                Zarządzaj
+              </v-btn>
+              <v-btn v-else @click="changeEditPhotosFlag">
+                Zamknij
+              </v-btn>
+            </v-col>
           </v-row>
         </v-col>
       </v-sheet>

@@ -194,6 +194,24 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
+  const editMainPhoto = async (user: UserModel, targetImageUrl: string) => {
+    try {
+      const userReference = doc(usersCollection, user?.reference?.id)
+
+      const index = user.photos.indexOf(targetImageUrl)
+      if (index > -1) {
+        user.photos.splice(index, 1)
+
+        user.photos.unshift(targetImageUrl)
+
+        await setDoc(userReference, user.toMap())
+      }
+    }
+    catch (e) {
+    // console.log(e)
+    }
+  }
+
   const getAllUsers = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'users'))
@@ -268,5 +286,6 @@ export const useAppStore = defineStore('app', () => {
     addImage,
     removeImage,
     getPhotoPath,
+    editMainPhoto,
   }
 })
