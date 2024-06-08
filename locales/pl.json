@@ -107,7 +107,9 @@
     "yourPreferences": "Twoje preferencje i hobby",
     "editProfile": "Edytuj dane",
     "editPreferences": "Edytuj preferencje",
-    "nothingToShow": "Brak zainteresowań"
+    "nothingToShow": "Brak zainteresowań",
+    "yourMainPhoto": "Twoje profilowe:",
+    "configuration": "Zarządzaj"
   },
   "fieldsOfStudies": {
     "computerScience": "Informatyka",

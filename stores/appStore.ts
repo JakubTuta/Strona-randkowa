@@ -155,6 +155,63 @@ export const useAppStore = defineStore('app', () => {
       updateDoc(newUser.reference, data)
   }
 
+  const addImage = async (user: UserModel, photoUrl: string) => {
+    try {
+      const userReference = doc(usersCollection, user?.reference?.id)
+
+      const imageUrl = (await uploadImageStore.createAndUploadImage(userReference, photoUrl)).imageUrl
+
+      const index = user.photos.length
+      if (index < 4) { user.photos.push(imageUrl) }
+      else {
+        user.photos.unshift(imageUrl)
+        user.photos.pop()
+      }
+
+      await setDoc(userReference, user.toMap())
+    }
+    catch (e) {
+      // console.log(e)
+    }
+  }
+
+  const removeImage = async (user: UserModel, photoUrl: string) => {
+    try {
+      const userReference = doc(usersCollection, user?.reference?.id)
+
+      const index = user.photos.indexOf(photoUrl)
+
+      if (index > -1) {
+        user.photos.splice(index, 1)
+
+        await setDoc(userReference, user.toMap())
+        const photoPath = appStore.getPhotoPath(photoUrl)
+        await uploadImageStore.deleteImage(userReference, photoPath)
+      }
+    }
+    catch (e) {
+      // console.log(e)
+    }
+  }
+
+  const editMainPhoto = async (user: UserModel, targetImageUrl: string) => {
+    try {
+      const userReference = doc(usersCollection, user?.reference?.id)
+
+      const index = user.photos.indexOf(targetImageUrl)
+      if (index > -1) {
+        user.photos.splice(index, 1)
+
+        user.photos.unshift(targetImageUrl)
+
+        await setDoc(userReference, user.toMap())
+      }
+    }
+    catch (e) {
+    // console.log(e)
+    }
+  }
+
   const getAllUsers = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'users'))
@@ -197,6 +254,21 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
+  const getPhotoPath = (photoUrl: string) => {
+    const url = new URL(photoUrl)
+
+    let path = url.pathname
+
+    if (path.startsWith('/'))
+      path = path.substring(1)
+
+    const prefix = 'v0/b/strona-randkowa.appspot.com/o/'
+    if (path.startsWith(prefix))
+      path = path.substring(prefix.length)
+
+    return decodeURIComponent(path)
+  }
+
   return {
     user,
     userData,
@@ -211,5 +283,9 @@ export const useAppStore = defineStore('app', () => {
     getAllUsers,
     fetchAllUsers,
     fetchLikedProfiles,
+    addImage,
+    removeImage,
+    getPhotoPath,
+    editMainPhoto,
   }
 })
