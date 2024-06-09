@@ -26,6 +26,17 @@
       "chat": "Czat"
     }
   },
+  "landing": {
+    "start": "Witamy na stronie randkowej",
+    "slogan": "Aplikacja zaprojektowana specjalnie do tego żeby ją usunąć. Zaintrygowało?",
+    "startNow": "Zacznij już teraz",
+    "howItWorks": "Zobacz jak to działa",
+    "howItWorksTutorial": "Przygotowaliśmy specjalnie dla ciebie krótki opis jak działa nasza aplikacja.",
+    "goSee": "Przejdź",
+    "eventsAndRelationships": "Poznawaj ludzi i uczestnicz w wydarzeniach",
+    "eventsButton": "Zobacz wydarzenia",
+    "eventsContent": "Poznaj kogoś nowego. Uczestnicz w wydarzeniach, łącz się w pary. Wystarczy parę chwil. Nie wiesz co cię omija."
+  },
   "about": {
     "seeWhatGoingOn": "Zobacz jak to działa",
     "shortDescription": "Zastanawiasz się do czego służy ta aplikacja? Randki? Wydarzenia? Znajamości? Zgadza się!",
