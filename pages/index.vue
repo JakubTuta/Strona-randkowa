@@ -40,7 +40,7 @@
           :width="466"
           aspect-ratio="16/9"
           cover
-          src="/landingOmg.jpg"
+          src="/landing-omg.jpg"
         />
       </v-col>
       <v-col cols="12" sm="12" md="6">
@@ -62,7 +62,7 @@
   </v-card>
 
   <v-img
-      src="/landingevents.jpg"
+      src="/landing-events.jpg"
       cover
       gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
       class="text-center"
