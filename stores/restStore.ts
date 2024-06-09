@@ -30,6 +30,9 @@ export const useRestStore = defineStore('rest', () => {
   }
 
   const mapIdsToUsers = async (referenceIds: string[]) => {
+    if (!referenceIds.length)
+      return []
+
     try {
       const documents = await getDocs(query(collectionUsers, where('__name__', 'in', referenceIds)))
       const mappedUsers = documents.docs.map(mapUser)
@@ -56,7 +59,8 @@ export const useRestStore = defineStore('rest', () => {
       const data = await getAxiosFirebase(userData.reference)
         .post('/get_matches', requestData)
 
-      users.value = await mapIdsToUsers(data.data)
+      if (data.status === 200)
+        users.value = await mapIdsToUsers(data.data)
     }
     catch (error) {
       console.error(error)
@@ -76,7 +80,8 @@ export const useRestStore = defineStore('rest', () => {
       const data = await getAxiosFirebase(userData.reference)
         .post('/is_match', requestData)
 
-      return data.data.is_match
+      if (data.status === 200)
+        return data.data.is_match
     }
     catch (error) {
       console.error(error)

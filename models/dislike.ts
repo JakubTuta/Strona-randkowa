@@ -1,22 +1,22 @@
-import type { DocumentData, DocumentReference, Timestamp } from 'firebase/firestore'
+import { type DocumentData, type DocumentReference, Timestamp } from 'firebase/firestore'
 
 export interface IDislike {
-  whoDisliked: DocumentReference
-  dislikedProfile: DocumentReference
-  date: Timestamp
+  whoDisliked: DocumentReference | null
+  dislikedProfile: DocumentReference | null
+  date: Timestamp | Date
 }
 
 export class DislikeModel implements IDislike {
-  whoDisliked: DocumentReference
-  dislikedProfile: DocumentReference
-  date: Timestamp
+  whoDisliked: DocumentReference | null
+  dislikedProfile: DocumentReference | null
+  date: Timestamp | Date
 
   reference: DocumentReference | null
 
   constructor(data: IDislike, reference: DocumentReference | null) {
     this.whoDisliked = data.whoDisliked || null
     this.dislikedProfile = data.dislikedProfile || null
-    this.date = data.date || null
+    this.date = data.date instanceof Timestamp ? data.date.toDate() : data.date
 
     this.reference = reference
   }

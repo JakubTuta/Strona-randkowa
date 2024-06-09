@@ -36,8 +36,15 @@ def get_matches(req: https_fn.Request) -> https_fn.Response:
     user_reference = db_functions.get_reference_from_id(user_reference_id)
     user_data = db_functions.get_user_data(user_reference)
 
+    user_likes = db_functions.get_user_likes(user_reference)
+    user_dislikes = db_functions.get_user_dislikes(user_reference)
+
     other_users = db_functions.get_other_users(user_data)
-    ranked_users = RecommendationAlgorithm.score_all_users(user_data, other_users)
+    filtered_users = db_functions.get_filtered_users(
+        other_users, user_likes, user_dislikes
+    )
+
+    ranked_users = RecommendationAlgorithm.score_all_users(user_data, filtered_users)
 
     users_references_ids = [user.reference.id for user in ranked_users]
     users_references_ids = users_references_ids[:max_users]
@@ -151,6 +158,13 @@ def add_score(req: https_fn.Request) -> https_fn.Response:
 )
 def delete_old_dislikes(event: scheduler_fn.ScheduledEvent) -> None:
     db_functions.delete_older_dislikes()
+
+
+@scheduler_fn.on_schedule(
+    region="europe-central2", schedule="every day 00:00", memory=128
+)
+def delete_old_likes(event: scheduler_fn.ScheduledEvent) -> None:
+    db_functions.delete_older_likes()
 
 
 @firestore_fn.on_document_created(region="europe-central2", document="likes/{likeId}")

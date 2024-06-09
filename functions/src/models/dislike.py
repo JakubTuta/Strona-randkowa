@@ -7,9 +7,9 @@ from google.cloud import firestore
 
 
 @dataclasses.dataclass(kw_only=True, frozen=True, repr=False)
-class LikeModel:
-    whoLiked: typing.Optional[firestore.DocumentReference] = None
-    likedProfile: typing.Optional[firestore.DocumentReference] = None
+class DislikeModel:
+    whoDisliked: typing.Optional[firestore.DocumentReference] = None
+    dislikedProfile: typing.Optional[firestore.DocumentReference] = None
     date: datetime.datetime = datetime.datetime.now()
 
     reference: typing.Optional[firestore.DocumentReference] = None

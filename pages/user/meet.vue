@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import type { Timestamp } from 'firebase/firestore'
-import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
 import profileCard from '~/components/user/profileCard.vue'
-import likedCard from '~/components/user/likedCard.vue'
 import { LikeModel } from '~/models/like'
 import { DislikeModel } from '~/models/dislike'
 
@@ -14,116 +11,111 @@ definePageMeta({
 const { t } = useI18n()
 
 const matchingStore = useMatchingStore()
-const appStore = useAppStore()
-const restStore = useRestStore()
 const sharedStore = useSharedStore()
 
+const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
-// const { allLikes } = storeToRefs(matchingStore)
 
-const currentUser: UserModel | null = userData.value
+const restStore = useRestStore()
+const { users } = storeToRefs(restStore)
 
-let allUsers: UserModel[]
-let currentDisplayUser: UserModel
-const isReady = ref<boolean>(false)
-const endFlag = ref<boolean>(false)
-const matchFlag = ref<boolean>(false)
-const newPairInfo = ref<string>()
-const counter = ref<number>(0)
-
-const { userMatches } = storeToRefs(appStore)
+const currentDisplayUser = ref<UserModel | null>(null)
+const matchFlag = ref(false)
+const newPairInfo = ref('')
+const counter = ref(0)
 
 async function setData() {
-  try {
-    console.log(currentUser)
-    await restStore.getTopUsers(currentUser)
-    const { users } = storeToRefs(restStore)
-    console.log(users)
-    allUsers = users.value
-    currentDisplayUser = allUsers[0]
-  }
-  catch (e) {
-    // console.log(e)
-  }
-  isReady.value = true
+  if (!userData.value)
+    return
+
+  await restStore.getTopUsers(userData.value)
+  currentDisplayUser.value = users.value[0]
 }
 
 function setNewUser() {
-  if (counter.value !== allUsers.length - 1) {
-    isReady.value = false
-    currentDisplayUser = allUsers[counter.value + 1]
+  if (counter.value !== users.value.length - 1) {
+    currentDisplayUser.value = users.value[counter.value + 1]
     counter.value += 1
-    isReady.value = true
-
-    // newPairInfo.value = `${currentDisplayUser.firstName}, ${t(`fieldsOfStudies.${currentDisplayUser.fieldOfStudy}`)}`
-    // matchFlag.value = true
-  }
-  else {
-    endFlag.value = true
   }
 }
 
 function thankYouNext() {
   const newDislike = new DislikeModel({
-    whoDisliked: currentUser?.reference,
-    dislikedProfile: currentDisplayUser.reference,
+    whoDisliked: userData.value?.reference || null,
+    dislikedProfile: currentDisplayUser.value?.reference || null,
     date: new Date(),
   }, null)
-  try {
-    matchingStore.addDislike(newDislike)
-    setNewUser()
-  }
-  catch (e) {
-    // console.log(e)
-  }
+
+  matchingStore.addDislike(newDislike)
+  setNewUser()
 }
 
 async function likeProfile() {
+  const likedProfile = currentDisplayUser.value
+
   const newLike = new LikeModel({
-    whoLiked: currentUser?.reference,
-    likedProfile: currentDisplayUser.reference,
-    date: new Date(),
+    whoLiked: userData.value?.reference || null,
+    likedProfile: likedProfile?.reference || null,
   }, null)
-  try {
-    const check = await restStore.checkMatches(currentUser, newLike)
-    console.log(check)
-    if (check) {
+
+  restStore.checkMatches(userData.value, newLike).then((response) => {
+    if (response) {
       const textToShow = t('matchingView.matchSnackbar')
       sharedStore.customTextSnackbar(textToShow)
-      newPairInfo.value = `${currentDisplayUser.firstName}, ${t(`fieldsOfStudies.${currentDisplayUser.fieldOfStudy}`)}`
+      newPairInfo.value = `${likedProfile?.firstName || ''}, ${t(`fieldsOfStudies.${likedProfile?.fieldOfStudy || ''}`)}`
       matchFlag.value = true
     }
-    setNewUser()
-  }
-  catch (e) {
-    console.log(e)
-  }
+  })
+  setNewUser()
 }
 
 async function setUserMatches() {
-  if (currentUser?.matches !== undefined) {
-    await appStore.fetchLikedProfiles(currentUser?.matches)
-    console.log(userMatches)
-  }
+  if (!userData.value?.matches.length)
+    await appStore.fetchLikedProfiles(userData.value?.matches || [])
 }
 
-onMounted(() => {
-  setData()
-  matchingStore.getAllLikes()
-  setUserMatches()
+watch(userData, (newValue) => {
+  if (newValue) {
+    setData()
+    matchingStore.getAllLikes()
+    setUserMatches()
+  }
+}, { immediate: true })
+
+watch(matchFlag, (newValue) => {
+  if (newValue) {
+    setTimeout(() => {
+      matchFlag.value = false
+    }, 4000)
+  }
 })
 </script>
 
 <template>
-  <v-row cols="12">
+  <v-alert
+    v-model="matchFlag"
+    position="static"
+    border="start"
+    :text="newPairInfo"
+    :title="$t('matchingView.matchSnackbar')"
+    type="success"
+    closable
+    style="position: fixed; top: 90px; right: 30px; z-index: 1000;"
+  >
+    <template #close>
+      <v-icon color="red" size="large" @click="() => matchFlag = !matchFlag">
+        mdi-close-circle-outline
+      </v-icon>
+    </template>
+  </v-alert>
+
+  <v-row class="d-flex align-center justify-center" style="height: 90%">
     <v-col md="6" sm="12">
-      <v-sheet v-if="!endFlag" class="mx-auto my-10 px-4" elevation="4" rounded>
-        <profile-card v-if="isReady && !endFlag" :user="currentDisplayUser" @dislike="thankYouNext" @like="likeProfile" />
+      <v-sheet v-if="currentDisplayUser" class="mx-auto my-10 px-4" elevation="4" rounded>
+        <profile-card :user="currentDisplayUser" @dislike="thankYouNext" @like="likeProfile" />
       </v-sheet>
-      <v-sheet v-else class="mx-auto my-10 px-4" elevation="4" rounded>
-        <v-card
-          class="mx-auto"
-        >
+      <v-sheet v-else elevation="4" rounded>
+        <v-card>
           <v-img
             class="align-end text-white"
             src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
@@ -133,25 +125,16 @@ onMounted(() => {
               {{ $t("matchingView.endTitle") }}
             </v-card-title>
           </v-img>
-          <v-card-text class="text-h6">
+          <v-card-text class="text-h6 ma-1">
             <div>{{ $t("matchingView.endMessage") }}</div>
           </v-card-text>
         </v-card>
       </v-sheet>
     </v-col>
+  </v-row>
 
-    <v-col md="6" sm="12">
+  <!-- <v-col md="6" sm="12">
       <v-sheet class="mx-auto my-10 px-4" elevation="4" rounded>
-        <v-alert
-          v-model="matchFlag"
-          class="mx-auto my-10 px-4"
-          border="start"
-          :text="newPairInfo"
-          :title="$t('matchingView.matchSnackbar')"
-          type="success"
-          closable
-        />
-
         <v-card v-if="userMatches.length">
           <v-card-title class="text-h5 d-flex justify-center align-center flex-column">
             {{ $t("matchingView.yourMatches") }}
@@ -168,6 +151,5 @@ onMounted(() => {
           </v-card-title>
         </v-card>
       </v-sheet>
-    </v-col>
-  </v-row>
+    </v-col> -->
 </template>

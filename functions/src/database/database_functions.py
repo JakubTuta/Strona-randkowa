@@ -3,6 +3,7 @@ import typing
 
 from google.cloud import firestore
 from google.cloud.firestore_v1.base_query import FieldFilter
+from src.models.dislike import DislikeModel
 from src.models.like import LikeModel
 from src.models.user import UserModel
 
@@ -104,9 +105,69 @@ def delete_older_dislikes():
         doc.reference.delete()
 
 
+def delete_older_likes():
+    cutout_date = datetime.datetime.now() - datetime.timedelta(weeks=1)
+
+    query = collections["likes"].where("date", "<", cutout_date)
+
+    docs = query.stream()
+
+    for doc in docs:
+        doc.reference.delete()
+
+
 def add_new_like(
     user_ref: firestore.DocumentReference, other_ref: firestore.DocumentReference
 ):
-    like_data = {"whoLiked": user_ref, "likedProfile": other_ref}
+    like_data = {
+        "whoLiked": user_ref,
+        "likedProfile": other_ref,
+        "date": datetime.datetime.now(),
+    }
 
     collections["likes"].add(like_data)
+
+
+def get_user_likes(user_ref: firestore.DocumentReference) -> typing.List[LikeModel]:
+    query = collections["likes"].where("whoLiked", "==", user_ref)
+
+    docs = query.stream()
+
+    likes = [
+        LikeModel.from_dict({**doc.to_dict(), "reference": doc.reference})
+        for doc in docs
+    ]
+
+    return likes
+
+
+def get_user_dislikes(
+    user_ref: firestore.DocumentReference,
+) -> typing.List[DislikeModel]:
+    query = collections["dislikes"].where("whoDisliked", "==", user_ref)
+
+    docs = query.stream()
+
+    dislikes = [
+        DislikeModel.from_dict({**doc.to_dict(), "reference": doc.reference})
+        for doc in docs
+    ]
+
+    return dislikes
+
+
+def get_filtered_users(
+    users: typing.List[UserModel],
+    user_likes: typing.List[LikeModel],
+    user_dislikes: typing.List[DislikeModel],
+):
+    user_likes_id = map(lambda user: user.likedProfile.id, user_likes)
+    user_dislikes_id = map(lambda user: user.dislikedProfile.id, user_dislikes)
+
+    filtered_users = filter(
+        lambda user: user.reference.id not in user_likes_id
+        and user.reference.id not in user_dislikes_id,
+        users,
+    )
+
+    return filtered_users

@@ -4,7 +4,7 @@ import { useTheme } from 'vuetify'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import formValidation, { validateForm } from '~/helpers/formValidation'
 import { lengthRule, lengthRuleShort, passwordRule, requiredRule } from '~/helpers/rules'
-import { UserModel } from '~/models/user'
+import { type IUser, UserModel } from '~/models/user'
 import type { TGender } from '~/types/gender'
 import { useFieldsOfStudies } from '~/composables/fieldsOfStudies'
 
@@ -78,14 +78,16 @@ function prepareNewAccount() {
       description: '',
       score: {
         count: 0,
-        average: 0
+        average: 0,
       },
-      elo: 0,
+      elo: 1000,
       preferredGender: preferredGender.value || 'any',
       lookingFor: lookingFor.value || 'other',
       photos: [image.value],
       blockedProfiles: [],
       hobbies: [],
+      matches: [],
+      verifiedImages: 0,
     },
     createdUserRef,
   )
