@@ -37,6 +37,9 @@ async function setData() {
     console.log(currentUser)
     await restStore.getTopUsers(currentUser)
     const { users } = storeToRefs(restStore)
+    if (!users.value.length)
+      endFlag.value = true
+
     console.log(users)
     allUsers = users.value
     currentDisplayUser = allUsers[0]
