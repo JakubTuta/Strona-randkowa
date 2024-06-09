@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { Timestamp } from 'firebase/firestore'
-import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
 import profileCard from '~/components/user/profileCard.vue'
 import likedCard from '~/components/user/likedCard.vue'
@@ -9,6 +7,7 @@ import { DislikeModel } from '~/models/dislike'
 
 definePageMeta({
   layout: 'user',
+  middleware: ['auth'],
 })
 
 const { t } = useI18n()

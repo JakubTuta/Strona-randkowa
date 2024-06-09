@@ -6,6 +6,7 @@ import type { UserModel } from '~/models/user'
 
 definePageMeta({
   layout: 'user',
+  middleware: ['auth'],
 })
 
 const appStore = useAppStore()
