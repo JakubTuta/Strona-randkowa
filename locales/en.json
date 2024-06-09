@@ -13,6 +13,7 @@
     "logout": "Log out",
     "changeTheme": "Change theme",
     "events": "Events",
+    "about": "About page",
     "user": {
       "myProfile": "My profile",
       "communities": "Communities",
@@ -25,6 +26,20 @@
       "chat": "Chat"
     }
   },
+  "about": {
+    "seeWhatGoingOn": "See how it works",
+    "shortDescription": "Wondering what this app is for? Dating? Events? Acquaintances? That's right.",
+    "events": "Events section",
+    "eventsDescription": "Don't know what to do this weekend? No idea for going out with friends? Check out the events section. Every logged-in user can add their event and it will be displayed on the homepage, and you can participate in it.",
+    "goToEvents": "See events",
+    "relationships": "Meet people",
+    "relationshipsDescription": "Don't have anyone to study with? Want to meet someone? Don't have anyone to go to the movies with? This app is just for you. You will meet other students with whom you can go through the entire studies together.",
+    "chats": "Talk to people",
+    "chatsDescription": "Fast and pleasant communication with newly met people. Both want to get to know each other? Write boldly.",
+    "whatsNext": "So what?",
+    "whatsNextDescription": "Shall we start?"
+  },
+
   "events": {
     "add": {
       "eventName": "Event name",

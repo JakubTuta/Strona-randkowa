@@ -13,6 +13,7 @@
     "logout": "Wyloguj",
     "changeTheme": "Zmień motyw",
     "events": "Wydarzenia",
+    "about": "O stronie",
     "user": {
       "myProfile": "Mój profil",
       "communities": "Społeczności",
@@ -24,6 +25,19 @@
       "meet": "Poznawaj",
       "chat": "Czat"
     }
+  },
+  "about": {
+    "seeWhatGoingOn": "Zobacz jak to działa",
+    "shortDescription": "Zastanawiasz się do czego ta aplikacja? Randki? Wydarzenia? Znajamości? Zgadza się.",
+    "events": "Sekcja wydarzeń",
+    "eventsDescription": "Nie wiesz co robić w ten weekend? Nie masz pomysłu na wyjście ze znajomymi? Zobacz sekcje wydarzeń. Każdy zalogowany użytkownik może dodać swoje wydarzenie i ono wyświetli się na stronie głównej, a Ty możesz wziąć w nim udział.",
+    "goToEvents": "Zobacz wydarzenia",
+    "relationships": "Poznawaj ludzi",
+    "relationshipsDescription": "Nie masz się z kim uczyć? Chcesz poznać kogoś? Nie masz z kim pójść do kina? Ta aplikacja jest właśnie dla ciebie. Poznasz innych studentów, z którymi możesz wspólnie iść przez całe studia.",
+    "chats": "Rozmawiaj z ludźmi",
+    "chatsDescription": "Szybka i przyjemna komunikacja z nowopoznanymi osobami. Oboje chcecie się poznać? Pisz śmiało.",
+    "whatsNext": "To jak?",
+    "whatsNextDescription": "Zaczynamy?"
   },
   "events": {
     "add": {
