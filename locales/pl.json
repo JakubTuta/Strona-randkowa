@@ -13,6 +13,7 @@
     "logout": "Wyloguj",
     "changeTheme": "Zmień motyw",
     "events": "Wydarzenia",
+    "about": "O stronie",
     "user": {
       "myProfile": "Mój profil",
       "communities": "Społeczności",
@@ -24,6 +25,30 @@
       "meet": "Poznawaj",
       "chat": "Czat"
     }
+  },
+  "landing": {
+    "start": "Witamy na stronie randkowej",
+    "slogan": "Aplikacja zaprojektowana specjalnie do tego żeby ją usunąć. Zaintrygowało?",
+    "startNow": "Zacznij już teraz",
+    "howItWorks": "Zobacz jak to działa",
+    "howItWorksTutorial": "Przygotowaliśmy specjalnie dla ciebie krótki opis jak działa nasza aplikacja.",
+    "goSee": "Przejdź",
+    "eventsAndRelationships": "Poznawaj ludzi i uczestnicz w wydarzeniach",
+    "eventsButton": "Zobacz wydarzenia",
+    "eventsContent": "Poznaj kogoś nowego. Uczestnicz w wydarzeniach, łącz się w pary. Wystarczy parę chwil. Nie wiesz co cię omija."
+  },
+  "about": {
+    "seeWhatGoingOn": "Zobacz jak to działa",
+    "shortDescription": "Zastanawiasz się do czego służy ta aplikacja? Randki? Wydarzenia? Znajamości? Zgadza się!",
+    "events": "Sekcja wydarzeń",
+    "eventsDescription": "Nie wiesz co robić w ten weekend? Nie masz pomysłu na wyjście ze znajomymi? Zobacz sekcje wydarzeń. Każdy zalogowany użytkownik może dodać swoje wydarzenie i wyświetli się ono na stronie głównej, a Ty możesz wziąć w nim udział.",
+    "goToEvents": "Zobacz wydarzenia",
+    "relationships": "Poznawaj ludzi",
+    "relationshipsDescription": "Nie masz z kim się uczyć? Chcesz kogoś poznać? Nie masz z kim pójść do kina? Ta aplikacja jest właśnie dla Ciebie! Poznasz innych studentów, z którymi możesz wspólnie iść przez całe studia.",
+    "chats": "Rozmawiaj z ludźmi",
+    "chatsDescription": "Szybka i przyjemna komunikacja z nowopoznanymi osobami. Oboje chcecie się poznać? Pisz śmiało!",
+    "whatsNext": "To jak?",
+    "whatsNextDescription": "Zaczynamy?"
   },
   "events": {
     "add": {

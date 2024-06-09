@@ -5,6 +5,7 @@ import type { EventModel } from '~/models/event'
 
 definePageMeta({
   layout: 'user',
+  middleware: ['auth'],
 })
 
 const { t } = useI18n()

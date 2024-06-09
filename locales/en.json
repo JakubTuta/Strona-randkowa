@@ -13,6 +13,7 @@
     "logout": "Log out",
     "changeTheme": "Change theme",
     "events": "Events",
+    "about": "About page",
     "user": {
       "myProfile": "My profile",
       "communities": "Communities",
@@ -24,6 +25,30 @@
       "meet": "Meet people",
       "chat": "Chat"
     }
+  },
+  "landing": {
+    "start": "Welcome to the dating site",
+    "slogan": "An app designed specifically to be deleted. Intrigued?",
+    "startNow": "Start now",
+    "howItWorks": "See how it works",
+    "howItWorksTutorial": "We have prepared a short description of how our app works especially for you.",
+    "goSee": "Go see",
+    "eventsAndRelationships": "Meet people and participate in events",
+    "eventsButton": "View events",
+    "eventsContent": "Meet someone new. Participate in events, pair up. It only takes a moment. You don't know what you're missing out on."
+  },
+  "about": {
+    "seeWhatGoingOn": "See how it works",
+    "shortDescription": "Wondering what this app is for? Dating? Events? Making friends? That's right!",
+    "events": "Events section",
+    "eventsDescription": "Don't know what to do this weekend? No idea for going out with friends? Check out the events section. Every logged-in user can add their event and it will be displayed on the homepage for you to participate in.",
+    "goToEvents": "See events",
+    "relationships": "Meet people",
+    "relationshipsDescription": "Don't have anyone to study with? Want to meet someone? Don't have anyone to go to the movies with? This app is just for you! You can meet other students with whom you can go through university",
+    "chats": "Talk to people",
+    "chatsDescription": "Fast and pleasant communication with newly met people. You both want to get to know one other? Text them now!",
+    "whatsNext": "So what?",
+    "whatsNextDescription": "Shall we begin?"
   },
   "events": {
     "add": {

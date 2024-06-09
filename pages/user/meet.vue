@@ -6,6 +6,7 @@ import { DislikeModel } from '~/models/dislike'
 
 definePageMeta({
   layout: 'user',
+  middleware: ['auth'],
 })
 
 const { t } = useI18n()
