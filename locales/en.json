@@ -26,6 +26,17 @@
       "chat": "Chat"
     }
   },
+  "landing": {
+    "start": "Welcome to the dating site",
+    "slogan": "An app designed specifically to be deleted. Intrigued?",
+    "startNow": "Start now",
+    "howItWorks": "See how it works",
+    "howItWorksTutorial": "We have prepared a short description of how our app works especially for you.",
+    "goSee": "Go see",
+    "eventsAndRelationships": "Meet people and participate in events",
+    "eventsButton": "View events",
+    "eventsContent": "Meet someone new. Participate in events, pair up. It only takes a moment. You don't know what you're missing out on."
+  },
   "about": {
     "seeWhatGoingOn": "See how it works",
     "shortDescription": "Wondering what this app is for? Dating? Events? Making friends? That's right!",
