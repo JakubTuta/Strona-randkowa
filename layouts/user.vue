@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { icons } from '../helpers/socials'
+import { icons } from '~/helpers/socials'
 
 const drawer = ref(false)
 </script>
