@@ -62,7 +62,7 @@
   </v-card>
 
   <v-img
-      src="/landingEvents.jpg"
+      src="/landingevents.jpg"
       cover
       gradient="to bottom, rgba(0,0,0,.25), rgba(0,0,0,.7)"
       class="text-center"
