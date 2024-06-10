@@ -20,8 +20,8 @@ class UserModel:
     gender: str = ""
     index: int = 0
     role: str = ""
-    score: typing.Dict[str, float] = dataclasses.field(
-        default_factory=lambda: {"count": 0, "average": 0.0}
+    score: typing.List[firestore.DocumentReference] = dataclasses.field(
+        default_factory=list, compare=False, hash=False, repr=False
     )
     elo: int = 0
     preferredGender: str = ""

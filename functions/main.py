@@ -21,12 +21,6 @@ def get_matches(req: https_fn.Request) -> https_fn.Response:
         user_reference_id = data["reference_id"]
         max_users = data.get("max_users", 1000)
 
-    except KeyError:
-        return https_fn.Response(
-            json.dumps({"Error": "Nie podano reference_id"}),
-            status=400,
-        )
-
     except Exception as e:
         return https_fn.Response(
             json.dumps({"Error": str(e)}),
@@ -63,16 +57,6 @@ def is_match(req: https_fn.Request) -> https_fn.Response:
         user_id = data["whoLiked"]
         other_id = data["likedProfile"]
 
-    except KeyError:
-        return https_fn.Response(
-            json.dumps(
-                {
-                    "Error": "Nie podano whoLiked lub likedProfile",
-                },
-                status=400,
-            )
-        )
-
     except Exception as e:
         return https_fn.Response(
             json.dumps({"Error": str(e)}),
@@ -108,47 +92,25 @@ def add_score(req: https_fn.Request) -> https_fn.Response:
     try:
         data = req.get_json(force=True)
 
-        user_reference_id = data["reference_id"]
+        who_scored_id = data["whoScoredId"]
+        scored_profile_id = data["scoredProfileId"]
         score = data["score"]
 
-    except KeyError:
-        return https_fn.Response(
-            json.dumps(
-                {
-                    "Error": "Nie podano reference_id lub score",
-                },
-                status=400,
-            )
-        )
-
     except Exception as e:
         return https_fn.Response(
             json.dumps({"Error": str(e)}),
             status=400,
         )
 
-    try:
-        user_reference = db_functions.get_reference_from_id(user_reference_id)
-        user_data = db_functions.get_user_data(user_reference)
+    who_scored_reference = db_functions.get_reference_from_id(who_scored_id)
 
-        new_average = (
-            (user_data.score["count"] * user_data.score["average"]) + score
-        ) / user_data.score["count"]
+    scored_profile_reference = db_functions.get_reference_from_id(scored_profile_id)
+    scored_profile_data = db_functions.get_user_data(scored_profile_reference)
 
-        update_data = {
-            "score": {
-                "average": new_average,
-                "count": user_data.score["count"],
-            }
-        }
+    if db_functions.has_reference_scored(scored_profile_data, who_scored_reference):
+        return https_fn.Response("User has already scored", status=200)
 
-        user_reference.update(update_data)
-
-    except Exception as e:
-        return https_fn.Response(
-            json.dumps({"Error": str(e)}),
-            status=400,
-        )
+    db_functions.add_new_score(scored_profile_data, who_scored_reference, score)
 
     return https_fn.Response("ok", status=200)
 

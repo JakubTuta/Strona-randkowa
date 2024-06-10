@@ -76,10 +76,7 @@ function prepareNewAccount() {
       fieldOfStudy: fieldOfStudy.value || '',
       role: 'user',
       description: '',
-      score: {
-        count: 0,
-        average: 0,
-      },
+      score: [],
       elo: 1000,
       preferredGender: preferredGender.value || 'any',
       lookingFor: lookingFor.value || 'other',

@@ -1,3 +1,4 @@
+import statistics
 import typing
 
 import src.database.database_functions as db_functions
@@ -22,9 +23,9 @@ class RecommendationAlgorithm:
     }
 
     __SCORING = {
-        "IS_PREFERRED_GENDER": 2.0,
+        "IS_PREFERRED_GENDER": 3.0,
         "VERIFIED_PHOTO": 0.25,
-        "IS_DESCRIPTION": 1.0,
+        "IS_DESCRIPTION": 0.5,
         "IS_LIKE": 3.0,
         "SAME_HOBBY": 0.5,
     }
@@ -38,7 +39,7 @@ class RecommendationAlgorithm:
         other_score += RecommendationAlgorithm.__calculate_rating_score(other)
         other_score += RecommendationAlgorithm.__check_verified_photos(other)
         other_score += RecommendationAlgorithm.__check_if_is_description(other)
-        other_score += RecommendationAlgorithm.__check_if_likes(user, other)
+        other_score += RecommendationAlgorithm.__check_if_is_liked(user, other)
         other_score += RecommendationAlgorithm.__check_hobbies(user, other)
 
         return other_score
@@ -92,7 +93,12 @@ class RecommendationAlgorithm:
 
     @staticmethod
     def __calculate_rating_score(user: UserModel) -> float:
-        user_score = user.score["average"]
+        scores = map(lambda score: score.score, user.score)
+
+        if not len(scores):
+            return 0
+
+        user_score = statistics.mean(scores)
 
         normalized_score = (
             (user_score - RecommendationAlgorithm.__RATING_SCORE["MIN_ORIGINAL_SCORE"])
@@ -125,7 +131,7 @@ class RecommendationAlgorithm:
         return score
 
     @staticmethod
-    def __check_if_likes(user: UserModel, other: UserModel) -> float:
+    def __check_if_is_liked(user: UserModel, other: UserModel) -> float:
         score = (
             bool(
                 db_functions.check_if_other_likes_user(user.reference, other.reference)

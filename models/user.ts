@@ -7,8 +7,8 @@ import type { TPreferredGender } from '~/types/preferredGender'
 import type { TRole } from '~/types/role'
 
 export interface IScore {
-  count: number
-  average: number
+  score: number
+  user: DocumentReference
 }
 
 export interface IUser {
@@ -23,7 +23,7 @@ export interface IUser {
   gender: TGender
   index: number
   role: TRole
-  score: IScore
+  score: IScore[]
   elo: number
   preferredGender: TPreferredGender
   lookingFor: TLookingFor
@@ -46,7 +46,7 @@ export class UserModel implements IUser {
   gender: TGender
   index: number
   role: TRole
-  score: IScore
+  score: IScore[]
   elo: number
   preferredGender: TPreferredGender
   lookingFor: TLookingFor
@@ -70,7 +70,7 @@ export class UserModel implements IUser {
     this.gender = data.gender || ''
     this.index = data.index || 0
     this.role = data.role || ''
-    this.score = data.score || { count: 0, average: 0 }
+    this.score = data.score || []
     this.elo = data.elo || 0
     this.preferredGender = data.preferredGender || ''
     this.lookingFor = data.lookingFor || ''
