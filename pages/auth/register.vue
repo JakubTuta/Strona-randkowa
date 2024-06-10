@@ -88,6 +88,7 @@ function prepareNewAccount() {
       hobbies: [],
       matches: [],
       verifiedImages: 0,
+      languageCode: 'pl',
     },
     createdUserRef,
   )

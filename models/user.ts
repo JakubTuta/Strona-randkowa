@@ -31,6 +31,7 @@ export interface IUser {
   hobbies: THobby[]
   verifiedImages: number
   matches: DocumentReference[]
+  languageCode: string
 }
 
 export class UserModel implements IUser {
@@ -53,6 +54,7 @@ export class UserModel implements IUser {
   hobbies: THobby[]
   verifiedImages: number
   matches: DocumentReference[]
+  languageCode: string
 
   reference: DocumentReference | null
 
@@ -76,6 +78,7 @@ export class UserModel implements IUser {
     this.hobbies = data.hobbies || []
     this.verifiedImages = data.verifiedImages || 0
     this.matches = data.matches || []
+    this.languageCode = data.languageCode || 'pl'
 
     this.reference = reference
   }
@@ -101,6 +104,7 @@ export class UserModel implements IUser {
       hobbies: this.hobbies,
       verifiedImages: this.verifiedImages,
       matches: this.matches,
+      languageCode: this.languageCode,
     }
   }
 }

@@ -13,7 +13,7 @@ export const useAppStore = defineStore('app', () => {
   const { firestore, auth } = useFirebase()
   const { fetchDocumentById } = useDatabase()
   const { getAuthError } = useError()
-  const { t } = useI18n()
+  const { t, setLocale } = useI18n()
 
   const usersCollection = collection(firestore, 'users')
   const router = useRouter()
@@ -269,6 +269,17 @@ export const useAppStore = defineStore('app', () => {
     return decodeURIComponent(path)
   }
 
+  const setLanguage = (language: string) => {
+    if (!userData.value?.reference || userData.value?.languageCode === language)
+      return
+
+    setLocale(language)
+    localStorage.setItem('current-lang', language)
+
+    userData.value.languageCode = language
+    updateDoc(userData.value.reference, userData.value.toMap())
+  }
+
   return {
     user,
     userData,
@@ -287,5 +298,6 @@ export const useAppStore = defineStore('app', () => {
     removeImage,
     getPhotoPath,
     editMainPhoto,
+    setLanguage,
   }
 })
