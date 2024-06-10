@@ -30,6 +30,7 @@ class UserModel:
     )
     hobbies: typing.List[str] = dataclasses.field(default_factory=list)
     verifiedImages: int = 0
+    languageCode: str = "pl"
 
     reference: firestore.DocumentReference = dataclasses.field(
         default=None, compare=False, hash=False, repr=False
