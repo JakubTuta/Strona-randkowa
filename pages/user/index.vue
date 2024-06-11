@@ -44,7 +44,7 @@ onMounted(async () => {
         <v-carousel v-if="events.length" class="rounded-xl" cycle :interval="5000">
           <template v-for="(item, index) in events" :key="index" :item="item">
             <v-carousel-item
-              src="/testEvent.jpg"
+              :src="item.photo"
               cover
               class="text-center"
             >

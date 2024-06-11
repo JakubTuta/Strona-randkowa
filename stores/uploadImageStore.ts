@@ -50,8 +50,27 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
     }
   }
 
+  const createAndUploadEventPhoto = async (imgData: string) => {
+    const imagePath = `events/${generateRandomText()}`
+
+    const uploadedData = await uploadString(
+      ref(storage, imagePath),
+      imgData,
+      'data_url',
+    )
+
+    const imageUrl = await getDownloadURL(uploadedData.ref)
+
+    return {
+      imageUrl,
+      imagePath,
+      uploadedData,
+    }
+  }
+
   return {
     createAndUploadImage,
     deleteImage,
+    createAndUploadEventPhoto,
   }
 })
