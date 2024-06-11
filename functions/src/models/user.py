@@ -6,7 +6,7 @@ import typing
 from google.cloud import firestore
 
 
-@dataclasses.dataclass(kw_only=True, frozen=True)
+@dataclasses.dataclass(kw_only=True, frozen=True, order=False)
 class UserModel:
     photos: typing.List[str] = dataclasses.field(
         default_factory=list, compare=False, hash=False, repr=False
@@ -20,7 +20,9 @@ class UserModel:
     gender: str = ""
     index: int = 0
     role: str = ""
-    score: float = 0
+    score: typing.List[firestore.DocumentReference] = dataclasses.field(
+        default_factory=list, compare=False, hash=False, repr=False
+    )
     elo: int = 0
     preferredGender: str = ""
     lookingFor: str = ""
@@ -28,8 +30,12 @@ class UserModel:
     blockedProfiles: typing.List[firestore.DocumentReference] = dataclasses.field(
         default_factory=list, compare=False, hash=False, repr=False
     )
+    matches: typing.List[firestore.DocumentReference] = dataclasses.field(
+        default_factory=list, compare=False, hash=False, repr=False
+    )
     hobbies: typing.List[str] = dataclasses.field(default_factory=list)
     verifiedImages: int = 0
+    languageCode: str = "pl"
 
     reference: firestore.DocumentReference = dataclasses.field(
         default=None, compare=False, hash=False, repr=False

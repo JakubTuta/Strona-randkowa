@@ -3,6 +3,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore'
 import axios from 'axios'
 import type { UserModel } from '~/models/user'
 import { mapUser } from '~/models/user'
+import type { LikeModel } from '~/models/like'
 
 export const useRestStore = defineStore('rest', () => {
   const { firestore } = useFirebase()
@@ -29,6 +30,9 @@ export const useRestStore = defineStore('rest', () => {
   }
 
   const mapIdsToUsers = async (referenceIds: string[]) => {
+    if (!referenceIds.length)
+      return []
+
     try {
       const documents = await getDocs(query(collectionUsers, where('__name__', 'in', referenceIds)))
       const mappedUsers = documents.docs.map(mapUser)
@@ -42,7 +46,7 @@ export const useRestStore = defineStore('rest', () => {
     }
   }
 
-  const getTopUsers = async (userData: UserModel | null, maxUsers: number = 1000) => {
+  const getTopUsers = async (userData: UserModel, maxUsers: number = 1000) => {
     if (!userData || !userData.reference)
       return
 
@@ -55,15 +59,39 @@ export const useRestStore = defineStore('rest', () => {
       const data = await getAxiosFirebase(userData.reference)
         .post('/get_matches', requestData)
 
-      users.value = await mapIdsToUsers(data.data)
+      if (data.status === 200)
+        users.value = await mapIdsToUsers(data.data)
     }
     catch (error) {
       console.error(error)
     }
   }
 
+  const checkMatches = async (userData: UserModel | null, like: LikeModel) => {
+    if (!like || !userData || !userData.reference)
+      return
+
+    const requestData = {
+      likedProfile: like.likedProfile.id,
+      whoLiked: like.whoLiked.id,
+    }
+
+    try {
+      const data = await getAxiosFirebase(userData.reference)
+        .post('/is_match', requestData)
+
+      if (data.status === 200)
+        return data.data.is_match
+    }
+    catch (error) {
+      console.error(error)
+    }
+    return false
+  }
+
   return {
     users,
     getTopUsers,
+    checkMatches,
   }
 })

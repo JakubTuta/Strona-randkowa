@@ -1,8 +1,13 @@
 <script lang="ts" setup>
-import EditProfile from '~/components/user/editProfile.vue'
-import EditPreferences from '~/components/user/editPreferences.vue'
+import EditProfile from '~/components/user/profile/editProfile.vue'
+import EditPreferences from '~/components/user/profile/editPreferences.vue'
 import type { THobby } from '~/types/hobby'
 import type { UserModel } from '~/models/user'
+
+definePageMeta({
+  layout: 'user',
+  middleware: ['auth'],
+})
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
@@ -23,7 +28,10 @@ const preferredGender = ref<string>('')
 const lookingFor = ref<string>('')
 const hobbies = ref<THobby[]>()
 
-// const hobbyArray: THobby [] = ['gym', 'studyPartner', 'beer']
+const photoAddFlag = ref<boolean>(true)
+const editPhotosFlag = ref<boolean>(false)
+
+const image = ref('')
 
 function countAge(dateBirth: Date) {
   const today = new Date()
@@ -56,6 +64,8 @@ function setData() {
     preferredGender.value = currentUser.preferredGender
     lookingFor.value = currentUser.lookingFor
     hobbies.value = currentUser.hobbies
+    if (currentUser.photos.length > 3)
+      photoAddFlag.value = false
   }
 }
 
@@ -69,9 +79,10 @@ function changeProfileEditFlag() {
 function changePreferencesEditFlag() {
   editPreferencesFlag.value = !editPreferencesFlag.value
 }
-definePageMeta({
-  layout: 'user',
-})
+
+function changeEditPhotosFlag() {
+  editPhotosFlag.value = !editPhotosFlag.value
+}
 
 watch(currentUser, async (newUser, oldUser) => {
   setData()
@@ -79,68 +90,84 @@ watch(currentUser, async (newUser, oldUser) => {
 
 onMounted(() => {
   setData()
+  console.log(currentUser?.photos.length)
 },
 )
 
 function setImage(url: string) {
-  // dodać zdjęcie do profilu
+  image.value = url
+  if (currentUser != null)
+    appStore.addImage(currentUser, url)
+}
+
+function deleteImage(url: string) {
+  const string = appStore.getPhotoPath(url)
+  console.log(string)
+  if (currentUser != null)
+    appStore.removeImage(currentUser, url)
+  editPhotosFlag.value = false
+  photoAddFlag.value = true
+}
+
+function setMainPhoto(url: string) {
+  if (currentUser != null)
+    appStore.editMainPhoto(currentUser, url)
 }
 </script>
 
 <template>
-  <v-row justify="center">
-    <v-col cols="12" sm="12" md="6">
+  <v-row justify="center" cols="12">
+    <v-col sm="12" md="6">
       <v-sheet
         class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-height="1200"
         max-width="1100" rounded
       >
-        <v-row justify="center">
-          <v-col cols="12" sm="12" md="12">
-            <div>
-              <v-card-title class="text-h4 my-2">
-                Twoje profilowe:
-              </v-card-title>
+        <v-col>
+          <v-row justify="center">
+            <v-col sm="12" md="12">
+              <div>
+                <v-card-title class="text-h4 my-2">
+                  <v-icon left class="mr-2">
+                    mdi-face-man-shimmer
+                  </v-icon>
+                  {{ t('profile.yourMainPhoto') }}
+                </v-card-title>
+              </div>
+              <div>
+                <v-img
+                  class="mx-auto my-5 elevation-5" rounded="xl" :width="400" :height="400" cover
+                  :src="userData?.photos[0]"
+                />
+              </div>
+            </v-col>
+          </v-row>
+
+          <v-row justify="center">
+            <div v-for="(photo, index) in userData?.photos.slice(1)" :key="index" :value="photo">
+              <v-col>
+                <v-img
+                  class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+                  :src="photo"
+                />
+                <v-btn v-if="editPhotosFlag" size="small" color="primary" icon="mdi-face-man-shimmer" class="mr-2" @click="setMainPhoto(photo)" />
+                <v-btn v-if="editPhotosFlag" size="small" color="error" icon="mdi-delete" class="ml-2" @click="deleteImage(photo)" />
+              </v-col>
             </div>
-            <div>
-              <v-img
-                class="mx-auto my-5 elevation-5" rounded="xl" :width="400" :height="400" cover
-                src="/testPerson3.jpg"
-              />
-            </div>
+          </v-row>
 
-            <!-- ZMIENIĆ NA PĘTLE WYŚWIETLANIE ZDJĘĆ W ZALEŻNOŚCI OD DŁUGOŚCI TABLICY PHOTOS W USERZE -->
-            <v-row justify="center">
-              <div>
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
-                  />
-                </v-col>
-              </div>
+          <v-row justify="center">
+            <UploadImage v-if="photoAddFlag" class="my-2" @set-image="setImage" />
 
-              <div>
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
-                  />
-                </v-col>
-              </div>
-
-              <div>
-                <v-col>
-                  <v-img
-                    class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
-                    src="/testPerson3.jpg"
-                  />
-                </v-col>
-              </div>
-            </v-row>
-          </v-col>
-        </v-row>
-
-        <UploadImage class="my-2" @set-image="setImage" />
+            <v-col>
+              <v-btn v-if="!editPhotosFlag" append-icon="mdi-grease-pencil" color="secondary" @click="changeEditPhotosFlag">
+                {{ t('profile.configuration') }}
+              </v-btn>
+              <v-btn v-else @click="changeEditPhotosFlag">
+                {{ t('universal.form.close') }}
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
       </v-sheet>
     </v-col>
 

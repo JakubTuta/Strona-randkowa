@@ -6,6 +6,11 @@ import type { TLookingFor } from '~/types/lookingFor'
 import type { TPreferredGender } from '~/types/preferredGender'
 import type { TRole } from '~/types/role'
 
+export interface IScore {
+  score: number
+  user: DocumentReference
+}
+
 export interface IUser {
   photos: string[]
   firstName: string
@@ -18,13 +23,15 @@ export interface IUser {
   gender: TGender
   index: number
   role: TRole
-  score: number
+  score: IScore[]
   elo: number
   preferredGender: TPreferredGender
   lookingFor: TLookingFor
   blockedProfiles: DocumentReference[]
   hobbies: THobby[]
   verifiedImages: number
+  matches: DocumentReference[]
+  languageCode: string
 }
 
 export class UserModel implements IUser {
@@ -39,13 +46,15 @@ export class UserModel implements IUser {
   gender: TGender
   index: number
   role: TRole
-  score: number
+  score: IScore[]
   elo: number
   preferredGender: TPreferredGender
   lookingFor: TLookingFor
   blockedProfiles: DocumentReference[]
   hobbies: THobby[]
   verifiedImages: number
+  matches: DocumentReference[]
+  languageCode: string
 
   reference: DocumentReference | null
 
@@ -61,13 +70,15 @@ export class UserModel implements IUser {
     this.gender = data.gender || ''
     this.index = data.index || 0
     this.role = data.role || ''
-    this.score = data.score || 0
+    this.score = data.score || []
     this.elo = data.elo || 0
     this.preferredGender = data.preferredGender || ''
     this.lookingFor = data.lookingFor || ''
     this.blockedProfiles = data.blockedProfiles || []
     this.hobbies = data.hobbies || []
     this.verifiedImages = data.verifiedImages || 0
+    this.matches = data.matches || []
+    this.languageCode = data.languageCode || 'pl'
 
     this.reference = reference
   }
@@ -92,6 +103,8 @@ export class UserModel implements IUser {
       blockedProfiles: this.blockedProfiles,
       hobbies: this.hobbies,
       verifiedImages: this.verifiedImages,
+      matches: this.matches,
+      languageCode: this.languageCode,
     }
   }
 }

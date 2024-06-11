@@ -11,6 +11,7 @@ const { t } = useI18n()
 
 definePageMeta({
   layout: 'user',
+  middleware: ['auth'],
 })
 
 const eventStore = useEventsStore()
