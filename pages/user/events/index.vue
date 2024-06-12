@@ -58,7 +58,7 @@ watch(userData, async () => {
         <v-carousel v-if="userEvents.length" class="rounded-xl" cycle :interval="5000">
           <template v-for="(item, index) in userEvents" :key="index" :item="item">
             <v-carousel-item
-              src="/testEvent.jpg"
+              :src="item.photo"
               cover
               class="text-center"
             >

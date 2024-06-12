@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {useEventsStore} from "~/stores/eventsStore";
-import {EventModel} from "~/models/event";
-import VueDatePicker from "@vuepic/vue-datepicker";
-import formValidation from "~/helpers/formValidation";
-import {useTheme} from "vuetify";
-import '@vuepic/vue-datepicker/dist/main.css';
-import {lengthRuleShort, requiredRule} from "~/helpers/rules";
+import VueDatePicker from '@vuepic/vue-datepicker'
+import { useTheme } from 'vuetify'
+import { useEventsStore } from '~/stores/eventsStore'
+import { EventModel } from '~/models/event'
+import formValidation from '~/helpers/formValidation'
+import '@vuepic/vue-datepicker/dist/main.css'
+import { lengthRuleShort, requiredRule } from '~/helpers/rules'
 
 const { t } = useI18n()
 
@@ -16,6 +16,7 @@ definePageMeta({
 
 const eventStore = useEventsStore()
 const appStore = useAppStore()
+// const uploadImageStore = useUploadImageStore()
 const { userData } = storeToRefs(appStore)
 const { current } = useTheme()
 const { form, valid, isValid } = formValidation()
@@ -24,6 +25,7 @@ const sharedStore = useSharedStore()
 
 const name = ref('')
 const durationTime = ref(null)
+const image = ref('')
 
 const isDark = computed(() => {
   return current.value.dark
@@ -31,23 +33,27 @@ const isDark = computed(() => {
 
 async function addEvent() {
   if (await isValid() && userData.value && userData.value.reference && durationTime.value) {
-    await eventStore.addEvent(new EventModel( {name: name.value, comments: [], createdBy: userData.value.reference, photo: '', startDate: durationTime.value[0], endDate: durationTime.value[1] }, null))
-
+    await eventStore.addEvent(new EventModel({ name: name.value, comments: [], createdBy: userData.value.reference, photo: image.value, startDate: durationTime.value[0], endDate: durationTime.value[1] }, null))
+    // await uploadImageStore.createAndUploadEventPhoto(image.value)
     await router.push('/user/events')
   }
   else {
     sharedStore.failureSnackbar({ code: String(t('events.add.error')) })
   }
 }
+
+function setImage(url: string) {
+  image.value = url
+}
 </script>
 
 <template>
   <v-container fluid>
     <v-sheet
-        class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
-        elevation="4"
-        max-width="1100"
-        rounded
+      class="d-flex align-center justify-center flex-wrap text-center mx-auto my-10 px-4"
+      elevation="4"
+      max-width="1100"
+      rounded
     >
       <v-row justify="center">
         <v-col cols="12" sm="12" md="10">
@@ -59,29 +65,30 @@ async function addEvent() {
             <v-col cols="12" md="10" lg="8">
               <v-form ref="form" v-model="valid" @submit.prevent="addEvent">
                 <v-text-field
-                    v-model="name"
-                    :label="t('events.add.eventName')"
-                    :rules="[requiredRule(), lengthRuleShort()]"
-                    class="py-3"
+                  v-model="name"
+                  :label="t('events.add.eventName')"
+                  :rules="[requiredRule(), lengthRuleShort()]"
+                  class="py-3"
                 />
 
                 <VueDatePicker
-                    v-model="durationTime"
-                    class="mb-6"
-                    :dark="isDark"
-                    auto-apply
-                    :range="{ partialRange: false, minRange: 0 }"
-                    :placeholder="t('events.add.durationTime')"
-                    :min-date="new Date()"
-                    :enable-time-picker="true"
-                    position="left"
-                    required
+                  v-model="durationTime"
+                  class="mb-6"
+                  :dark="isDark"
+                  auto-apply
+                  :range="{ partialRange: false, minRange: 0 }"
+                  :placeholder="t('events.add.durationTime')"
+                  :min-date="new Date()"
+                  :enable-time-picker="true"
+                  position="left"
+                  required
                 />
+
+                <UploadImage class="my-2" @set-image="setImage" />
 
                 <v-btn variant="elevated" color="secondary" @click="addEvent">
                   {{ t('events.add.addEvent') }}
                 </v-btn>
-
               </v-form>
             </v-col>
           </div>

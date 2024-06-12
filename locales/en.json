@@ -72,7 +72,9 @@
       "editEvent": "Edit event",
       "upcomingEvents": "Upcoming events",
       "showEvent": "Show more",
-      "noEvents": "No events to show"
+      "noEvents": "No events to show",
+      "startDate": "Starting:",
+      "endDate": "Ending:"
     }
   },
   "universal": {
