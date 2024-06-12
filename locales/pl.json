@@ -23,6 +23,7 @@
     "events": "Wydarzenia",
     "about": "O stronie",
     "settings": "Ustawienia",
+    "footer": "Projekt Kompetencyjny",
     "user": {
       "myProfile": "Mój profil",
       "communities": "Społeczności",
@@ -118,7 +119,7 @@
       "other": "Inna",
       "any": "Dowolna"
     },
-    "prefferedRelationship": {
+    "preferredRelationship": {
       "friendship": "Przyjaźń",
       "relationship": "Związek",
       "studyPartner": "Partner do nauki",
@@ -139,7 +140,7 @@
     "faculty": "Wydział",
     "fieldOfStudy": "Kierunek",
     "index": "Indeks",
-    "prefferedGender": "Preferowana płeć",
+    "preferredGender": "Preferowana płeć",
     "lookingFor": "Czego szukam",
     "hobbies": "Zainteresowania",
     "yourPreferences": "Twoje preferencje i hobby",

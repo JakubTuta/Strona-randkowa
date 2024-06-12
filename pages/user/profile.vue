@@ -226,14 +226,14 @@ function setMainPhoto(url: string) {
           <v-row justify="center">
             <v-col cols="12" md="6" sm="12">
               <v-text-field
-                v-model="lookingFor" :value="t(`user.prefferedRelationship.${lookingFor}`)"
+                v-model="lookingFor" :value="t(`user.preferredRelationship.${lookingFor}`)"
                 :label="t('profile.lookingFor')" readonly
               />
             </v-col>
             <v-col cols="12" md="6" sm="12">
               <v-text-field
                 v-model="preferredGender" :value="t(`user.sex.${preferredGender}`)"
-                :label="t('profile.prefferedGender')" readonly
+                :label="t('profile.preferredGender')" readonly
               />
             </v-col>
             <v-col cols="12" md="12" sm="12" class="d-flex justify-center">

@@ -23,6 +23,7 @@
     "events": "Events",
     "about": "About page",
     "settings": "Settings",
+    "footer": "Competency Project",
     "user": {
       "myProfile": "My profile",
       "communities": "Communities",
@@ -118,7 +119,7 @@
       "other": "Other",
       "any": "Any"
     },
-    "prefferedRelationship": {
+    "preferredRelationship": {
       "friendship": "Friendship",
       "relationship": "Relationship",
       "studyPartner": "Study partner",
@@ -139,7 +140,7 @@
     "faculty": "Faculty",
     "fieldOfStudy": "Field of study",
     "index": "Index",
-    "prefferedGender": "Preffered gender",
+    "preferredGender": "Preferred gender",
     "lookingFor": "Looking for",
     "hobbies": "Hobbies",
     "yourPreferences": "Your preferences and hobbies",
