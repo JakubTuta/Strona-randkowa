@@ -1,6 +1,16 @@
 <script lang="ts" setup>
 import { useTheme } from 'vuetify'
 import { toggleTheme } from '~/helpers/theme'
+import ShowSettings from '~/components/showSettings.vue'
+
+const showForm = ref(false)
+function showEditForm() {
+  showForm.value = true
+}
+
+function closeForm() {
+  showForm.value = false
+}
 
 const theme = useTheme()
 const router = useRouter()
@@ -75,5 +85,9 @@ async function logOut() {
         <v-icon icon="mdi-menu" />
       </v-btn>
     </div>
+
+    <v-btn variant="text" color="white" icon="mdi-cog" @click="showEditForm" />
   </v-app-bar>
+
+  <ShowSettings :is-show="showForm" @on-close="closeForm" />
 </template>

@@ -35,7 +35,7 @@ onMounted(async () => {
     <v-row justify="center" class="mt-4">
       <v-col cols="12" md="8">
         <h1>
-          Nachodzące wydarzenia
+          {{ t('events.index.upcomingEvents') }}
         </h1>
       </v-col>
     </v-row>
@@ -70,7 +70,7 @@ onMounted(async () => {
     <v-row justify="center" class="mt-12">
       <v-col cols="12" md="8">
         <h1>
-          Wybrane osoby o podobnych zainteresowaniach
+          {{ t('universal.quickChat') }}
         </h1>
       </v-col>
     </v-row>

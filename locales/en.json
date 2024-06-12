@@ -84,7 +84,8 @@
     "form": {
       "close": "Close",
       "save": "Save"
-    }
+    },
+    "quickChat": "Your chats"
   },
   "registration": {
     "step": "Step {step}",

@@ -84,7 +84,8 @@
     "form": {
       "close": "Zamknij",
       "save": "Zapisz"
-    }
+    },
+    "quickChat": "Twoje pary"
   },
   "registration": {
     "step": "Krok {step}",
