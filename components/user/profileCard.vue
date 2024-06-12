@@ -109,7 +109,7 @@ async function like() {
                 mdi-magnify
               </v-icon>
               <div style="margin-left: 10px;">
-                {{ t(`user.prefferedRelationship.${user?.lookingFor || 'other'}`) }}
+                {{ t(`user.preferredRelationship.${user?.lookingFor || 'other'}`) }}
               </div>
             </v-col>
             <v-col>

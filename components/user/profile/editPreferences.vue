@@ -74,7 +74,7 @@ watch(isShow, () => isShowRef.value = isShow.value)
         />
 
         <v-select
-          v-model="currentGenderPref" :label="$t('profile.prefferedGender')" :items="mappedGendersPreferences"
+          v-model="currentGenderPref" :label="$t('profile.preferredGender')" :items="mappedGendersPreferences"
           variant="outlined"
         />
         <v-select v-model="hobbiesList" :items="mappedHobbies" label="Hobby" chips multiple />
