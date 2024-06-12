@@ -105,7 +105,7 @@ function editPhoto(url: string) {
             required
           />
 
-          <v-img :src="event?.photo" />
+          <v-img :src="event?.photo" cover max-height="400" />
 
           <UploadImage class="my-2" @set-image="editPhoto" />
         </v-form>
