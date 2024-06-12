@@ -110,7 +110,7 @@
       "other": "Other",
       "any": "Any"
     },
-    "prefferedRelationship": {
+    "preferredRelationship": {
       "friendship": "Friendship",
       "relationship": "Relationship",
       "studyPartner": "Study partner",
@@ -131,7 +131,7 @@
     "faculty": "Faculty",
     "fieldOfStudy": "Field of study",
     "index": "Index",
-    "prefferedGender": "Preffered gender",
+    "preferredGender": "Preferred gender",
     "lookingFor": "Looking for",
     "hobbies": "Hobbies",
     "yourPreferences": "Your preferences and hobbies",
