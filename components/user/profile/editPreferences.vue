@@ -19,6 +19,7 @@ const emit = defineEmits<{
 
 const appStore = useAppStore()
 const { isShow, userData } = toRefs(props)
+const { t } = useI18n()
 
 const { mappedRelationships } = useRelationship()
 const { mappedGendersPreferences } = useGenders()
@@ -65,11 +66,11 @@ watch(isShow, () => isShowRef.value = isShow.value)
   <v-dialog max-width="800px" :model-value="isShowRef" scrollable @update:model-value="close">
     <v-card>
       <v-card-title class="text-h5 flex-wrap">
-        {{ $t("profile.editProfile") }}
+        {{ t("profile.editProfile") }}
       </v-card-title>
       <v-card-text>
         <v-select
-          v-model="currentLookingFor" :label="$t('profile.lookingFor')" :items="mappedRelationships"
+          v-model="currentLookingFor" :label="t('profile.lookingFor')" :items="mappedRelationships"
           variant="outlined"
         />
 
@@ -81,10 +82,10 @@ watch(isShow, () => isShowRef.value = isShow.value)
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">
-          Zamknij
+          {{ t('universal.form.close') }}
         </v-btn>
         <v-btn color="success" @click="saveData">
-          Zapisz
+          {{ t('universal.form.save') }}
         </v-btn>
       </v-card-actions>
     </v-card>

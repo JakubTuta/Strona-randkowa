@@ -8,12 +8,21 @@
     "doYouHaveAccount": "Nie masz jeszcze konta?",
     "register": "Zarejestruj się"
   },
+  "settings": {
+    "themes": "Motyw",
+    "language": "Język",
+    "polish": "Polski",
+    "english": "Angielski",
+    "dark": "Ciemny",
+    "light": "Jasny"
+  },
   "navBar": {
     "login": "Logowanie",
     "logout": "Wyloguj",
     "changeTheme": "Zmień motyw",
     "events": "Wydarzenia",
     "about": "O stronie",
+    "settings": "Ustawienia",
     "footer": "Projekt Kompetencyjny",
     "user": {
       "myProfile": "Mój profil",

@@ -8,12 +8,21 @@
     "doYouHaveAccount": "Don't have an account yet?",
     "register": "Register"
   },
+  "settings": {
+    "themes": "Theme",
+    "language": "Language",
+    "polish": "Polish",
+    "english": "English",
+    "dark": "Dark",
+    "light": "Light"
+  },
   "navBar": {
     "login": "Login",
     "logout": "Log out",
     "changeTheme": "Change theme",
     "events": "Events",
     "about": "About page",
+    "settings": "Settings",
     "footer": "Competency Project",
     "user": {
       "myProfile": "My profile",
