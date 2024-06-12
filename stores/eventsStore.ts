@@ -45,8 +45,15 @@ export const useEventsStore = defineStore('events', () => {
   const editEvent = async (editEvent: EventModel) => {
     sharedStore.init()
 
+    // do poprawki, edycja zdjęcia zamiast dodania nowego
+    const imageUrl = (await uploadImageStore.createAndUploadEventPhoto(editEvent.photo)).imageUrl
+    editEvent.photo = imageUrl
+
     const onSuccess = () => {
-      userEvents.value = [...userEvents.value, editEvent]
+      const index = userEvents.value.findIndex(event => event.reference?.id === editEvent.reference?.id)
+      if (index !== -1)
+        userEvents.value[index] = editEvent
+
       sharedStore.success()
     }
 

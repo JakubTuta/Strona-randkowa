@@ -68,9 +68,28 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
     }
   }
 
+  const editEventPhoto = async (imgData: string, photoPath: string) => {
+    const imagePath = `events/${photoPath}}`
+
+    const uploadedData = await uploadString(
+      ref(storage, imagePath),
+      imgData,
+      'data_url',
+    )
+
+    const imageUrl = await getDownloadURL(uploadedData.ref)
+
+    return {
+      imageUrl,
+      imagePath,
+      uploadedData,
+    }
+  }
+
   return {
     createAndUploadImage,
     deleteImage,
     createAndUploadEventPhoto,
+    editEventPhoto,
   }
 })
