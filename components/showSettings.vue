@@ -18,27 +18,31 @@ function close() {
 
 const { t, locale } = useI18n()
 
-const themes = [
-  {
-    name: t('settings.light'),
-    value: 'light'
-  },
-  {
-    name: t('settings.dark'),
-    value: 'dark'
-  }
-]
+const themes = computed(() => (
+  [
+    {
+      name: t('settings.light'),
+      value: 'light'
+    },
+    {
+      name: t('settings.dark'),
+      value: 'dark'
+    }
+  ]
+))
 
-const languages = [
-  {
-    name: t('settings.polish'),
-    value: 'pl',
-  },
-  {
-    name: t('settings.english'),
-    value: 'en',
-  }
-]
+const languages = computed(() => (
+    [
+      {
+        name: t('settings.polish'),
+        value: 'pl',
+      },
+      {
+        name: t('settings.english'),
+        value: 'en',
+      }
+    ]
+))
 
 const theme = useTheme()
 
