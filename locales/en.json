@@ -85,7 +85,8 @@
       "close": "Close",
       "save": "Save"
     },
-    "quickChat": "Your chats"
+    "quickChat": "Your friends",
+    "meetNewPeople": "People You may know"
   },
   "registration": {
     "step": "Step {step}",

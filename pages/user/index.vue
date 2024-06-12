@@ -2,6 +2,7 @@
 import type { EventModel } from '~/models/event'
 import { useEventsStore } from '~/stores/eventsStore'
 import ShowEventDialog from '~/components/user/events/showEventDialog.vue'
+import likedCard from '~/components/user/likedCard.vue'
 
 definePageMeta({
   layout: 'user',
@@ -11,6 +12,9 @@ definePageMeta({
 const { t } = useI18n()
 const eventStore = useEventsStore()
 const { events } = storeToRefs(eventStore)
+
+const appStore = useAppStore()
+const { userData, userMatches } = storeToRefs(appStore)
 
 const showForm = ref(false)
 const showedEvent: Ref<EventModel | null> = ref(null)
@@ -25,8 +29,19 @@ function closeForm() {
   showForm.value = false
 }
 
+async function setUserMatches() {
+  if (!userData.value?.matches.length)
+    await appStore.fetchLikedProfiles(userData.value?.matches || [])
+}
+
+watch(userData, (newValue) => {
+  if (newValue)
+    setUserMatches()
+}, { immediate: true })
+
 onMounted(async () => {
   await eventStore.getFutureEvents()
+  await appStore.fetchLikedProfiles(userData.value?.matches || [])
 })
 </script>
 
@@ -67,23 +82,38 @@ onMounted(async () => {
       </v-col>
     </v-row>
 
-    <v-row justify="center" class="mt-12">
-      <v-col cols="12" md="8">
-        <h1>
-          {{ t('universal.quickChat') }}
-        </h1>
-      </v-col>
-    </v-row>
+    <div v-if="!userMatches.length">
+      <v-row justify="center" class="mt-12">
+        <v-col cols="12" md="8">
+          <h1>
+            {{ t('universal.quickChat') }}
+          </h1>
+        </v-col>
+      </v-row>
+      <v-row cols="12" class="d-flex justify-center align-center">
+        <v-col cols="12" md="8" class="mt-4 d-flex justify-space-around flex-wrap ">
+          <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
+        </v-col>
+      </v-row>
+    </div>
+    <div v-else>
+      <v-row justify="center" class="mt-12">
+        <v-col cols="12" md="9">
+          <h1>
+            {{ t('universal.meetNewPeople') }}
+          </h1>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="12" md="9" class="mt-4 d-flex justify-space-around flex-wrap ">
+          <UserCard img="/testPerson1.jpg" name="Madzia" :age="22" />
 
-    <v-row justify="center">
-      <v-col cols="12" md="8" class="mt-4 d-flex justify-space-around flex-wrap ">
-        <UserCard img="/testPerson1.jpg" name="Madzia" :age="22" />
+          <UserCard img="/testPerson2.jpg" name="Ewa" :age="21" />
 
-        <UserCard img="/testPerson2.jpg" name="Ewa" :age="21" />
-
-        <UserCard img="/testPerson3.jpg" name="Natalia" :age="24" />
-      </v-col>
-    </v-row>
+          <UserCard img="/testPerson3.jpg" name="Natalia" :age="24" />
+        </v-col>
+      </v-row>
+    </div>
   </v-container>
 
   <ShowEventDialog :event="showedEvent" :is-show="showForm" @on-close="closeForm" />

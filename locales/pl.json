@@ -85,7 +85,9 @@
       "close": "Zamknij",
       "save": "Zapisz"
     },
-    "quickChat": "Twoje pary"
+    "quickChat": "Twoi znajomi",
+    "meetNewPeople": "Użytkownicy, których możesz znać"
+
   },
   "registration": {
     "step": "Krok {step}",
