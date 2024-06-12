@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {useTheme} from "vuetify";
+import { useTheme} from "vuetify";
 import {toggleTheme} from "~/helpers/theme";
 
 const props = defineProps<{
@@ -16,8 +16,43 @@ function close() {
   emit('onClose')
 }
 
+const { t, locale } = useI18n()
+
+const themes = [
+  {
+    name: t('settings.light'),
+    value: 'light'
+  },
+  {
+    name: t('settings.dark'),
+    value: 'dark'
+  }
+]
+
+const languages = [
+  {
+    name: t('settings.polish'),
+    value: 'pl',
+  },
+  {
+    name: t('settings.english'),
+    value: 'en',
+  }
+]
+
 const theme = useTheme()
-const { t } = useI18n()
+
+
+const currentTheme = ref(theme.name)
+
+const setTheme = () => {
+  toggleTheme(theme)
+}
+
+const currentLanguage = ref(locale)
+const changeLocale = () => {
+  locale.value = currentLanguage.value
+}
 
 </script>
 
@@ -34,26 +69,42 @@ const { t } = useI18n()
       <v-card-text>
         {{ t('settings.themes') }}
         <div>
+          <v-radio-group
+              class="my-1"
+              v-model="currentTheme"
+              inline
+              @update:model-value="setTheme()"
+          >
+            <div v-for="item in themes">
+              <v-radio
+                  :label="item.name"
+                  :value="item.value"
+              ></v-radio>
+            </div>
 
-<!--          <v-radio-group-->
-<!--              v-model="theme"-->
-<!--              inline-->
-<!--          >-->
-<!--            <div v-for="item in theme.themes.value">-->
-<!--              <v-radio-->
-<!--                  :label="item.dark ? 'ciemny': 'jasny' "-->
-<!--                  :value="item"-->
-<!--              ></v-radio>-->
-<!--            </div>-->
 
-
-<!--          </v-radio-group>-->
+          </v-radio-group>
         </div>
-        <hr>
         {{ t('settings.language') }}
+        <div>
+          <v-radio-group
+              class="my-1"
+              v-model="currentLanguage"
+              inline
+              @update:model-value="changeLocale()"
+          >
+            <div v-for="item in languages">
+              <v-radio
+                  :label="item.name"
+                  :value="item.value"
+              ></v-radio>
+            </div>
 
 
-        <v-btn variant="text" color="white" icon="mdi-theme-light-dark" @click="toggleTheme(theme)" />
+          </v-radio-group>
+        </div>
+
+
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">

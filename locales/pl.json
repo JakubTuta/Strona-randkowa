@@ -10,7 +10,11 @@
   },
   "settings": {
     "themes": "Motyw",
-    "language": "Język"
+    "language": "Język",
+    "polish": "Polski",
+    "english": "Angielski",
+    "dark": "Ciemny",
+    "light": "Jasny"
   },
   "navBar": {
     "login": "Logowanie",
