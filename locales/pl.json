@@ -8,6 +8,10 @@
     "doYouHaveAccount": "Nie masz jeszcze konta?",
     "register": "Zarejestruj się"
   },
+  "settings": {
+    "themes": "Motyw",
+    "language": "Język"
+  },
   "navBar": {
     "login": "Logowanie",
     "logout": "Wyloguj",

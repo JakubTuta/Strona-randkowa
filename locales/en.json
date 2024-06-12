@@ -8,6 +8,10 @@
     "doYouHaveAccount": "Don't have an account yet?",
     "register": "Register"
   },
+  "settings": {
+    "themes": "Theme",
+    "language": "Language"
+  },
   "navBar": {
     "login": "Login",
     "logout": "Log out",

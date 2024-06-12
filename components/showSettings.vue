@@ -29,9 +29,30 @@ const { t } = useI18n()
   >
     <v-card>
       <v-card-title>
-        Ustawienia
+        {{ t('navBar.settings') }}
       </v-card-title>
       <v-card-text>
+        {{ t('settings.themes') }}
+        <div>
+
+<!--          <v-radio-group-->
+<!--              v-model="theme"-->
+<!--              inline-->
+<!--          >-->
+<!--            <div v-for="item in theme.themes.value">-->
+<!--              <v-radio-->
+<!--                  :label="item.dark ? 'ciemny': 'jasny' "-->
+<!--                  :value="item"-->
+<!--              ></v-radio>-->
+<!--            </div>-->
+
+
+<!--          </v-radio-group>-->
+        </div>
+        <hr>
+        {{ t('settings.language') }}
+
+
         <v-btn variant="text" color="white" icon="mdi-theme-light-dark" @click="toggleTheme(theme)" />
       </v-card-text>
       <v-card-actions class="justify-end">
