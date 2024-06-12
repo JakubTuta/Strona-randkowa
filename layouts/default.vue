@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { icons } from '../helpers/socials'
+import { icons } from '~/helpers/socials'
+const { t } = useI18n()
 </script>
 
 <template>
@@ -22,7 +23,7 @@ import { icons } from '../helpers/socials'
       </div>
 
       <div class="text-center mt-2">
-        <strong> Projekt Kompetencyjny {{ new Date().getFullYear() }} ©</strong>
+        <strong> {{ t('navBar.footer') }} {{ new Date().getFullYear() }} ©</strong>
       </div>
     </v-footer>
   </v-app>
