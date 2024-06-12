@@ -17,6 +17,7 @@ function close() {
 }
 
 const theme = useTheme()
+const { t } = useI18n()
 
 </script>
 
@@ -35,7 +36,7 @@ const theme = useTheme()
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">
-          Zamknij
+          {{ t('universal.form.close') }}
         </v-btn>
       </v-card-actions>
     </v-card>
