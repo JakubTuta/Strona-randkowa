@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { icons } from '~/helpers/socials'
 
+const { t } = useI18n()
 const drawer = ref(false)
 </script>
 
@@ -27,7 +28,7 @@ const drawer = ref(false)
       </div>
 
       <div class="text-center mt-2">
-        <strong> Projekt Kompetencyjny {{ new Date().getFullYear() }} ©</strong>
+        <strong> {{ t('navBar.footer') }} {{ new Date().getFullYear() }} ©</strong>
       </div>
     </v-footer>
   </v-app>
