@@ -82,7 +82,7 @@ onMounted(async () => {
       </v-col>
     </v-row>
 
-    <div v-if="!userMatches.length">
+    <div v-if="userMatches.length">
       <v-row justify="center" class="mt-12">
         <v-col cols="12" md="8">
           <h1>
@@ -98,19 +98,19 @@ onMounted(async () => {
     </div>
     <div v-else>
       <v-row justify="center" class="mt-12">
-        <v-col cols="12" md="9">
+        <v-col cols="12" md="8">
           <h1>
             {{ t('universal.meetNewPeople') }}
           </h1>
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col cols="12" md="9" class="mt-4 d-flex justify-space-around flex-wrap ">
-          <UserCard img="/testPerson1.jpg" name="Madzia" :age="22" />
+        <v-col cols="12" md="8" class="mt-4 d-flex justify-space-around flex-wrap ">
+          <UserCard img="/testPerson1.jpg" name="Madzia" :age="22" field-of-study="architecture" />
 
-          <UserCard img="/testPerson2.jpg" name="Ewa" :age="21" />
+          <UserCard img="/testPerson2.jpg" name="Ewa" :age="21" field-of-study="computerScience" />
 
-          <UserCard img="/testPerson3.jpg" name="Natalia" :age="24" />
+          <UserCard img="/testPerson3.jpg" name="Natalia" :age="24" field-of-study="logistics" />
         </v-col>
       </v-row>
     </div>
