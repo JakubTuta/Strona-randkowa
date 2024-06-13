@@ -176,5 +176,8 @@
     "yourMatches": "Your matches:",
     "noMatches": "Actually you don't have any matches :(",
     "matchSnackbar": "New match!"
+  },
+  "chatView": {
+    "enterMessage": "Type message..."
   }
 }

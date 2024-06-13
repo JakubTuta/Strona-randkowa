@@ -53,27 +53,13 @@ watch(message, (newValue) => {
 
 <template>
   <v-row class="h-100 mb-0 px-4">
-    <v-col cols="3" style="background-color: rgb(37, 37, 27); color: white">
+    <v-col cols="3">
       <template v-for="(user, index) in userMatches" :key="index">
         <MatchedProfileCard :user="user" />
       </template>
     </v-col>
     <v-col cols="9">
-      <div class="bg-secondary" style="height: 80%">
-        <v-row>
-          <v-spacer />
-          <v-col cols="3">
-            First message own
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col cols="3">
-            Second message you
-          </v-col>
-        </v-row>
-      </div>
-
+      <UserChatWindow :current-user="userMatches[0]" />
       <div id="wrapper" ref="wrapper">
         <EmojiPicker
           v-if="isEmojiPickerVisible"
@@ -84,10 +70,11 @@ watch(message, (newValue) => {
         />
       </div>
 
-      <div style="height: 20%;" class="mt-4">
+      <div style="height: 15%;" class="mt-4">
         <v-form>
           <v-textarea
             v-model="message"
+            :label="$t('chatView.enterMessage')"
             color="primary"
             no-resize
           >
@@ -98,7 +85,7 @@ watch(message, (newValue) => {
             </template>
 
             <template #append>
-              <v-btn icon="mdi-send" />
+              <v-btn icon="mdi-send" :disabled="!message.length" />
             </template>
           </v-textarea>
         </v-form>
