@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import ShowSettings from "~/components/showSettings.vue";
+// import ShowSettings from "~/components/showSettings.vue";
 
 const { t } = useI18n()
 
-const showForm = ref(false)
-function showEditForm() {
-  showForm.value = true
-}
+// const showForm = ref(false)
+// function showEditForm() {
+//   showForm.value = true
+// }
 
-function closeForm() {
-  showForm.value = false
-}
-
+// function closeForm() {
+//   showForm.value = false
+// }
 </script>
 
 <template>
@@ -27,7 +26,6 @@ function closeForm() {
     <v-spacer />
 
     <div class="hidden-sm-and-down">
-
       <v-btn variant="elevated" class="mx-2" color="primary" to="/about">
         {{ t("navBar.about") }}
       </v-btn>
@@ -35,7 +33,6 @@ function closeForm() {
       <v-btn variant="elevated" class="mx-2" color="primary" to="/events">
         {{ t("navBar.events") }}
       </v-btn>
-
     </div>
 
     <v-spacer />
@@ -45,7 +42,7 @@ function closeForm() {
         {{ t("navBar.login") }}
       </v-btn>
 
-      <v-btn variant="text" color="white" icon="mdi-cog" @click="showEditForm"/>
+      <!-- <v-btn variant="text" color="white" icon="mdi-cog" @click="showEditForm"/> -->
     </div>
 
     <div class="hidden-md-and-up">
@@ -65,14 +62,14 @@ function closeForm() {
               <v-list-item-title> {{ t("navBar.about") }} </v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="showEditForm">
+            <!-- <v-list-item @click="showEditForm">
               <v-list-item-title> {{ t('navBar.settings') }}</v-list-item-title>
-            </v-list-item>
+            </v-list-item> -->
           </v-list>
         </v-menu>
       </v-btn>
     </div>
   </v-app-bar>
 
-  <ShowSettings :is-show="showForm" @on-close="closeForm" />
+  <!-- <ShowSettings :is-show="showForm" @on-close="closeForm" /> -->
 </template>
