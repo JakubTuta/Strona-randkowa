@@ -29,12 +29,11 @@ const drawer = defineModel({ default: false })
             append-icon="mdi-party-popper"
             :title="$t('navBar.user.events.browse')"
           />
-
         </v-list>
       </v-menu>
     </v-list-item>
 
-    <v-list-item link :title="$t('navBar.user.meet')" append-icon="mdi-heart" />
+    <v-list-item link :title="$t('navBar.user.meet')" append-icon="mdi-heart" to="/user/meet" />
     <v-list-item link :title="$t('navBar.user.chat')" append-icon="mdi-chat" />
 
     <div class="hidden-sm-and-up">

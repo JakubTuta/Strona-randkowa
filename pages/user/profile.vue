@@ -117,7 +117,7 @@ function setMainPhoto(url: string) {
 
 <template>
   <v-row justify="center" cols="12">
-    <v-col sm="12" md="6">
+    <v-col cols="12" sm="10" md="6">
       <v-sheet
         class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-height="1200"
         max-width="1100" rounded
@@ -125,13 +125,11 @@ function setMainPhoto(url: string) {
         <v-col>
           <v-row justify="center">
             <v-col sm="12" md="12">
-              <div>
-                <v-card-title class="text-h4 my-2">
-                  <v-icon left class="mr-2">
-                    mdi-face-man-shimmer
-                  </v-icon>
-                  {{ t('profile.yourMainPhoto') }}
-                </v-card-title>
+              <div class="text-h4 my-2">
+                <v-icon left class="mr-2">
+                  mdi-face-man-shimmer
+                </v-icon>
+                {{ t('profile.yourMainPhoto') }}
               </div>
               <div>
                 <v-img
@@ -171,17 +169,15 @@ function setMainPhoto(url: string) {
       </v-sheet>
     </v-col>
 
-    <v-col cols="12" sm="12" md="6">
+    <v-col cols="12" sm="10" md="6">
       <v-sheet
         class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1100"
         max-height="1200" rounded
       >
         <v-col cols="12" sm="12" md="12">
           <v-row>
-            <div class="mx-auto">
-              <v-card-title class="text-h4 flex-wrap">
-                {{ `${userData?.firstName} ${userData?.lastName}, ${age}` }}
-              </v-card-title>
+            <div class="mx-auto text-h4 flex-wrap my-2">
+              {{ `${userData?.firstName} ${userData?.lastName}, ${age}` }}
               <v-card-subtitle>
                 {{ index }}
               </v-card-subtitle>
@@ -216,11 +212,11 @@ function setMainPhoto(url: string) {
           </v-card-actions>
 
           <v-row>
-            <div class="mx-auto">
-              <v-card-title class="text-h4">
+            <v-col cols="12" md="12" sm="12">
+              <div class="mx-auto text-h4">
                 {{ t("profile.yourPreferences") }}
-              </v-card-title>
-            </div>
+              </div>
+            </v-col>
           </v-row>
 
           <v-row justify="center">
