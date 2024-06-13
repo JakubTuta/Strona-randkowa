@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import EmojiPicker from 'vue3-emoji-picker'
 import MatchedProfileCard from '~/components/user/chat/matchedProfileCard.vue'
+import 'vue3-emoji-picker/css'
 
 definePageMeta({
   layout: 'user',
@@ -8,13 +10,44 @@ definePageMeta({
 const appStore = useAppStore()
 const { userMatches, userData } = storeToRefs(appStore)
 
+const isEmojiPickerVisible = ref(false)
+const message = ref('')
+const wrapper = ref(null)
+
 watch(userData, async (newValue) => {
   if (newValue)
     await appStore.fetchLikedProfiles(userData.value?.matches || [])
 })
 
 onMounted(async () => {
+  document.addEventListener('click', handleClickOutside)
   await appStore.fetchLikedProfiles(userData.value?.matches || [])
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside)
+})
+
+function onSelectEmoji(emoji) {
+  message.value += emoji.i
+}
+
+function showEmojiPicker() {
+  setTimeout(() => {
+    isEmojiPickerVisible.value = !isEmojiPickerVisible.value
+  }, 0)
+}
+
+function handleClickOutside(event) {
+  if (event.target.id === 'emoji')
+    return
+
+  if (wrapper.value && !wrapper.value.contains(event.target))
+    isEmojiPickerVisible.value = false
+}
+
+watch(message, (newValue) => {
+  console.log(newValue)
 })
 </script>
 
@@ -40,14 +73,34 @@ onMounted(async () => {
           </v-col>
         </v-row>
       </div>
+
+      <div id="wrapper" ref="wrapper">
+        <EmojiPicker
+          v-if="isEmojiPickerVisible"
+          :native="true"
+          style="position: absolute; bottom: 220px; right: 60px;"
+          :disable-skin-tones="true"
+          @select="onSelectEmoji"
+        />
+      </div>
+
       <div style="height: 20%;" class="mt-4">
         <v-form>
           <v-textarea
+            v-model="message"
             color="primary"
             no-resize
-            append-inner-icon="mdi-emoticon-outline"
-            append-icon="mdi-send"
-          />
+          >
+            <template #append-inner>
+              <v-icon id="emoji" style="cursor: pointer;" @click="showEmojiPicker">
+                mdi-emoticon-outline
+              </v-icon>
+            </template>
+
+            <template #append>
+              <v-btn icon="mdi-send" />
+            </template>
+          </v-textarea>
         </v-form>
       </div>
     </v-col>
