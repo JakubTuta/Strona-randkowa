@@ -178,6 +178,10 @@
     "matchSnackbar": "New match!"
   },
   "chatView": {
-    "enterMessage": "Type message..."
+    "enterMessage": "Type message...",
+    "viewProfile": "Show profile",
+    "rate": "Rate user",
+    "remove": "Remove conversation",
+    "block": "Block user"
   }
 }

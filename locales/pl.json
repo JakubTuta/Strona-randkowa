@@ -179,6 +179,10 @@
     "matchSnackbar": "Masz nową parę!"
   },
   "chatView": {
-    "enterMessage": "Wpisz wiadomość..."
+    "enterMessage": "Wpisz wiadomość...",
+    "viewProfile": "Wyświetl profil",
+    "rate": "Oceń użytkownika",
+    "remove": "Usuń konwesrację",
+    "block": "Zablokuj użytkownika"
   }
 }

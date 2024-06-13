@@ -2,6 +2,7 @@
 import EmojiPicker from 'vue3-emoji-picker'
 import MatchedProfileCard from '~/components/user/chat/matchedProfileCard.vue'
 import 'vue3-emoji-picker/css'
+import type { UserModel } from '~/models/user'
 
 definePageMeta({
   layout: 'user',
@@ -13,15 +14,19 @@ const { userMatches, userData } = storeToRefs(appStore)
 const isEmojiPickerVisible = ref(false)
 const message = ref('')
 const wrapper = ref(null)
+const currentUser: Ref<UserModel | null> = ref(null)
 
 watch(userData, async (newValue) => {
-  if (newValue)
+  if (newValue) {
     await appStore.fetchLikedProfiles(userData.value?.matches || [])
+    currentUser.value = userMatches.value[0]
+  }
 })
 
 onMounted(async () => {
   document.addEventListener('click', handleClickOutside)
   await appStore.fetchLikedProfiles(userData.value?.matches || [])
+  currentUser.value = userMatches.value[0]
 })
 
 onUnmounted(() => {
@@ -46,6 +51,10 @@ function handleClickOutside(event) {
     isEmojiPickerVisible.value = false
 }
 
+function setCurrentUser(index: number) {
+  currentUser.value = userMatches.value[index]
+}
+
 watch(message, (newValue) => {
   console.log(newValue)
 })
@@ -55,11 +64,11 @@ watch(message, (newValue) => {
   <v-row class="h-100 mb-0 px-4">
     <v-col cols="3">
       <template v-for="(user, index) in userMatches" :key="index">
-        <MatchedProfileCard :user="user" />
+        <MatchedProfileCard :user="user" @click="setCurrentUser(index)" />
       </template>
     </v-col>
     <v-col cols="9">
-      <UserChatWindow :current-user="userMatches[0]" />
+      <UserChatWindow :current-user="currentUser" />
       <div id="wrapper" ref="wrapper">
         <EmojiPicker
           v-if="isEmojiPickerVisible"
