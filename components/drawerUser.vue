@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { useTheme } from 'vuetify'
-import { toggleTheme } from '~/helpers/theme'
+// import { useTheme } from 'vuetify'
+// import { toggleTheme } from '~/helpers/theme'
 
-const theme = useTheme()
+// const theme = useTheme()
 const drawer = defineModel({ default: false })
 </script>
 
@@ -39,7 +39,7 @@ const drawer = defineModel({ default: false })
     <div class="hidden-sm-and-up">
       <v-divider />
       <v-list-item to="/user/profile" append-icon="mdi-logout" :title="$t('navBar.user.myProfile')" />
-      <v-list-item append-icon="mdi-theme-light-dark" :title="$t('navBar.changeTheme')" @click="toggleTheme(theme)" />
+<!--      <v-list-item append-icon="mdi-theme-light-dark" :title="$t('navBar.changeTheme')" @click="toggleTheme(theme)" />-->
       <v-list-item to="/" append-icon="mdi-logout" :title="$t('navBar.logout')" />
     </div>
   </v-navigation-drawer>
