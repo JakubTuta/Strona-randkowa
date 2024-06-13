@@ -3,9 +3,9 @@ import formValidation from '~/helpers/formValidation'
 
 const { t } = useI18n()
 
-useHead({
-  title: `${t('login.login')} - ${t('appName')}`,
-})
+// useHead({
+//   title: `${t('login.login')} - ${t('appName')}`,
+// })
 
 const email = ref('')
 const password = ref('')
