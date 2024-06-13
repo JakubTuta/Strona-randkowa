@@ -60,7 +60,7 @@ async function logOut() {
         {{ t('navBar.user.meet') }}
       </v-btn>
 
-      <v-btn variant="text" color="default" prepend-icon="mdi-chat">
+      <v-btn to="/user/chat" variant="text" color="default" prepend-icon="mdi-chat">
         {{ t('navBar.user.chat') }}
       </v-btn>
     </div>

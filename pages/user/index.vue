@@ -46,7 +46,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <v-container fluid class="px-8">
+  <v-container fluid class="px-8 mb-10">
     <v-row justify="center" class="mt-4">
       <v-col cols="12" md="8">
         <h1>
