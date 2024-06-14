@@ -16,6 +16,12 @@
     "dark": "Ciemny",
     "light": "Jasny"
   },
+  "emailVerification": {
+    "title": "Weryfikacja email",
+    "content": "Zweryfikuj swój adres email.",
+    "sendAgain": "Wyślij ponownie",
+    "signOut": "Wyloguj się"
+  },
   "navBar": {
     "login": "Logowanie",
     "logout": "Wyloguj",

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { icons } from '~/helpers/socials'
+import EmailVerification from "~/components/user/EmailVerification.vue";
 
 const { t } = useI18n()
 const drawer = ref(false)
@@ -10,7 +11,7 @@ const drawer = ref(false)
   <v-app>
     <NavBarUser v-model="drawer" />
     <DrawerUser v-model="drawer" class="hidden-md-and-up" />
-
+    <EmailVerification />
     <slot />
 
     <v-footer class="d-flex flex-column justify-center mt-10" elevation="4">
