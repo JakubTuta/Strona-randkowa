@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import ShowSettings from '~/components/showSettings.vue'
-import EmailVerification from "~/components/user/EmailVerification.vue";
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
