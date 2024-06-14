@@ -3,8 +3,7 @@ import {
   sendEmailVerification,
 } from 'firebase/auth'
 
-// const appStore = useAppStore()
-// const { user } = storeToRefs(appStore)
+const appStore = useAppStore()
 
 const isModalShow = ref(false)
 const { auth } = useFirebase()
@@ -23,6 +22,11 @@ const hasTimeToVerifyPassed = computed(() => {
   return !auth.currentUser?.emailVerified
 })
 
+function signOut() {
+  appStore.signOut()
+  navigateTo('/')
+}
+
 </script>
 
 <template>
@@ -32,9 +36,7 @@ const hasTimeToVerifyPassed = computed(() => {
       persistent
   >
     <v-card>
-      <v-card-title
-          align="center"
-      >
+      <v-card-title>
         {{ t("emailVerification.title") }}
       </v-card-title>
 
@@ -55,7 +57,7 @@ const hasTimeToVerifyPassed = computed(() => {
             block
             class="my-4"
             :text="t('emailVerification.signOut')"
-            @click="auth.signOut()"
+            @click="signOut"
         />
       </v-card-text>
     </v-card>
