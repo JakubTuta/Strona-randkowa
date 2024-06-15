@@ -33,6 +33,10 @@ const themes = computed(() => (
       name: t('settings.highContrast'),
       value: 'highContrast',
     },
+    {
+      name: t('settings.blackAndWhite'),
+      value: 'blackAndWhite',
+    },
   ]
 ))
 
@@ -49,6 +53,23 @@ const languages = computed(() => (
   ]
 ))
 
+const fontsSizes = computed(() => (
+    [
+      {
+        name: t('settings.small'),
+        value: '10px',
+      },
+      {
+        name: t('settings.medium'),
+        value: '16px',
+      },
+      {
+        name: t('settings.big'),
+        value: '26px',
+      },
+    ]
+))
+
 const theme = useTheme()
 
 const currentTheme: Ref<string> = ref(theme.name.value)
@@ -61,6 +82,11 @@ function setTheme() {
 const currentLanguage = ref(locale)
 function changeLocale() {
   locale.value = currentLanguage.value
+}
+const fontSize = ref('16px')
+
+function applyFontSize() {
+  window.document.body.style.fontSize = fontSize.value;
 }
 </script>
 
@@ -86,12 +112,13 @@ function changeLocale() {
             <div v-for="item in themes">
               <v-radio
                   class="px-2"
-                :label="item.name"
-                :value="item.value"
+                  :label="item.name"
+                  :value="item.value"
               />
             </div>
           </v-radio-group>
         </div>
+
         {{ t('settings.language') }}
         <div>
           <v-radio-group
@@ -103,12 +130,32 @@ function changeLocale() {
             <div v-for="item in languages">
               <v-radio
                   class="px-2"
-                :label="item.name"
-                :value="item.value"
+                  :label="item.name"
+                  :value="item.value"
               />
             </div>
           </v-radio-group>
         </div>
+
+        {{ t('settings.fontSize') }}
+        <div>
+          <v-radio-group
+              v-model="fontSize"
+              class="my-1"
+              inline
+              @change="applyFontSize"
+          >
+            <div v-for="item in fontsSizes">
+              <v-radio
+                  class="px-2"
+                  :label="item.name"
+                  :value="item.value"
+              />
+            </div>
+          </v-radio-group>
+        </div>
+
+
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">

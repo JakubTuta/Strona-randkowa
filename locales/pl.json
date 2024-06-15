@@ -11,11 +11,16 @@
   "settings": {
     "themes": "Motyw",
     "language": "Język",
+    "fontSize": "Rozmiar czcionki",
     "polish": "Polski",
     "english": "Angielski",
     "dark": "Ciemny",
     "light": "Jasny",
-    "highContrast": "Wysoki kontrast"
+    "highContrast": "Wysoki kontrast",
+    "blackAndWhite": "Czarno-biały",
+    "small": "Mała",
+    "medium": "Średnia",
+    "big": "Duża"
   },
   "emailVerification": {
     "title": "Weryfikacja email",

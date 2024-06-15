@@ -11,11 +11,16 @@
   "settings": {
     "themes": "Theme",
     "language": "Language",
+    "fontSize": "Font size",
     "polish": "Polish",
     "english": "English",
     "dark": "Dark",
     "light": "Light",
-    "highContrast": "High contrast"
+    "highContrast": "High contrast",
+    "blackAndWhite": "Black and white",
+    "small": "Small",
+    "medium": "Medium",
+    "big": "Big"
   },
   "emailVerification": {
     "title": "Email verification",
