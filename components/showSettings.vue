@@ -49,6 +49,23 @@ const languages = computed(() => (
   ]
 ))
 
+const fontsSizes = computed(() => (
+    [
+      {
+        name: t('settings.small'),
+        value: '10px',
+      },
+      {
+        name: t('settings.medium'),
+        value: '16px',
+      },
+      {
+        name: t('settings.big'),
+        value: '26px',
+      },
+    ]
+))
+
 const theme = useTheme()
 
 const currentTheme: Ref<string> = ref(theme.name.value)
@@ -91,8 +108,8 @@ function applyFontSize() {
             <div v-for="item in themes">
               <v-radio
                   class="px-2"
-                :label="item.name"
-                :value="item.value"
+                  :label="item.name"
+                  :value="item.value"
               />
             </div>
           </v-radio-group>
@@ -109,20 +126,31 @@ function applyFontSize() {
             <div v-for="item in languages">
               <v-radio
                   class="px-2"
-                :label="item.name"
-                :value="item.value"
+                  :label="item.name"
+                  :value="item.value"
               />
             </div>
           </v-radio-group>
         </div>
 
         {{ t('settings.fontSize') }}
+        <div>
+          <v-radio-group
+              v-model="fontSize"
+              class="my-1"
+              inline
+              @change="applyFontSize"
+          >
+            <div v-for="item in fontsSizes">
+              <v-radio
+                  class="px-2"
+                  :label="item.name"
+                  :value="item.value"
+              />
+            </div>
+          </v-radio-group>
+        </div>
 
-        <v-radio-group v-model="fontSize" @change="applyFontSize">
-          <v-radio label="Mała" value="10px"></v-radio>
-          <v-radio label="Średnia" value="16px"></v-radio>
-          <v-radio label="Duża" value="22px"></v-radio>
-        </v-radio-group>
 
       </v-card-text>
       <v-card-actions class="justify-end">

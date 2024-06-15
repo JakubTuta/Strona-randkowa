@@ -16,7 +16,10 @@
     "english": "Angielski",
     "dark": "Ciemny",
     "light": "Jasny",
-    "highContrast": "Wysoki kontrast"
+    "highContrast": "Wysoki kontrast",
+    "small": "Mała",
+    "medium": "Średnia",
+    "big": "Duża"
   },
   "emailVerification": {
     "title": "Weryfikacja email",

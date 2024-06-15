@@ -16,7 +16,10 @@
     "english": "English",
     "dark": "Dark",
     "light": "Light",
-    "highContrast": "High contrast"
+    "highContrast": "High contrast",
+    "small": "Small",
+    "medium": "Medium",
+    "big": "Big"
   },
   "emailVerification": {
     "title": "Email verification",
