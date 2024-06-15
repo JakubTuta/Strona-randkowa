@@ -33,6 +33,10 @@ const themes = computed(() => (
       name: t('settings.highContrast'),
       value: 'highContrast',
     },
+    {
+      name: t('settings.blackAndWhite'),
+      value: 'blackAndWhite',
+    },
   ]
 ))
 
