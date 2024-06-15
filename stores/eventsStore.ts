@@ -57,7 +57,7 @@ export const useEventsStore = defineStore('events', () => {
   const editEvent = async (editEvent: EventModel, newImage: string) => {
     sharedStore.init()
 
-    await uploadImageStore.deleteEventImage(convertUrlToPath(editEvent.photo))
+    await uploadImageStore.deleteImage(convertUrlToPath(editEvent.photo))
 
     const imageUrl = (await uploadImageStore.createAndUploadEventPhoto(newImage)).imageUrl
 

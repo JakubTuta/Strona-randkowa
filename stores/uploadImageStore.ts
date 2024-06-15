@@ -31,7 +31,7 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
     }
   }
 
-  const deleteEventImage = async (imagePath: string) => {
+  const deleteImage = async (imagePath: string) => {
     try {
       await deleteObject(refFirebase(storage, imagePath))
 
@@ -83,7 +83,7 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
 
   return {
     createAndUploadImage,
-    deleteEventImage,
+    deleteImage,
     createAndUploadEventPhoto,
     editEventPhoto,
   }

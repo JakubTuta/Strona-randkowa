@@ -102,6 +102,7 @@ function setImage(url: string) {
 
 function deleteImage(url: string) {
   const string = appStore.getPhotoPath(url)
+  console.log(url)
   console.log(string)
   if (currentUser != null)
     appStore.removeImage(currentUser, url)
