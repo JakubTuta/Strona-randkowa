@@ -38,16 +38,6 @@ const image = ref(event.value?.photo)
 function close() {
   emit('onClose')
 }
-function convertUrlToPath(photoUrl: string): string {
-  const matches = photoUrl.match(/o\/(.+)\?alt=media/)
-  if (matches && matches[1]) {
-    const photoPath = matches[1].replace(/%2F/g, '/')
-    return `${photoPath}`
-  }
-  else {
-    throw new Error('Invalid photo URL')
-  }
-}
 
 async function editEvent() {
   if (await isValid() && userData.value && userData.value.reference && durationTime.value && event.value?.reference) {
