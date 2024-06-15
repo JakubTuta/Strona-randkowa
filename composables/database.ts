@@ -1,5 +1,6 @@
-import type { DocumentReference, Firestore } from 'firebase/firestore'
-import { collection, doc, getDoc } from 'firebase/firestore'
+import type { get } from 'firebase/database'
+import type { DocumentData, DocumentReference, Firestore, Query } from 'firebase/firestore'
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 
 export function useDatabase() {
   const nuxtApp = useNuxtApp()
@@ -28,12 +29,24 @@ export function useDatabase() {
     return { data: (documentSnapshot.data()) as T, ref: documentSnapshot.ref }
   }
 
+  const fetchDocumentByQuery = async <T>(query: Query<DocumentData, DocumentData>) => {
+    const documentSnapshot = await getDocs(query)
+
+    if (documentSnapshot.empty)
+      return { data: null, ref: null }
+
+    return { data: (documentSnapshot.docs[0].data()) as T, ref: documentSnapshot.docs[0].ref }
+  }
+
   return {
+    getFirebaseCollection,
     fetchDocumentByRef,
     fetchDocumentById,
+    fetchDocumentByQuery,
   }
 }
 
 export enum Collections {
   USERS = 'users',
+  CHAT_ROOMS = 'chatRooms',
 }

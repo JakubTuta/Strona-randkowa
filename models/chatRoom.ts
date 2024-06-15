@@ -3,18 +3,15 @@ import type { IMessage } from './message'
 
 export interface IChatRoom {
   users: DocumentReference[]
-  messages: IMessage[]
 }
 
 export class ChatRoomModel implements IChatRoom {
   users: DocumentReference[]
-  messages: IMessage[]
 
   reference: DocumentReference | null
 
   constructor(data: IChatRoom, reference: DocumentReference | null) {
     this.users = data.users || []
-    this.messages = data.messages || []
 
     this.reference = reference
   }
@@ -22,7 +19,6 @@ export class ChatRoomModel implements IChatRoom {
   toMap() {
     return {
       users: this.users,
-      messages: this.messages,
     }
   }
 }
