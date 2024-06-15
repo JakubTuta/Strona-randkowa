@@ -82,7 +82,7 @@ function changeLocale() {
 const fontSize = ref('16px')
 
 function applyFontSize() {
-  document.body.style.fontSize = fontSize.value;
+  window.document.body.style.fontSize = fontSize.value;
 }
 </script>
 
