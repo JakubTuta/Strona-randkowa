@@ -40,7 +40,7 @@ function signOut() {
         {{ t("emailVerification.title") }}
       </v-card-title>
 
-      <v-card-text>
+      <v-card-text class="text-center">
         <p>{{ t("emailVerification.content") }}</p>
 
         <v-btn
