@@ -11,6 +11,7 @@
   "settings": {
     "themes": "Theme",
     "language": "Language",
+    "fontSize": "Font size",
     "polish": "Polish",
     "english": "English",
     "dark": "Dark",

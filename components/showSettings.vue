@@ -62,6 +62,11 @@ const currentLanguage = ref(locale)
 function changeLocale() {
   locale.value = currentLanguage.value
 }
+const fontSize = ref('16px')
+
+function applyFontSize() {
+  document.body.style.fontSize = fontSize.value;
+}
 </script>
 
 <template>
@@ -92,6 +97,7 @@ function changeLocale() {
             </div>
           </v-radio-group>
         </div>
+
         {{ t('settings.language') }}
         <div>
           <v-radio-group
@@ -109,6 +115,15 @@ function changeLocale() {
             </div>
           </v-radio-group>
         </div>
+
+        {{ t('settings.fontSize') }}
+
+        <v-radio-group v-model="fontSize" @change="applyFontSize">
+          <v-radio label="Mała" value="10px"></v-radio>
+          <v-radio label="Średnia" value="16px"></v-radio>
+          <v-radio label="Duża" value="22px"></v-radio>
+        </v-radio-group>
+
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">
