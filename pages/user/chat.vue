@@ -61,11 +61,16 @@ watch(message, (newValue) => {
 </script>
 
 <template>
-  <v-row class="h-100 mb-0 px-4">
+  <v-row class="h-100 mb-8 px-4">
     <v-col cols="3">
-      <template v-for="(user, index) in userMatches" :key="index">
-        <MatchedProfileCard :user="user" @click="setCurrentUser(index)" />
-      </template>
+      <v-virtual-scroll
+        height="100vh"
+        :items="userMatches"
+      >
+        <template #default="{ item, index }">
+          <MatchedProfileCard :user="item" @click="setCurrentUser(index)" />
+        </template>
+      </v-virtual-scroll>
     </v-col>
     <v-col cols="9">
       <UserChatWindow :current-user="currentUser" />

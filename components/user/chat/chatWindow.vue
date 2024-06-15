@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { UserModel } from '~/models/user'
+
 const props = defineProps<{
   currentUser: UserModel | null
 }>()

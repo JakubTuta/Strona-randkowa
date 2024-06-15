@@ -11,7 +11,7 @@ const vTheme = useTheme()
 </script>
 
 <template>
-  <v-card style="cursor: pointer;">
+  <v-card style="cursor: pointer;" class=" my-1 mx-1">
     <div class="d-flex flex-no-wrap justify-space-between">
       <v-avatar
         class="ma-3"
