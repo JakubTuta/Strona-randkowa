@@ -21,6 +21,8 @@ export const useAppStore = defineStore('app', () => {
   const sharedStore = useSharedStore()
   const uploadImageStore = useUploadImageStore()
 
+  const messageStore = useMessageStore()
+
   const user: Ref<User | null> = ref(null)
   const userData: Ref<UserModel | null> = ref(null)
 
@@ -33,6 +35,8 @@ export const useAppStore = defineStore('app', () => {
     await signoutFirebase(auth)
     user.value = null
     userData.value = null
+
+    messageStore.reset()
 
     sharedStore.success()
   }

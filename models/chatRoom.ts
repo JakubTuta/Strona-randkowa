@@ -1,31 +1,39 @@
-import type { DocumentData, DocumentReference } from 'firebase/firestore'
-import type { IMessage } from './message'
+import type { DocumentData, DocumentReference, DocumentSnapshot } from 'firebase/firestore'
 
 export interface IChatRoom {
-  users: DocumentReference[]
+  usersIds: string[]
+  usersRefs: DocumentReference[]
 }
 
 export class ChatRoomModel implements IChatRoom {
-  users: DocumentReference[]
+  usersIds: string[]
+  usersRefs: DocumentReference[]
 
   reference: DocumentReference | null
 
   constructor(data: IChatRoom, reference: DocumentReference | null) {
-    this.users = data.users || []
+    this.usersIds = data.usersIds || []
+    this.usersRefs = data.usersRefs || []
 
     this.reference = reference
   }
 
   toMap() {
     return {
-      users: this.users,
+      usersIds: this.usersIds,
+      usersRefs: this.usersRefs,
     }
   }
 }
 
-export function mapChatRoom(chatRoom: DocumentData) {
+export function mapChatRoom(chatRoom: DocumentSnapshot<DocumentData>) {
+  const data = chatRoom.data()
+
+  if (!data)
+    return null
+
   return new ChatRoomModel(
-    chatRoom.data(),
+    data as IChatRoom,
     chatRoom.ref,
   )
 }

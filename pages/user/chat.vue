@@ -3,6 +3,7 @@ import EmojiPicker from 'vue3-emoji-picker'
 import MatchedProfileCard from '~/components/user/chat/matchedProfileCard.vue'
 import 'vue3-emoji-picker/css'
 import type { UserModel } from '~/models/user'
+import { MessageModel } from '~/models/message'
 
 definePageMeta({
   layout: 'user',
@@ -11,22 +12,38 @@ definePageMeta({
 const appStore = useAppStore()
 const { userMatches, userData } = storeToRefs(appStore)
 
+const messageStore = useMessageStore()
+
+const { chatRoom, messages } = storeToRefs(messageStore)
+
 const isEmojiPickerVisible = ref(false)
 const message = ref('')
 const wrapper = ref(null)
-const currentUser: Ref<UserModel | null> = ref(null)
+const pickedUser: Ref<UserModel | null> = ref(null)
 
 watch(userData, async (newValue) => {
   if (newValue) {
     await appStore.fetchLikedProfiles(userData.value?.matches || [])
-    currentUser.value = userMatches.value[0]
+    pickedUser.value = userMatches.value[0]
+
+    if (userData.value?.reference && pickedUser.value?.reference)
+      await messageStore.getChatRoom(userData.value?.reference, pickedUser.value?.reference)
   }
+
+  if (chatRoom.value?.reference)
+    await messageStore.fetchMessages(chatRoom.value.reference)
 })
 
 onMounted(async () => {
   document.addEventListener('click', handleClickOutside)
   await appStore.fetchLikedProfiles(userData.value?.matches || [])
-  currentUser.value = userMatches.value[0]
+  pickedUser.value = userMatches.value[0]
+
+  if (userData.value?.reference && pickedUser.value?.reference)
+    await messageStore.getChatRoom(userData.value?.reference, pickedUser.value?.reference)
+
+  if (chatRoom.value?.reference)
+    await messageStore.fetchMessages(chatRoom.value.reference)
 })
 
 onUnmounted(() => {
@@ -52,12 +69,30 @@ function handleClickOutside(event) {
 }
 
 function setCurrentUser(index: number) {
-  currentUser.value = userMatches.value[index]
+  pickedUser.value = userMatches.value[index]
 }
 
-watch(message, (newValue) => {
-  console.log(newValue)
-})
+function sendMessage() {
+  if (userData.value?.reference && pickedUser.value?.reference) {
+    const toUser = chatRoom.value?.usersRefs.filter(ref => ref.id !== userData.value?.reference?.id)[0]
+
+    if (!toUser) {
+      console.error('No user found')
+      return
+    }
+
+    console.log(toUser)
+
+    const newMessage = new MessageModel({
+      fromUser: userData.value?.reference,
+      toUser,
+      text: message.value,
+      date: new Date(),
+    }, null)
+    messageStore.sendMessage(newMessage)
+    message.value = ''
+  }
+}
 </script>
 
 <template>
@@ -73,7 +108,7 @@ watch(message, (newValue) => {
       </v-virtual-scroll>
     </v-col>
     <v-col cols="9">
-      <UserChatWindow :current-user="currentUser" />
+      <UserChatWindow :picked-user="pickedUser" :messages="messages" />
       <div id="wrapper" ref="wrapper">
         <EmojiPicker
           v-if="isEmojiPickerVisible"
@@ -99,7 +134,7 @@ watch(message, (newValue) => {
             </template>
 
             <template #append>
-              <v-btn icon="mdi-send" :disabled="!message.length" />
+              <v-btn icon="mdi-send" :disabled="!message.length" @click="sendMessage" />
             </template>
           </v-textarea>
         </v-form>

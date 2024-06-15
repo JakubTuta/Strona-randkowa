@@ -11,6 +11,10 @@ export function useDatabase() {
     return collection(firestore, collectionName)
   }
 
+  const getFirebaseSubCollection = (documentRef: DocumentReference, subcollectionName: string) => {
+    return collection(documentRef, subcollectionName)
+  }
+
   const fetchDocumentById = async <T>(uid: string, collectionName: Collections) => {
     const documentSnapshot = await getDoc(doc(getFirebaseCollection(collectionName), uid))
 
@@ -29,20 +33,21 @@ export function useDatabase() {
     return { data: (documentSnapshot.data()) as T, ref: documentSnapshot.ref }
   }
 
-  const fetchDocumentByQuery = async <T>(query: Query<DocumentData, DocumentData>) => {
+  const fetchDocumentsByQuery = async (query: Query<DocumentData, DocumentData>) => {
     const documentSnapshot = await getDocs(query)
 
     if (documentSnapshot.empty)
-      return { data: null, ref: null }
+      return null
 
-    return { data: (documentSnapshot.docs[0].data()) as T, ref: documentSnapshot.docs[0].ref }
+    return documentSnapshot
   }
 
   return {
     getFirebaseCollection,
+    getFirebaseSubCollection,
     fetchDocumentByRef,
     fetchDocumentById,
-    fetchDocumentByQuery,
+    fetchDocumentsByQuery,
   }
 }
 
