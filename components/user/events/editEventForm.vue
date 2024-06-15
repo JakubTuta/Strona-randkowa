@@ -38,20 +38,29 @@ const image = ref(event.value?.photo)
 function close() {
   emit('onClose')
 }
+function convertUrlToPath(photoUrl: string): string {
+  const matches = photoUrl.match(/o\/(.+)\?alt=media/)
+  if (matches && matches[1]) {
+    const photoPath = matches[1].replace(/%2F/g, '/')
+    return `${photoPath}`
+  }
+  else {
+    throw new Error('Invalid photo URL')
+  }
+}
 
 async function editEvent() {
   if (await isValid() && userData.value && userData.value.reference && durationTime.value && event.value?.reference) {
     if (image.value === undefined)
       image.value = event.value.photo
-    console.log(image.value)
     await eventStore.editEvent(new EventModel({
       name: name.value,
       comments: [],
       createdBy: userData.value.reference,
-      photo: image.value,
+      photo: event.value.photo,
       startDate: durationTime.value[0],
       endDate: durationTime.value[1],
-    }, event.value?.reference))
+    }, event.value?.reference), image.value)
     close()
   }
   else {
@@ -67,6 +76,7 @@ watch(event, () => {
 })
 
 function editPhoto(url: string) {
+  console.log(url)
   image.value = url
 }
 </script>

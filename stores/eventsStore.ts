@@ -9,6 +9,7 @@ import {
   query,
   updateDoc,
   where,
+
 } from 'firebase/firestore'
 import type { Ref } from 'vue'
 import { useUploadImageStore } from './uploadImageStore'
@@ -42,11 +43,24 @@ export const useEventsStore = defineStore('events', () => {
       .catch(sharedStore.failureSnackbar)
   }
 
-  const editEvent = async (editEvent: EventModel) => {
+  function convertUrlToPath(photoUrl: string): string {
+    const matches = photoUrl.match(/o\/(.+)\?alt=media/)
+    if (matches && matches[1]) {
+      const photoPath = matches[1].replace(/%2F/g, '/')
+      return `${photoPath}`
+    }
+    else {
+      throw new Error('Invalid photo URL')
+    }
+  }
+
+  const editEvent = async (editEvent: EventModel, newImage: string) => {
     sharedStore.init()
 
-    // do poprawki, edycja zdjęcia zamiast dodania nowego
-    const imageUrl = (await uploadImageStore.createAndUploadEventPhoto(editEvent.photo)).imageUrl
+    await uploadImageStore.deleteImage(convertUrlToPath(editEvent.photo))
+
+    const imageUrl = (await uploadImageStore.createAndUploadEventPhoto(newImage)).imageUrl
+
     editEvent.photo = imageUrl
 
     const onSuccess = () => {
