@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
-import { toggleTheme } from '~/helpers/theme'
+import { setMyTheme } from '~/helpers/theme'
+import type {Ref} from "vue";
 
 const props = defineProps<{
   isShow: boolean
@@ -28,6 +29,10 @@ const themes = computed(() => (
       name: t('settings.dark'),
       value: 'dark',
     },
+    {
+      name: t('settings.highContrast'),
+      value: 'highContrast',
+    },
   ]
 ))
 
@@ -46,10 +51,11 @@ const languages = computed(() => (
 
 const theme = useTheme()
 
-const currentTheme = ref(theme.name)
+const currentTheme: Ref<string> = ref(theme.name.value)
 
 function setTheme() {
-  toggleTheme(theme)
+  console.log('theme', currentTheme.value)
+  setMyTheme(theme, currentTheme.value)
 }
 
 const currentLanguage = ref(locale)
@@ -79,6 +85,7 @@ function changeLocale() {
           >
             <div v-for="item in themes">
               <v-radio
+                  class="px-2"
                 :label="item.name"
                 :value="item.value"
               />
@@ -95,6 +102,7 @@ function changeLocale() {
           >
             <div v-for="item in languages">
               <v-radio
+                  class="px-2"
                 :label="item.name"
                 :value="item.value"
               />

@@ -14,7 +14,8 @@
     "polish": "Polski",
     "english": "Angielski",
     "dark": "Ciemny",
-    "light": "Jasny"
+    "light": "Jasny",
+    "highContrast": "Wysoki kontrast"
   },
   "emailVerification": {
     "title": "Weryfikacja email",
