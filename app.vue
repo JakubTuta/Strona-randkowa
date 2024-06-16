@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import ShowSettings from '~/components/showSettings.vue'
 import {useLocalStorage} from "@vueuse/core";
+import {setMyTheme} from "~/helpers/theme";
+import {useTheme} from "vuetify";
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
 
 const { locale, setLocale } = useI18n()
 const currentLang = useLocalStorage('current-lang', 'pl')
+
+const theme = useTheme()
+const currentTheme = useLocalStorage('current-theme', 'dark')
 
 const showForm = ref(false)
 function showEditForm() {
@@ -26,6 +31,11 @@ onMounted(() => {
         ? locale.value = 'pl'
         : locale.value = 'en')
   }
+
+  if (currentTheme.value) {
+    setMyTheme(theme, currentTheme.value)
+  }
+
   appStore.currentUser()
 })
 

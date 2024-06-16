@@ -74,11 +74,12 @@ const fontsSizes = computed(() => (
 
 const theme = useTheme()
 
-const currentTheme: Ref<string> = ref(theme.name.value)
+const currentThemeStore = useLocalStorage('current-theme', 'dark')
+const currentTheme: Ref<string> = ref(currentThemeStore.value)
 
 function setTheme() {
-  console.log('theme', currentTheme.value)
   setMyTheme(theme, currentTheme.value)
+  currentThemeStore.value = currentTheme.value
 }
 
 const currentLanguage = ref(currentLang.value)
