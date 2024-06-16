@@ -3,6 +3,7 @@ import ShowSettings from '~/components/showSettings.vue'
 import {useLocalStorage} from "@vueuse/core";
 import {setMyTheme} from "~/helpers/theme";
 import {useTheme} from "vuetify";
+import {changeFont} from "~/helpers/fonts";
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
@@ -12,6 +13,8 @@ const currentLang = useLocalStorage('current-lang', 'pl')
 
 const theme = useTheme()
 const currentTheme = useLocalStorage('current-theme', 'dark')
+
+const currentFont = useLocalStorage('current-font', '16px')
 
 const showForm = ref(false)
 function showEditForm() {
@@ -34,6 +37,10 @@ onMounted(() => {
 
   if (currentTheme.value) {
     setMyTheme(theme, currentTheme.value)
+  }
+
+  if (currentFont.value) {
+    changeFont(currentFont.value)
   }
 
   appStore.currentUser()
