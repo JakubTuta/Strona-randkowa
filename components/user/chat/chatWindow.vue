@@ -49,7 +49,7 @@ function isFromCurrentUser(message: MessageModel) {
   </v-row>
 
   <v-divider class="my-3" />
-  <div style="height: 72%" class="mt-6 px-8 text-justify">
+  <div style="height: 77%" class="mt-6 px-8 text-justify">
     <template v-for="(message, index) in messages" :key="index">
       <v-row>
         <v-spacer v-if="isFromCurrentUser(message)" />

@@ -81,8 +81,6 @@ function sendMessage() {
       return
     }
 
-    console.log(toUser)
-
     const newMessage = new MessageModel({
       fromUser: userData.value?.reference,
       toUser,
@@ -119,25 +117,28 @@ function sendMessage() {
         />
       </div>
 
-      <div style="height: 15%;" class="mt-4">
-        <v-form>
-          <v-textarea
-            v-model="message"
-            :label="$t('chatView.enterMessage')"
-            color="primary"
-            no-resize
-          >
-            <template #append-inner>
-              <v-icon id="emoji" style="cursor: pointer;" @click="showEmojiPicker">
-                mdi-emoticon-outline
-              </v-icon>
-            </template>
+      <div style="height: 15%;" class="d-flex align-end">
+        <v-textarea
+          v-model="message"
+          :label="$t('chatView.enterMessage')"
+          color="primary"
+          no-resize
+          rows="3"
+          auto-grow
+          style="max-height: 180px; overflow: auto; width: 74%;"
+          class="mr-4"
+          @keydown.enter.prevent="sendMessage"
+        >
+          <template #append-inner>
+            <v-icon id="emoji" style="cursor: pointer;" @click="showEmojiPicker">
+              mdi-emoticon-outline
+            </v-icon>
+          </template>
+        </v-textarea>
 
-            <template #append>
-              <v-btn icon="mdi-send" :disabled="!message.length" @click="sendMessage" />
-            </template>
-          </v-textarea>
-        </v-form>
+        <div class="h-100">
+          <v-btn icon="mdi-send" :disabled="!message.length" style="width: 50px;" @click="sendMessage" />
+        </div>
       </div>
     </v-col>
   </v-row>

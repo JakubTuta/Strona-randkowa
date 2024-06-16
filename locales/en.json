@@ -6,7 +6,8 @@
     "password": "Password",
     "signUp": "Log in",
     "doYouHaveAccount": "Don't have an account yet?",
-    "register": "Register"
+    "register": "Register",
+    "email": "Email"
   },
   "settings": {
     "themes": "Theme",
