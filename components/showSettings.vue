@@ -2,6 +2,7 @@
 import { useTheme } from 'vuetify'
 import { setMyTheme } from '~/helpers/theme'
 import type {Ref} from "vue";
+import {useLocalStorage} from "@vueuse/core";
 
 const props = defineProps<{
   isShow: boolean
@@ -18,6 +19,7 @@ function close() {
 }
 
 const { t, locale } = useI18n()
+const currentLang = useLocalStorage('current-lang', 'pl')
 
 const themes = computed(() => (
   [
@@ -79,9 +81,10 @@ function setTheme() {
   setMyTheme(theme, currentTheme.value)
 }
 
-const currentLanguage = ref(locale)
+const currentLanguage = ref(currentLang.value)
 function changeLocale() {
   locale.value = currentLanguage.value
+  currentLang.value = currentLanguage.value
 }
 const fontSize = ref('16px')
 

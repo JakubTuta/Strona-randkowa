@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import ShowSettings from '~/components/showSettings.vue'
+import {useLocalStorage} from "@vueuse/core";
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
 
 const { locale, setLocale } = useI18n()
+const currentLang = useLocalStorage('current-lang', 'pl')
 
 const showForm = ref(false)
 function showEditForm() {
@@ -15,8 +17,16 @@ function closeForm() {
   showForm.value = false
 }
 
-onMounted(async () => {
-  await appStore.currentUser()
+onMounted(() => {
+  if (currentLang.value) {
+    setLocale(currentLang.value)
+  }
+  else {
+    setLocale((navigator.languages.includes('pl') || navigator.languages.includes('pl-PL'))
+        ? locale.value = 'pl'
+        : locale.value = 'en')
+  }
+  appStore.currentUser()
 })
 
 watch(userData, (newValue) => {
