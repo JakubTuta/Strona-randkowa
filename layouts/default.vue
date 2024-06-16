@@ -17,6 +17,7 @@ const { t } = useI18n()
           :href="icon.url"
           class="mx-4"
           size="small"
+          color="secondary"
           variant="plain"
           target="_blank"
         />
