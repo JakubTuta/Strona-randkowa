@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import ShowSettings from '~/components/showSettings.vue'
+import {useLocalStorage} from "@vueuse/core";
+import {setMyTheme} from "~/helpers/theme";
+import {useTheme} from "vuetify";
+import {changeFont} from "~/helpers/fonts";
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
 
 const { locale, setLocale } = useI18n()
+const currentLang = useLocalStorage('current-lang', 'pl')
+
+const theme = useTheme()
+const currentTheme = useLocalStorage('current-theme', 'dark')
+
+const currentFont = useLocalStorage('current-font', '16px')
 
 const showForm = ref(false)
 function showEditForm() {
@@ -15,8 +25,25 @@ function closeForm() {
   showForm.value = false
 }
 
-onMounted(async () => {
-  await appStore.currentUser()
+onMounted(() => {
+  if (currentLang.value) {
+    setLocale(currentLang.value)
+  }
+  else {
+    setLocale((navigator.languages.includes('pl') || navigator.languages.includes('pl-PL'))
+        ? locale.value = 'pl'
+        : locale.value = 'en')
+  }
+
+  if (currentTheme.value) {
+    setMyTheme(theme, currentTheme.value)
+  }
+
+  if (currentFont.value) {
+    changeFont(currentFont.value)
+  }
+
+  appStore.currentUser()
 })
 
 watch(userData, (newValue) => {

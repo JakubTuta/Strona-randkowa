@@ -23,6 +23,7 @@ const drawer = ref(false)
           :href="icon.url"
           class="mx-4"
           size="small"
+          color="secondary"
           variant="plain"
           target="_blank"
         />
