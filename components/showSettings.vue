@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
+import type { Ref } from 'vue'
+import { useLocalStorage } from '@vueuse/core'
 import { setMyTheme } from '~/helpers/theme'
-import type {Ref} from "vue";
-import {useLocalStorage} from "@vueuse/core";
-import {changeFont} from "~/helpers/fonts";
+import { changeFont } from '~/helpers/fonts'
 
 const props = defineProps<{
   isShow: boolean
@@ -19,8 +19,12 @@ function close() {
   emit('onClose')
 }
 
-const { t, locale } = useI18n()
-const currentLang = useLocalStorage('current-lang', 'pl')
+const { t } = useI18n()
+
+const appStore = useAppStore()
+const { userData } = storeToRefs(appStore)
+
+const currentLanguage = ref('pl')
 
 const themes = computed(() => (
   [
@@ -57,20 +61,20 @@ const languages = computed(() => (
 ))
 
 const fontsSizes = computed(() => (
-    [
-      {
-        name: t('settings.small'),
-        value: '10px',
-      },
-      {
-        name: t('settings.medium'),
-        value: '16px',
-      },
-      {
-        name: t('settings.big'),
-        value: '26px',
-      },
-    ]
+  [
+    {
+      name: t('settings.small'),
+      value: '10px',
+    },
+    {
+      name: t('settings.medium'),
+      value: '16px',
+    },
+    {
+      name: t('settings.big'),
+      value: '26px',
+    },
+  ]
 ))
 
 const theme = useTheme()
@@ -83,10 +87,8 @@ function setTheme() {
   currentThemeStore.value = currentTheme.value
 }
 
-const currentLanguage = ref(currentLang.value)
 function changeLocale() {
-  locale.value = currentLanguage.value
-  currentLang.value = currentLanguage.value
+  appStore.setLanguage(currentLanguage.value)
 }
 
 const currentFont = useLocalStorage('current-font', '16px')
@@ -96,6 +98,11 @@ function applyFontSize() {
   changeFont(fontSize.value)
   currentFont.value = fontSize.value
 }
+
+watch(userData, (newValue) => {
+  if (newValue)
+    currentLanguage.value = newValue.languageCode
+})
 </script>
 
 <template>
@@ -117,11 +124,11 @@ function applyFontSize() {
             inline
             @update:model-value="setTheme()"
           >
-            <div v-for="item in themes">
+            <div v-for="item in themes" :key="item.value">
               <v-radio
-                  class="px-2"
-                  :label="item.name"
-                  :value="item.value"
+                class="px-2"
+                :label="item.name"
+                :value="item.value"
               />
             </div>
           </v-radio-group>
@@ -135,11 +142,11 @@ function applyFontSize() {
             inline
             @update:model-value="changeLocale()"
           >
-            <div v-for="item in languages">
+            <div v-for="item in languages" :key="item.value">
               <v-radio
-                  class="px-2"
-                  :label="item.name"
-                  :value="item.value"
+                class="px-2"
+                :label="item.name"
+                :value="item.value"
               />
             </div>
           </v-radio-group>
@@ -148,22 +155,20 @@ function applyFontSize() {
         {{ t('settings.fontSize') }}
         <div>
           <v-radio-group
-              v-model="fontSize"
-              class="my-1"
-              inline
-              @change="applyFontSize"
+            v-model="fontSize"
+            class="my-1"
+            inline
+            @change="applyFontSize"
           >
-            <div v-for="item in fontsSizes">
+            <div v-for="item in fontsSizes" :key="item.value">
               <v-radio
-                  class="px-2"
-                  :label="item.name"
-                  :value="item.value"
+                class="px-2"
+                :label="item.name"
+                :value="item.value"
               />
             </div>
           </v-radio-group>
         </div>
-
-
       </v-card-text>
       <v-card-actions class="justify-end">
         <v-btn color="error" @click="close">

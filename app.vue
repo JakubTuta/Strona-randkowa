@@ -1,9 +1,9 @@
 <script setup lang="ts">
+import { useLocalStorage } from '@vueuse/core'
+import { useTheme } from 'vuetify'
 import ShowSettings from '~/components/showSettings.vue'
-import {useLocalStorage} from "@vueuse/core";
-import {setMyTheme} from "~/helpers/theme";
-import {useTheme} from "vuetify";
-import {changeFont} from "~/helpers/fonts";
+import { setMyTheme } from '~/helpers/theme'
+import { changeFont } from '~/helpers/fonts'
 
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
@@ -31,17 +31,15 @@ onMounted(() => {
   }
   else {
     setLocale((navigator.languages.includes('pl') || navigator.languages.includes('pl-PL'))
-        ? locale.value = 'pl'
-        : locale.value = 'en')
+      ? locale.value = 'pl'
+      : locale.value = 'en')
   }
 
-  if (currentTheme.value) {
+  if (currentTheme.value)
     setMyTheme(theme, currentTheme.value)
-  }
 
-  if (currentFont.value) {
+  if (currentFont.value)
     changeFont(currentFont.value)
-  }
 
   appStore.currentUser()
 })

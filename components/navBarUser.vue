@@ -73,7 +73,7 @@ async function logOut() {
         <v-menu activator="parent">
           <v-list class="justify-center">
             <v-list-item to="/user/profile" prepend-icon="mdi-face-man-profile" :title="t('navBar.user.myProfile')" />
-<!--            <v-list-item prepend-icon="mdi-theme-light-dark" :title="t('navBar.changeTheme')" @click="toggleTheme(theme)" />-->
+            <!--            <v-list-item prepend-icon="mdi-theme-light-dark" :title="t('navBar.changeTheme')" @click="toggleTheme(theme)" /> -->
             <v-list-item prepend-icon="mdi-logout" :title="t('navBar.logout')" @click="logOut" />
           </v-list>
         </v-menu>

@@ -35,7 +35,7 @@ def get_matches(req: https_fn.Request) -> https_fn.Response:
 
     other_users = db_functions.get_other_users(user_data)
     filtered_users = db_functions.get_filtered_users(
-        other_users, user_likes, user_dislikes
+        user_data, other_users, user_likes, user_dislikes
     )
 
     ranked_users = RecommendationAlgorithm.score_all_users(user_data, filtered_users)
