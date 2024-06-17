@@ -183,6 +183,8 @@
     "viewProfile": "Show profile",
     "rate": "Rate user",
     "remove": "Remove conversation",
-    "block": "Block user"
+    "block": "Block user",
+    "loadMore": "Load more",
+    "noMore": "No more messages"
   }
 }

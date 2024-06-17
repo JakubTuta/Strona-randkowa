@@ -20,8 +20,8 @@ const vTheme = useTheme()
         size="85"
       >
         <v-img v-if="user?.photos.length" :src="user?.photos[0]" />
-        <v-img v-else-if="vTheme.current.value.dark" src="/account-dark.png" />
-        <v-img v-else src="/account-white.png" />
+        <!-- <v-img v-else-if="vTheme.current.value.dark" src="/account-dark.png" />
+        <v-img v-else src="/account-white.png" /> -->
       </v-avatar>
 
       <div>

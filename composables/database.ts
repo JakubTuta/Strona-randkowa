@@ -1,4 +1,3 @@
-import type { get } from 'firebase/database'
 import type { DocumentData, DocumentReference, Firestore, Query } from 'firebase/firestore'
 import { collection, doc, getDoc, getDocs } from 'firebase/firestore'
 

@@ -183,6 +183,8 @@
     "viewProfile": "Wyświetl profil",
     "rate": "Oceń użytkownika",
     "remove": "Usuń konwesrację",
-    "block": "Zablokuj użytkownika"
+    "block": "Zablokuj użytkownika",
+    "noMore": "Brak większej ilości wiadomości",
+    "loadMore": "Załaduj więcej"
   }
 }

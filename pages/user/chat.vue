@@ -97,7 +97,7 @@ function sendMessage() {
   <v-row class="h-100 mb-8 px-4">
     <v-col cols="3">
       <v-virtual-scroll
-        height="100vh"
+        height="85vh"
         :items="userMatches"
       >
         <template #default="{ item, index }">
@@ -111,13 +111,13 @@ function sendMessage() {
         <EmojiPicker
           v-if="isEmojiPickerVisible"
           :native="true"
-          style="position: absolute; bottom: 220px; right: 60px;"
+          style="position: absolute; bottom: 140px; right: 80px;"
           :disable-skin-tones="true"
           @select="onSelectEmoji"
         />
       </div>
 
-      <div style="height: 15%;" class="d-flex align-end">
+      <div style="height: 15%;" class="d-flex align-end pb-2">
         <v-textarea
           v-model="message"
           :label="$t('chatView.enterMessage')"
