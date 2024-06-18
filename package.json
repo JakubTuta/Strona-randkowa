@@ -17,7 +17,6 @@
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
     "@nuxt/content": "github:nuxt/content",
-    "@nuxt/image": "^1.7.0",
     "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@pinia/nuxt": "^0.5.1",
     "@vuepic/vue-datepicker": "^8.5.1",
