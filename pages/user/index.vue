@@ -92,7 +92,7 @@ onMounted(async () => {
       </v-row>
       <v-row cols="12" class="d-flex justify-center align-center">
         <v-col cols="12" md="8" class="mt-4 d-flex justify-space-around flex-wrap ">
-          <liked-card v-for="(user, index) in userMatches" :key="index" :user="user" />
+          <liked-card v-for="(user, index) in userMatches.slice(-3)" :key="index" :user="user" />
         </v-col>
       </v-row>
     </div>
