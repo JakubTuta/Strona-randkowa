@@ -185,6 +185,7 @@
     "remove": "Usuń konwesrację",
     "block": "Zablokuj użytkownika",
     "noMore": "Brak większej ilości wiadomości",
-    "loadMore": "Załaduj więcej"
+    "loadMore": "Załaduj więcej",
+    "sayHello": "Przywitaj się"
   }
 }

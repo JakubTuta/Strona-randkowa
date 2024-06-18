@@ -185,6 +185,7 @@
     "remove": "Remove conversation",
     "block": "Block user",
     "loadMore": "Load more",
-    "noMore": "No more messages"
+    "noMore": "No more messages",
+    "sayHello": "Say hello"
   }
 }

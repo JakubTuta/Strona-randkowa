@@ -107,8 +107,11 @@ async function load({ done }: { done: Function }) {
       </v-infinite-scroll>
     </template>
 
-    <div v-else-if="!chatRoom && !loading && pickedUser" class="text-h5 text-center">
-      Przywitaj się!
+    <div v-else-if="!chatRoom && !loading && pickedUser" class="d-flex flex-column justify-center align-center" style="height: 77%;">
+      <nuxt-img src="/waving-hand.webp" style="height: 60px; width: 60px;" />
+      <div class="text-h5 text-center">
+        {{ $t('chatView.sayHello') }}
+      </div>
     </div>
   </div>
 </template>
