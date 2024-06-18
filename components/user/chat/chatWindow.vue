@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { ChatRoomModel } from '~/models/chatRoom'
 import type { MessageModel } from '~/models/message'
 import type { UserModel } from '~/models/user'
 
@@ -11,6 +12,10 @@ const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
 
 const messagesStore = useMessageStore()
+const { chatRoom } = storeToRefs(messagesStore)
+
+const sharedStore = useSharedStore()
+const { loading } = storeToRefs(sharedStore)
 
 const { pickedUser, messages } = toRefs(props)
 
@@ -36,8 +41,8 @@ async function load({ done }: { done: Function }) {
 </script>
 
 <template>
-  <v-row class="mt-4" style="height: 8%;">
-    <v-col cols="4" class="text-h5">
+  <v-row class="my-2" style="height: 8%;">
+    <v-col cols="auto" class="text-h5">
       <v-avatar
         class="ma-3"
         rounded="xl"
@@ -66,40 +71,44 @@ async function load({ done }: { done: Function }) {
     </v-col>
   </v-row>
 
-  <v-divider class="my-3" />
+  <v-divider />
+
   <div style="height: 77%" class="mt-6 px-8 text-justify">
-    <v-infinite-scroll
-      v-if="messages.length > 0"
-      height="655"
-      side="start"
-      style="overflow-x: hidden;"
-      mode="intersect"
-      :load-more-text="$t('chatView.loadMore')"
-      :empty-text="$t('chatView.noMore')"
-      @load="load"
-    >
-      <template v-for="message in messages" :key="message.reference.id">
-        <v-row>
-          <v-spacer v-if="isFromCurrentUser(message)" />
-          <v-avatar
-            v-else
-            class="ma-3"
-            rounded="xl"
-            size="40"
-          >
-            <v-img :src="pickedUser?.photos[0]" />
-          </v-avatar>
-          <v-col :cols="isFromCurrentUser(message) ? 6 : 5">
-            <v-card :class="isFromCurrentUser(message) ? 'bg-secondary pa-4 mr-2' : 'bg-primary pa-4'">
-              {{ message.text }}
-            </v-card>
-          </v-col>
-        </v-row>
-      </template>
-    </v-infinite-scroll>
+    <template v-if="chatRoom && !loading">
+      <v-infinite-scroll
+        v-if="messages.length > 0"
+        class="mt-n2"
+        height="655"
+        side="start"
+        style="overflow-x: hidden;"
+        mode="intersect"
+        :load-more-text="$t('chatView.loadMore')"
+        :empty-text="$t('chatView.noMore')"
+        @load="load"
+      >
+        <template v-for="message in messages" :key="message.reference.id">
+          <v-row>
+            <v-spacer v-if="isFromCurrentUser(message)" />
+            <v-avatar
+              v-else
+              class="ma-3"
+              rounded="xl"
+              size="40"
+            >
+              <v-img :src="pickedUser?.photos[0]" />
+            </v-avatar>
+            <v-col :cols="isFromCurrentUser(message) ? 6 : 5">
+              <v-card :class="isFromCurrentUser(message) ? 'bg-secondary pa-4 mr-2' : 'bg-primary pa-4'">
+                {{ message.text }}
+              </v-card>
+            </v-col>
+          </v-row>
+        </template>
+      </v-infinite-scroll>
+    </template>
+
+    <div v-else-if="!chatRoom && !loading && pickedUser" class="text-h5 text-center">
+      Przywitaj się!
+    </div>
   </div>
 </template>
-
-<style>
-
-</style>

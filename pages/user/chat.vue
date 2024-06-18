@@ -14,7 +14,7 @@ const { userMatches, userData } = storeToRefs(appStore)
 
 const messageStore = useMessageStore()
 
-const { chatRoom, messages } = storeToRefs(messageStore)
+const { messages, matchedUsersInfo, chatRoom } = storeToRefs(messageStore)
 
 const isEmojiPickerVisible = ref(false)
 const message = ref('')
@@ -26,8 +26,10 @@ watch(userData, async (newValue) => {
     await appStore.fetchLikedProfiles(userData.value?.matches || [])
     pickedUser.value = userMatches.value[0]
 
-    if (userData.value?.reference && pickedUser.value?.reference)
-      await messageStore.getChatRoom(userData.value?.reference, pickedUser.value?.reference)
+    if (userData.value?.reference && pickedUser.value?.reference && matchedUsersInfo.value.length === 0) {
+      await messageStore.getMatchedUsersInfo(userData.value?.reference, userData.value?.matches)
+      messageStore.setCurrentChatRoom(matchedUsersInfo.value[0].chatRoom)
+    }
   }
 
   if (chatRoom.value?.reference)
@@ -39,8 +41,10 @@ onMounted(async () => {
   await appStore.fetchLikedProfiles(userData.value?.matches || [])
   pickedUser.value = userMatches.value[0]
 
-  if (userData.value?.reference && pickedUser.value?.reference)
-    await messageStore.getChatRoom(userData.value?.reference, pickedUser.value?.reference)
+  if (userData.value?.reference && pickedUser.value?.reference && matchedUsersInfo.value.length === 0) {
+    await messageStore.getMatchedUsersInfo(userData.value?.reference, userData.value?.matches)
+    messageStore.setCurrentChatRoom(matchedUsersInfo.value[0].chatRoom)
+  }
 
   if (chatRoom.value?.reference)
     await messageStore.fetchMessages(chatRoom.value.reference)
@@ -68,8 +72,11 @@ function handleClickOutside(event) {
     isEmojiPickerVisible.value = false
 }
 
-function setCurrentUser(index: number) {
+function setNewChatRoom(index: number) {
   pickedUser.value = userMatches.value[index]
+  // TODO usunac pickedUser i currentChatRoom, zastapic obiektem z tablicy matchedUsersInfo
+
+  messageStore.setCurrentChatRoom(matchedUsersInfo.value[index].chatRoom)
 }
 
 function sendMessage() {
@@ -98,10 +105,10 @@ function sendMessage() {
     <v-col cols="3">
       <v-virtual-scroll
         height="85vh"
-        :items="userMatches"
+        :items="matchedUsersInfo"
       >
         <template #default="{ item, index }">
-          <MatchedProfileCard :user="item" @click="setCurrentUser(index)" />
+          <MatchedProfileCard :matched-user-info="item" @click="setNewChatRoom(index)" />
         </template>
       </v-virtual-scroll>
     </v-col>

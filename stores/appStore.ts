@@ -242,6 +242,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const fetchLikedProfiles = async (likedUserRefs: DocumentReference[]) => {
+    sharedStore.init()
     try {
       const likedUsers = []
       for (const ref of likedUserRefs) {
@@ -252,8 +253,10 @@ export const useAppStore = defineStore('app', () => {
         }
       }
       userMatches.value = likedUsers
+      sharedStore.success()
     }
     catch (error) {
+      sharedStore.failureSnackbar({ code: String(error) })
       console.error('Error fetching liked users:', error)
     }
   }
