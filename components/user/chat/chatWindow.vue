@@ -73,7 +73,7 @@ async function load({ done }: { done: Function }) {
 
   <v-divider />
 
-  <div style="height: 77%" class="mt-6 px-8 text-justify">
+  <div style="height: 70%" class="mt-6 px-8 pt-0 pb-2 text-justify">
     <template v-if="chatRoom && !loading">
       <v-infinite-scroll
         v-if="messages.length > 0"

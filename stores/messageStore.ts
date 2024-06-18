@@ -1,8 +1,8 @@
 import { type CollectionReference, type DocumentReference, type QueryDocumentSnapshot, type QuerySnapshot, type Timestamp, type Unsubscribe, addDoc, limit, onSnapshot, orderBy, query, startAfter, where } from 'firebase/firestore'
 
 import { defineStore } from 'pinia'
-import type { ChatRoomModel } from '~/models/chatRoom'
-import { mapChatRoom } from '~/models/chatRoom'
+import { ChatRoomModel, mapChatRoom } from '~/models/chatRoom'
+
 import type { MessageModel } from '~/models/message'
 import { mapMessageModel } from '~/models/message'
 import type { UserModel } from '~/models/user'
@@ -11,7 +11,7 @@ export interface MatchInfo {
   chatRoom: ChatRoomModel | null
   user: UserModel
   lastMessage: string | null
-  lastMessageDate: Timestamp | Date | null
+  lastMessageDate: Timestamp | null
   unreadMessages: number
 }
 
@@ -22,7 +22,6 @@ const getNextMessageQuery = (collection: CollectionReference, lastMessageLoaded:
 export const useMessageStore = defineStore('message', () => {
   const messages = ref<MessageModel[]>([])
   const chatRoom = ref<ChatRoomModel | null>(null)
-  // TODO chatRooms zamiast pojedynczego chatRooma
   const chatRooms = ref<(ChatRoomModel | null)[]>([])
 
   const matchedUsersInfo = ref<MatchInfo[]>([])
@@ -52,6 +51,15 @@ export const useMessageStore = defineStore('message', () => {
     }
   }
 
+  const updateLastMessage = (message: MessageModel) => {
+    const info = matchedUsersInfo.value.find(match => match.chatRoom?.reference?.id === chatRoom.value?.reference?.id)
+
+    if (info) {
+      info.lastMessage = message.text
+      info.lastMessageDate = message.date
+    }
+  }
+
   const fetchMessages = async (chatRoomRef: DocumentReference) => {
     const messagesCollection = getFirebaseSubCollection(chatRoomRef, 'messages')
 
@@ -62,7 +70,20 @@ export const useMessageStore = defineStore('message', () => {
       messages.value = arg.docs.map(mapMessageModel).reverse()
       lastMessageLoaded.value = arg.docs[arg.docs.length - 1] || null
 
-      // TODO firebase dokumentacja metody (onDataChange czy cos takiego) wykorzystac do sledzenia nowych wiadomosci w chatRoomach
+      // arg.docChanges().forEach((change) => {
+      //   if (change.type === 'added')
+      //     console.log('New message ', change.doc.data())
+
+      //   if (change.type === 'modified')
+      //     console.log('Modified message: ', change.doc.data())
+
+      //   if (change.type === 'removed')
+      //     console.log('Removed message: ', change.doc.data())
+      // })
+
+      const message = messages.value[messages.value.length - 1]
+      updateLastMessage(message)
+
       sharedStore.success()
     }
 
@@ -96,6 +117,20 @@ export const useMessageStore = defineStore('message', () => {
     chatRoom.value = newChatRoom
   }
 
+  const createChatRoom = async (userRef1: DocumentReference, userRef2: DocumentReference) => {
+    sharedStore.init()
+
+    const chatRoomData = new ChatRoomModel({
+      usersIds: [userRef1.id, userRef2.id],
+      usersRefs: [userRef1, userRef2],
+    }, null)
+
+    const docRef = await addDoc(chatRoomsCollection, chatRoomData.toMap())
+
+    chatRoom.value = new ChatRoomModel(chatRoomData, docRef)
+    chatRooms.value.push(chatRoom.value)
+  }
+
   const sendMessage = async (message: MessageModel) => {
     if (!chatRoom.value?.reference) {
       console.error('Chat room is not defined')
@@ -106,6 +141,7 @@ export const useMessageStore = defineStore('message', () => {
 
     try {
       await addDoc(messagesCollection, message.toMap())
+
       sharedStore.success()
     }
     catch (error) {
@@ -154,47 +190,49 @@ export const useMessageStore = defineStore('message', () => {
     }
     catch (error) {
       console.error('Error fetching chat room:', error)
+      return
     }
 
-    for (const matchedUserRef of matchedUsersRefs) {
-      if (!result)
-        return
+    if (!result)
+      return
 
-      // TODO groupQuery zeby pobrac chatroom z najpozniejsza wiadomoscia?
+    const usersPromises = matchedUsersRefs.map(ref => fetchDocumentByRef<UserModel>(ref))
+    const usersResults = await Promise.all(usersPromises)
+
+    for (const userResult of usersResults) {
+      const userRef = matchedUsersRefs[usersResults.indexOf(userResult)]
+      if (!userResult.data) {
+        console.log('Error fetching user data')
+        continue
+      }
 
       const filteredResult = result.docs.map(mapChatRoom)
         .filter(data =>
-          (data?.usersIds[0] === loggedUserRef?.id && data?.usersIds[1] === matchedUserRef?.id)
-          || (data?.usersIds[0] === matchedUserRef?.id && data?.usersIds[1] === loggedUserRef?.id),
+          (data?.usersIds[0] === loggedUserRef?.id && data?.usersIds[1] === userRef?.id)
+          || (data?.usersIds[0] === userRef?.id && data?.usersIds[1] === loggedUserRef?.id),
         )
-
-      const user = await fetchDocumentByRef<UserModel>(matchedUserRef)
-
-      if (!user.data) {
-        console.log('Error fetching user data')
-        return
-      }
 
       if (!filteredResult[0]) {
         matchedUsersInfo.value.push({
           chatRoom: null,
-          user: user.data,
+          user: userResult.data,
           lastMessage: null,
           lastMessageDate: null,
           unreadMessages: 0,
         })
-        continue
       }
-
-      chatRooms.value.push(filteredResult[0])
-      matchedUsersInfo.value.push({
-        chatRoom: filteredResult[0],
-        user: user.data,
-        lastMessage: null,
-        lastMessageDate: null,
-        unreadMessages: 0,
-      })
+      else {
+        chatRooms.value.push(filteredResult[0])
+        matchedUsersInfo.value.push({
+          chatRoom: filteredResult[0],
+          user: userResult.data,
+          lastMessage: null,
+          lastMessageDate: null,
+          unreadMessages: 0,
+        })
+      }
     }
+
     sharedStore.success()
   }
 
@@ -203,6 +241,7 @@ export const useMessageStore = defineStore('message', () => {
     chatRoom,
     chatRooms,
     matchedUsersInfo,
+    createChatRoom,
     setCurrentChatRoom,
     fetchMessages,
     fetchNextMessages,

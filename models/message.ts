@@ -1,24 +1,24 @@
-import { type DocumentData, type DocumentReference, Timestamp } from 'firebase/firestore'
+import type { DocumentData, DocumentReference, Timestamp } from 'firebase/firestore'
 
 export interface IMessage {
   text: string
   toUser: DocumentReference
   fromUser: DocumentReference
-  date: Timestamp | Date
+  date: Timestamp
 }
 
 export class MessageModel implements IMessage {
   text: string
   toUser: DocumentReference
   fromUser: DocumentReference
-  date: Timestamp | Date
+  date: Timestamp
   reference: DocumentReference | null
 
   constructor(data: IMessage, reference: DocumentReference | null) {
     this.text = data.text
     this.toUser = data.toUser
     this.fromUser = data.fromUser
-    this.date = data.date instanceof Timestamp ? data.date.toDate() : data.date
+    this.date = data.date
 
     this.reference = reference
   }

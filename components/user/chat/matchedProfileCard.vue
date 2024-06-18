@@ -29,6 +29,10 @@ const vTheme = useTheme()
           {{ matchedUserInfo.user.firstName }}
           {{ matchedUserInfo.user.lastName }}
         </v-card-title>
+
+        <v-card-subtitle class="text-h6" align="center" justify="center">
+          {{ matchedUserInfo?.lastMessage }}
+        </v-card-subtitle>
       </div>
     </div>
   </v-card>

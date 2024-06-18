@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Timestamp } from 'firebase/firestore'
 import EmojiPicker from 'vue3-emoji-picker'
 import MatchedProfileCard from '~/components/user/chat/matchedProfileCard.vue'
 import 'vue3-emoji-picker/css'
@@ -14,7 +15,7 @@ const { userMatches, userData } = storeToRefs(appStore)
 
 const messageStore = useMessageStore()
 
-const { messages, matchedUsersInfo, chatRoom } = storeToRefs(messageStore)
+const { messages, matchedUsersInfo, chatRoom, chatRooms } = storeToRefs(messageStore)
 
 const isEmojiPickerVisible = ref(false)
 const message = ref('')
@@ -36,6 +37,14 @@ watch(userData, async (newValue) => {
     await messageStore.fetchMessages(chatRoom.value.reference)
 })
 
+watch(chatRooms, async (newValue, oldValue) => {
+  if ((newValue.length > oldValue.length) && userData.value?.reference) {
+    // TODO do zmiany to czyszczenie?
+    matchedUsersInfo.value = []
+    await messageStore.getMatchedUsersInfo(userData.value.reference, userData.value?.matches)
+  }
+})
+
 onMounted(async () => {
   document.addEventListener('click', handleClickOutside)
   await appStore.fetchLikedProfiles(userData.value?.matches || [])
@@ -52,6 +61,18 @@ onMounted(async () => {
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+})
+
+const sortedByDateUserMatchesInfo = computed(() => {
+  const result = [...matchedUsersInfo.value].sort((a, b) => {
+    if (!a.lastMessageDate || !b.lastMessageDate)
+      return 0
+
+    return b.lastMessageDate.toMillis() - a.lastMessageDate.toMillis()
+  })
+
+  console.log(result, 'sortedByDateUserMatchesInfo')
+  return result
 })
 
 function onSelectEmoji(emoji) {
@@ -79,8 +100,32 @@ function setNewChatRoom(index: number) {
   messageStore.setCurrentChatRoom(matchedUsersInfo.value[index].chatRoom)
 }
 
-function sendMessage() {
-  if (userData.value?.reference && pickedUser.value?.reference) {
+function updateMatchInfo() {
+  matchedUsersInfo.value = matchedUsersInfo.value.map((info) => {
+    if (info?.user?.reference?.id === pickedUser.value?.reference?.id)
+      return { ...info, chatRoom: chatRoom.value }
+
+    return info
+  })
+}
+
+watch(pickedUser, async () => {
+  // TODO do zmiany to czyszczenie?
+  messages.value = []
+  if (chatRoom.value?.reference)
+    await messageStore.fetchMessages(chatRoom.value.reference)
+})
+watch(matchedUsersInfo, () => {
+  console.log('matchedUsersInfo', matchedUsersInfo.value)
+})
+
+async function sendMessage() {
+  if (!chatRoom.value && pickedUser.value?.reference && userData.value?.reference) {
+    await messageStore.createChatRoom(userData.value.reference, pickedUser.value?.reference)
+    updateMatchInfo()
+  }
+
+  if (userData.value?.reference) {
     const toUser = chatRoom.value?.usersRefs.filter(ref => ref.id !== userData.value?.reference?.id)[0]
 
     if (!toUser) {
@@ -92,7 +137,7 @@ function sendMessage() {
       fromUser: userData.value?.reference,
       toUser,
       text: message.value,
-      date: new Date(),
+      date: Timestamp.now(),
     }, null)
     messageStore.sendMessage(newMessage)
     message.value = ''
@@ -104,8 +149,8 @@ function sendMessage() {
   <v-row class="h-100 mb-8 px-4">
     <v-col cols="3">
       <v-virtual-scroll
-        height="85vh"
-        :items="matchedUsersInfo"
+        height="100%"
+        :items="sortedByDateUserMatchesInfo"
       >
         <template #default="{ item, index }">
           <MatchedProfileCard :matched-user-info="item" @click="setNewChatRoom(index)" />
@@ -143,7 +188,7 @@ function sendMessage() {
           </template>
         </v-textarea>
 
-        <div class="h-100">
+        <div class="h-100 pt-6">
           <v-btn icon="mdi-send" :disabled="!message.length" style="width: 50px;" @click="sendMessage" />
         </div>
       </div>
