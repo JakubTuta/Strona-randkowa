@@ -1,89 +1,116 @@
-import {EventModel, mapEvent} from "~/models/event";
-import {useSharedStore} from "~/stores/sharedStore";
+import type {
+  DocumentReference,
+  QuerySnapshot,
+} from 'firebase/firestore'
 import {
-    addDoc,
-    collection,
-    DocumentReference,
-    getDocs,
-    QuerySnapshot,
-    where,
-    query,
-    updateDoc
-} from 'firebase/firestore';
-import type {Ref} from "vue";
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  updateDoc,
+  where,
 
-export const useEventsStore = defineStore("events", () => {
-    const events: Ref<EventModel[]> = ref([])
-    const userEvents: Ref<EventModel[]> = ref([])
+} from 'firebase/firestore'
+import type { Ref } from 'vue'
+import { useUploadImageStore } from './uploadImageStore'
+import type { EventModel } from '~/models/event'
+import { mapEvent } from '~/models/event'
+import { useSharedStore } from '~/stores/sharedStore'
 
-    const sharedStore = useSharedStore()
+export const useEventsStore = defineStore('events', () => {
+  const events: Ref<EventModel[]> = ref([])
+  const userEvents: Ref<EventModel[]> = ref([])
 
-    const { firestore } = useFirebase()
-    const eventsCollection = collection(firestore, 'events')
+  const sharedStore = useSharedStore()
+  const uploadImageStore = useUploadImageStore()
 
-    const addEvent = async (newEvent: EventModel) => {
-        sharedStore.init()
+  const { firestore } = useFirebase()
+  const eventsCollection = collection(firestore, 'events')
 
-        const onSuccess = () => {
-            userEvents.value = [...userEvents.value, newEvent]
-            sharedStore.success()
-        }
+  const addEvent = async (newEvent: EventModel) => {
+    sharedStore.init()
 
-        await addDoc(eventsCollection, newEvent.toMap())
-            .then(onSuccess)
-            .catch(sharedStore.failureSnackbar)
+    const onSuccess = () => {
+      userEvents.value = [...userEvents.value, newEvent]
+      sharedStore.success()
     }
 
-    const editEvent = async (editEvent: EventModel) => {
-        sharedStore.init()
+    const imageUrl = (await uploadImageStore.createAndUploadEventPhoto(newEvent.photo)).imageUrl
+    newEvent.photo = imageUrl
 
-        const onSuccess = () => {
-            userEvents.value = [...userEvents.value, editEvent]
-            sharedStore.success()
-        }
+    await addDoc(eventsCollection, newEvent.toMap())
+      .then(onSuccess)
+      .catch(sharedStore.failureSnackbar)
+  }
 
-        if (editEvent.reference)
-            await updateDoc(editEvent.reference, editEvent.toMap())
-                .then(onSuccess)
-                .catch(sharedStore.failureSnackbar)
-        else
-            sharedStore.failure({code: String("Wrong event")})
+  function convertUrlToPath(photoUrl: string): string {
+    const matches = photoUrl.match(/o\/(.+)\?alt=media/)
+    if (matches && matches[1]) {
+      const photoPath = matches[1].replace(/%2F/g, '/')
+      return `${photoPath}`
+    }
+    else {
+      throw new Error('Invalid photo URL')
+    }
+  }
+
+  const editEvent = async (editEvent: EventModel, newImage: string) => {
+    sharedStore.init()
+
+    await uploadImageStore.deleteImage(convertUrlToPath(editEvent.photo))
+
+    const imageUrl = (await uploadImageStore.createAndUploadEventPhoto(newImage)).imageUrl
+
+    editEvent.photo = imageUrl
+
+    const onSuccess = () => {
+      const index = userEvents.value.findIndex(event => event.reference?.id === editEvent.reference?.id)
+      if (index !== -1)
+        userEvents.value[index] = editEvent
+
+      sharedStore.success()
     }
 
-    const getFutureEvents = async () => {
-        sharedStore.init()
+    if (editEvent.reference) {
+      await updateDoc(editEvent.reference, editEvent.toMap())
+        .then(onSuccess)
+        .catch(sharedStore.failureSnackbar)
+    }
+    else { sharedStore.failure({ code: String('Wrong event') }) }
+  }
 
-        const onSuccess = (data: QuerySnapshot) => {
-            events.value = data.docs.map(mapEvent)
-            sharedStore.success()
-        }
+  const getFutureEvents = async () => {
+    sharedStore.init()
 
-        getDocs(query(eventsCollection, where('endDate', '>', new Date())))
-            .then(onSuccess)
-            .catch(sharedStore.failureSnackbar)
+    const onSuccess = (data: QuerySnapshot) => {
+      events.value = data.docs.map(mapEvent)
+      sharedStore.success()
     }
 
-    const getUserEvents = async (userRef: DocumentReference) => {
-        sharedStore.init()
+    getDocs(query(eventsCollection, where('endDate', '>', new Date())))
+      .then(onSuccess)
+      .catch(sharedStore.failureSnackbar)
+  }
 
-        const onSuccess = (data: QuerySnapshot) => {
-            userEvents.value = data.docs.map(mapEvent)
-            sharedStore.success()
-        }
+  const getUserEvents = async (userRef: DocumentReference) => {
+    sharedStore.init()
 
-        getDocs(query(eventsCollection,
-            where('createdBy', '==', userRef),
-            where('endDate', '>', new Date())))
-            .then(onSuccess)
-            .catch(sharedStore.failureSnackbar)
+    const onSuccess = (data: QuerySnapshot) => {
+      userEvents.value = data.docs.map(mapEvent)
+      sharedStore.success()
     }
 
-    return {
-        events,
-        userEvents,
-        addEvent,
-        editEvent,
-        getUserEvents,
-        getFutureEvents,
-    }
+    getDocs(query(eventsCollection, where('createdBy', '==', userRef), where('endDate', '>', new Date())))
+      .then(onSuccess)
+      .catch(sharedStore.failureSnackbar)
+  }
+
+  return {
+    events,
+    userEvents,
+    addEvent,
+    editEvent,
+    getUserEvents,
+    getFutureEvents,
+  }
 })

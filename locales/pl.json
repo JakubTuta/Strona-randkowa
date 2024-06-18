@@ -8,12 +8,34 @@
     "doYouHaveAccount": "Nie masz jeszcze konta?",
     "register": "Zarejestruj się"
   },
+  "settings": {
+    "themes": "Motyw",
+    "language": "Język",
+    "fontSize": "Rozmiar czcionki",
+    "polish": "Polski",
+    "english": "Angielski",
+    "dark": "Ciemny",
+    "light": "Jasny",
+    "highContrast": "Wysoki kontrast",
+    "blackAndWhite": "Czarno-biały",
+    "small": "Mała",
+    "medium": "Średnia",
+    "big": "Duża"
+  },
+  "emailVerification": {
+    "title": "Weryfikacja email",
+    "content": "Zweryfikuj swój adres email.",
+    "sendAgain": "Wyślij ponownie",
+    "signOut": "Wyloguj się"
+  },
   "navBar": {
     "login": "Logowanie",
     "logout": "Wyloguj",
     "changeTheme": "Zmień motyw",
     "events": "Wydarzenia",
     "about": "O stronie",
+    "settings": "Ustawienia",
+    "footer": "Projekt Kompetencyjny",
     "user": {
       "myProfile": "Mój profil",
       "communities": "Społeczności",
@@ -62,7 +84,9 @@
       "editEvent": "Edytuj wydarzenie",
       "upcomingEvents": "Nadchodzące wydarzenia",
       "showEvent": "Pokaż więcej",
-      "noEvents": "Brak wydarzeń do pokazania"
+      "noEvents": "Brak wydarzeń do pokazania",
+      "startDate": "Rozpoczęcie:",
+      "endDate": "Zakończenie:"
     }
   },
   "universal": {
@@ -72,7 +96,10 @@
     "form": {
       "close": "Zamknij",
       "save": "Zapisz"
-    }
+    },
+    "quickChat": "Twoi znajomi",
+    "meetNewPeople": "Użytkownicy, których możesz znać"
+
   },
   "registration": {
     "step": "Krok {step}",
@@ -109,7 +136,7 @@
       "other": "Inna",
       "any": "Dowolna"
     },
-    "prefferedRelationship": {
+    "preferredRelationship": {
       "friendship": "Przyjaźń",
       "relationship": "Związek",
       "studyPartner": "Partner do nauki",
@@ -130,7 +157,7 @@
     "faculty": "Wydział",
     "fieldOfStudy": "Kierunek",
     "index": "Indeks",
-    "prefferedGender": "Preferowana płeć",
+    "preferredGender": "Preferowana płeć",
     "lookingFor": "Czego szukam",
     "hobbies": "Zainteresowania",
     "yourPreferences": "Twoje preferencje i hobby",

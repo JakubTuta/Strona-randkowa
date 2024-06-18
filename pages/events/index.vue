@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import {useEventsStore} from "~/stores/eventsStore";
-import type {EventModel} from "~/models/event";
-import type {Ref} from "vue";
-import ShowEventDialog from "~/components/user/events/showEventDialog.vue";
+import type { Ref } from 'vue'
+import { useEventsStore } from '~/stores/eventsStore'
+import type { EventModel } from '~/models/event'
+import ShowEventDialog from '~/components/user/events/showEventDialog.vue'
 
 const { t } = useI18n()
 const eventStore = useEventsStore()
@@ -40,9 +40,9 @@ onMounted(async () => {
         <v-carousel v-if="events.length" class="rounded-xl" cycle :interval="5000">
           <template v-for="(item, index) in events" :key="index" :item="item">
             <v-carousel-item
-                src="/testEvent.jpg"
-                cover
-                class="text-center"
+              :src="item.photo"
+              cover
+              class="text-center"
             >
               <v-row justify="center">
                 <v-col>
@@ -68,5 +68,4 @@ onMounted(async () => {
   </v-container>
 
   <ShowEventDialog :event="showedEvent" :is-show="showForm" @on-close="closeForm" />
-
 </template>

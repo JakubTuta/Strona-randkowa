@@ -1,5 +1,5 @@
 import type { DocumentReference } from 'firebase/firestore'
-import { deleteObject, getDownloadURL, ref, refFromURL, uploadString } from 'firebase/storage'
+import { deleteObject, getDownloadURL, ref, ref as refFirebase, refFromURL, uploadString } from 'firebase/storage'
 
 export const useUploadImageStore = defineStore('uploadImage', () => {
   const { storage } = useFirebase()
@@ -31,14 +31,9 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
     }
   }
 
-  const deleteImage = async (userRef: DocumentReference, imagePath: string) => {
+  const deleteImage = async (imagePath: string) => {
     try {
-      // const pictureRef = storage.refFromURL(imagePath)
-      // const fullImageRef = `${userRef.id}/${pictureRef}`
-
-      const imageRef = ref(storage, fullImageRef)
-
-      await deleteObject(imageRef)
+      await deleteObject(refFirebase(storage, imagePath))
 
       return {
         message: 'Zdjęcie zostało pomyślnie usunięte',
@@ -50,8 +45,46 @@ export const useUploadImageStore = defineStore('uploadImage', () => {
     }
   }
 
+  const createAndUploadEventPhoto = async (imgData: string) => {
+    const imagePath = `events/${generateRandomText()}`
+
+    const uploadedData = await uploadString(
+      ref(storage, imagePath),
+      imgData,
+      'data_url',
+    )
+
+    const imageUrl = await getDownloadURL(uploadedData.ref)
+
+    return {
+      imageUrl,
+      imagePath,
+      uploadedData,
+    }
+  }
+
+  const editEventPhoto = async (imgData: string, photoPath: string) => {
+    const imagePath = `events/${photoPath}}`
+
+    const uploadedData = await uploadString(
+      ref(storage, imagePath),
+      imgData,
+      'data_url',
+    )
+
+    const imageUrl = await getDownloadURL(uploadedData.ref)
+
+    return {
+      imageUrl,
+      imagePath,
+      uploadedData,
+    }
+  }
+
   return {
     createAndUploadImage,
     deleteImage,
+    createAndUploadEventPhoto,
+    editEventPhoto,
   }
 })

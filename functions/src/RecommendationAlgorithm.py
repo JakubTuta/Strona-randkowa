@@ -93,7 +93,7 @@ class RecommendationAlgorithm:
 
     @staticmethod
     def __calculate_rating_score(user: UserModel) -> float:
-        scores = map(lambda score: score.score, user.score)
+        scores = list(map(lambda score: score.score, user.score))
 
         if not len(scores):
             return 0

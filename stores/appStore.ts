@@ -175,6 +175,17 @@ export const useAppStore = defineStore('app', () => {
     }
   }
 
+  function convertUrlToPath(photoUrl: string): string {
+    const matches = photoUrl.match(/o\/(.+)\?alt=media/)
+    if (matches && matches[1]) {
+      const photoPath = matches[1].replace(/%2F/g, '/')
+      return photoPath
+    }
+    else {
+      throw new Error('Invalid photo URL')
+    }
+  }
+
   const removeImage = async (user: UserModel, photoUrl: string) => {
     try {
       const userReference = doc(usersCollection, user?.reference?.id)
@@ -185,8 +196,8 @@ export const useAppStore = defineStore('app', () => {
         user.photos.splice(index, 1)
 
         await setDoc(userReference, user.toMap())
-        const photoPath = appStore.getPhotoPath(photoUrl)
-        await uploadImageStore.deleteImage(userReference, photoPath)
+
+        await uploadImageStore.deleteImage(convertUrlToPath(photoUrl))
       }
     }
     catch (e) {

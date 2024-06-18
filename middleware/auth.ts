@@ -1,8 +1,8 @@
 export default defineNuxtRouteMiddleware(async () => {
-    const { auth } = useFirebase()
+  const { auth } = useFirebase()
 
-    await auth.authStateReady()
+  await auth.authStateReady()
 
-    if (!auth.currentUser)
-        return navigateTo('/')
+//   if (!auth.currentUser)
+//     return navigateTo('/')
 })

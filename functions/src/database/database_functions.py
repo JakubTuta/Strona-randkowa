@@ -23,22 +23,15 @@ def get_user_data(
     return user
 
 
-def get_all_users() -> typing.List[firestore.DocumentReference]:
-    docs = collections["users"].stream()
+def get_reference_from_id(doc_id: str) -> firestore.DocumentReference:
+    doc_ref = collections["users"].document(doc_id)
 
-    users = [
-        UserModel.from_dict({**doc.to_dict(), "reference": doc.reference})
-        for doc in docs
-    ]
-
-    return users
+    return doc_ref
 
 
 def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]:
     query = collections["users"].where(
-        filter=FieldFilter(
-            "__name__", "not-in", [user.reference, *user.blockedProfiles, *user.matches]
-        )
+        filter=FieldFilter("__name__", "!=", user.reference)
     )
 
     if user.lookingFor == "relationship":
@@ -52,12 +45,6 @@ def get_other_users(user: UserModel) -> typing.List[firestore.DocumentReference]
     ]
 
     return users
-
-
-def get_reference_from_id(doc_id: str) -> firestore.DocumentReference:
-    doc_ref = collections["users"].document(doc_id)
-
-    return doc_ref
 
 
 def get_likes_for_user(
@@ -157,16 +144,20 @@ def get_user_dislikes(
 
 
 def get_filtered_users(
+    user_data: UserModel,
     users: typing.List[UserModel],
     user_likes: typing.List[LikeModel],
     user_dislikes: typing.List[DislikeModel],
 ):
-    user_likes_id = map(lambda user: user.likedProfile.id, user_likes)
-    user_dislikes_id = map(lambda user: user.dislikedProfile.id, user_dislikes)
+    user_likes_id = map(lambda like: like.likedProfile.id, user_likes)
+    user_dislikes_id = map(lambda dislike: dislike.dislikedProfile.id, user_dislikes)
+    matches_id = map(lambda match: match.id, user_data.matches)
+    blocked_id = map(lambda block: block.id, user_data.blockedProfiles)
+
+    not_wanted_ids = [*user_likes_id, *user_dislikes_id, *matches_id, *blocked_id]
 
     filtered_users = filter(
-        lambda user: user.reference.id not in user_likes_id
-        and user.reference.id not in user_dislikes_id,
+        lambda user: user.reference.id not in not_wanted_ids,
         users,
     )
 

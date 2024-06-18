@@ -22,6 +22,32 @@ export default defineNuxtPlugin((app) => {
             secondary: '#87CACA',
           },
         },
+        highContrast: {
+          dark: true,
+          colors: {
+            background: '#000000',
+            surface: '#ffffff',
+            primary: '#ff0000',
+            secondary: '#00ff00',
+            error: '#ff0000',
+            info: '#0000ff',
+            success: '#00ff00',
+            warning: '#ffff00',
+          }
+        },
+        blackAndWhite: {
+          dark: true,
+          colors: {
+            background: '#000000',
+            surface: '#ffffff',
+            primary: '#ffffff',
+            secondary: '#000000',
+            error: '#ffffff',
+            info: '#ffffff',
+            success: '#ffffff',
+            warning: '#ffffff',
+          }
+        }
       },
     },
     defaults: {

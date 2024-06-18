@@ -8,12 +8,34 @@
     "doYouHaveAccount": "Don't have an account yet?",
     "register": "Register"
   },
+  "settings": {
+    "themes": "Theme",
+    "language": "Language",
+    "fontSize": "Font size",
+    "polish": "Polish",
+    "english": "English",
+    "dark": "Dark",
+    "light": "Light",
+    "highContrast": "High contrast",
+    "blackAndWhite": "Black and white",
+    "small": "Small",
+    "medium": "Medium",
+    "big": "Big"
+  },
+  "emailVerification": {
+    "title": "Email verification",
+    "content": "Verify your email address.",
+    "sendAgain": "Send again",
+    "signOut": "Sign out"
+  },
   "navBar": {
     "login": "Login",
     "logout": "Log out",
     "changeTheme": "Change theme",
     "events": "Events",
     "about": "About page",
+    "settings": "Settings",
+    "footer": "Competency Project",
     "user": {
       "myProfile": "My profile",
       "communities": "Communities",
@@ -62,7 +84,9 @@
       "editEvent": "Edit event",
       "upcomingEvents": "Upcoming events",
       "showEvent": "Show more",
-      "noEvents": "No events to show"
+      "noEvents": "No events to show",
+      "startDate": "Starting:",
+      "endDate": "Ending:"
     }
   },
   "universal": {
@@ -72,7 +96,9 @@
     "form": {
       "close": "Close",
       "save": "Save"
-    }
+    },
+    "quickChat": "Your friends",
+    "meetNewPeople": "People You may know"
   },
   "registration": {
     "step": "Step {step}",
@@ -109,7 +135,7 @@
       "other": "Other",
       "any": "Any"
     },
-    "prefferedRelationship": {
+    "preferredRelationship": {
       "friendship": "Friendship",
       "relationship": "Relationship",
       "studyPartner": "Study partner",
@@ -130,7 +156,7 @@
     "faculty": "Faculty",
     "fieldOfStudy": "Field of study",
     "index": "Index",
-    "prefferedGender": "Preffered gender",
+    "preferredGender": "Preferred gender",
     "lookingFor": "Looking for",
     "hobbies": "Hobbies",
     "yourPreferences": "Your preferences and hobbies",

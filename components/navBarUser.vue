@@ -1,6 +1,16 @@
 <script lang="ts" setup>
 import { useTheme } from 'vuetify'
 import { toggleTheme } from '~/helpers/theme'
+// import ShowSettings from '~/components/showSettings.vue'
+
+// const showForm = ref(false)
+// function showEditForm() {
+//   showForm.value = true
+// }
+
+// function closeForm() {
+//   showForm.value = false
+// }
 
 const theme = useTheme()
 const router = useRouter()
@@ -62,9 +72,9 @@ async function logOut() {
         {{ `${userData.firstName} ${userData.lastName}` }}
         <v-menu activator="parent">
           <v-list class="justify-center">
-            <v-list-item to="/user/profile" prepend-icon="mdi-face-man-profile" :title="$t('navBar.user.myProfile')" />
-            <v-list-item prepend-icon="mdi-theme-light-dark" title="Zmień motyw" @click="toggleTheme(theme)" />
-            <v-list-item prepend-icon="mdi-logout" :title="$t('navBar.logout')" @click="logOut" />
+            <v-list-item to="/user/profile" prepend-icon="mdi-face-man-profile" :title="t('navBar.user.myProfile')" />
+            <!--            <v-list-item prepend-icon="mdi-theme-light-dark" :title="t('navBar.changeTheme')" @click="toggleTheme(theme)" /> -->
+            <v-list-item prepend-icon="mdi-logout" :title="t('navBar.logout')" @click="logOut" />
           </v-list>
         </v-menu>
       </v-btn>
@@ -75,5 +85,9 @@ async function logOut() {
         <v-icon icon="mdi-menu" />
       </v-btn>
     </div>
+
+    <!-- <v-btn variant="text" color="white" icon="mdi-cog" @click="showEditForm" /> -->
   </v-app-bar>
+
+  <!-- <ShowSettings :is-show="showForm" @on-close="closeForm" /> -->
 </template>

@@ -1,10 +1,16 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
-import { toggleTheme } from '~/helpers/theme'
+// import ShowSettings from "~/components/showSettings.vue";
 
 const { t } = useI18n()
 
-const theme = useTheme()
+// const showForm = ref(false)
+// function showEditForm() {
+//   showForm.value = true
+// }
+
+// function closeForm() {
+//   showForm.value = false
+// }
 </script>
 
 <template>
@@ -20,7 +26,6 @@ const theme = useTheme()
     <v-spacer />
 
     <div class="hidden-sm-and-down">
-
       <v-btn variant="elevated" class="mx-2" color="primary" to="/about">
         {{ t("navBar.about") }}
       </v-btn>
@@ -28,7 +33,6 @@ const theme = useTheme()
       <v-btn variant="elevated" class="mx-2" color="primary" to="/events">
         {{ t("navBar.events") }}
       </v-btn>
-
     </div>
 
     <v-spacer />
@@ -38,7 +42,7 @@ const theme = useTheme()
         {{ t("navBar.login") }}
       </v-btn>
 
-      <v-btn variant="text" color="white" icon="mdi-theme-light-dark" @click="toggleTheme(theme)" />
+      <!-- <v-btn variant="text" color="white" icon="mdi-cog" @click="showEditForm"/> -->
     </div>
 
     <div class="hidden-md-and-up">
@@ -57,9 +61,15 @@ const theme = useTheme()
             <v-list-item to="/about">
               <v-list-item-title> {{ t("navBar.about") }} </v-list-item-title>
             </v-list-item>
+
+            <!-- <v-list-item @click="showEditForm">
+              <v-list-item-title> {{ t('navBar.settings') }}</v-list-item-title>
+            </v-list-item> -->
           </v-list>
         </v-menu>
       </v-btn>
     </div>
   </v-app-bar>
+
+  <!-- <ShowSettings :is-show="showForm" @on-close="closeForm" /> -->
 </template>
