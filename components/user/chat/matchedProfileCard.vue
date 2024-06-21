@@ -32,6 +32,9 @@ const vTheme = useTheme()
 
         <v-card-subtitle class="text-h6" align="center" justify="center">
           {{ matchedUserInfo?.lastMessage }}
+          <v-icon v-if="matchedUserInfo?.toAnotherUser" size="x-small">
+            mdi-check-circle-outline
+          </v-icon>
         </v-card-subtitle>
       </div>
     </div>

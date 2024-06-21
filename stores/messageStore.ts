@@ -12,6 +12,7 @@ export interface MatchInfo {
   user: UserModel
   lastMessage: string | null
   lastMessageDate: Timestamp | null
+  toAnotherUser: boolean
   unreadMessages: number
 }
 
@@ -57,6 +58,7 @@ export const useMessageStore = defineStore('message', () => {
     if (info) {
       info.lastMessage = message.text
       info.lastMessageDate = message.date
+      info.toAnotherUser = message.fromUser.id === useAppStore().userData?.reference?.id
     }
   }
 
@@ -83,6 +85,9 @@ export const useMessageStore = defineStore('message', () => {
 
       const message = messages.value[messages.value.length - 1]
       updateLastMessage(message)
+
+      // TODO do osobnej funkcji
+      // const q = query()
 
       sharedStore.success()
     }
@@ -201,10 +206,8 @@ export const useMessageStore = defineStore('message', () => {
 
     for (const userResult of usersResults) {
       const userRef = matchedUsersRefs[usersResults.indexOf(userResult)]
-      if (!userResult.data) {
-        console.log('Error fetching user data')
+      if (!userResult.data)
         continue
-      }
 
       const filteredResult = result.docs.map(mapChatRoom)
         .filter(data =>
@@ -218,6 +221,7 @@ export const useMessageStore = defineStore('message', () => {
           user: userResult.data,
           lastMessage: null,
           lastMessageDate: null,
+          toAnotherUser: false,
           unreadMessages: 0,
         })
       }
@@ -228,6 +232,7 @@ export const useMessageStore = defineStore('message', () => {
           user: userResult.data,
           lastMessage: null,
           lastMessageDate: null,
+          toAnotherUser: false,
           unreadMessages: 0,
         })
       }

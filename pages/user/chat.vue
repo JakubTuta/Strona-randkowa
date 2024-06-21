@@ -19,7 +19,7 @@ const { messages, matchedUsersInfo, chatRoom, chatRooms } = storeToRefs(messageS
 
 const isEmojiPickerVisible = ref(false)
 const message = ref('')
-const wrapper = ref(null)
+const wrapper: Ref<HTMLDivElement | null> = ref(null)
 const pickedUser: Ref<UserModel | null> = ref(null)
 
 watch(userData, async (newValue) => {
@@ -64,18 +64,18 @@ onUnmounted(() => {
 })
 
 const sortedByDateUserMatchesInfo = computed(() => {
-  const result = [...matchedUsersInfo.value].sort((a, b) => {
-    if (!a.lastMessageDate || !b.lastMessageDate)
-      return 0
+  return [...matchedUsersInfo.value].sort((a, b) => {
+    if (!a.lastMessageDate)
+      return 1
+
+    if (!b.lastMessageDate)
+      return -1
 
     return b.lastMessageDate.toMillis() - a.lastMessageDate.toMillis()
   })
-
-  console.log(result, 'sortedByDateUserMatchesInfo')
-  return result
 })
 
-function onSelectEmoji(emoji) {
+function onSelectEmoji(emoji: { i: string }) {
   message.value += emoji.i
 }
 
@@ -85,19 +85,19 @@ function showEmojiPicker() {
   }, 0)
 }
 
-function handleClickOutside(event) {
-  if (event.target.id === 'emoji')
+function handleClickOutside(event: MouseEvent) {
+  if ((event?.target as HTMLElement)?.id === 'emoji')
     return
 
-  if (wrapper.value && !wrapper.value.contains(event.target))
+  if (wrapper.value && !wrapper.value.contains(event.target as Node))
     isEmojiPickerVisible.value = false
 }
 
 function setNewChatRoom(index: number) {
-  pickedUser.value = userMatches.value[index]
+  pickedUser.value = sortedByDateUserMatchesInfo.value[index].user
   // TODO usunac pickedUser i currentChatRoom, zastapic obiektem z tablicy matchedUsersInfo
 
-  messageStore.setCurrentChatRoom(matchedUsersInfo.value[index].chatRoom)
+  messageStore.setCurrentChatRoom(sortedByDateUserMatchesInfo.value[index].chatRoom)
 }
 
 function updateMatchInfo() {
@@ -114,9 +114,6 @@ watch(pickedUser, async () => {
   messages.value = []
   if (chatRoom.value?.reference)
     await messageStore.fetchMessages(chatRoom.value.reference)
-})
-watch(matchedUsersInfo, () => {
-  console.log('matchedUsersInfo', matchedUsersInfo.value)
 })
 
 async function sendMessage() {
