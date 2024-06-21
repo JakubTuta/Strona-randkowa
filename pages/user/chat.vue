@@ -117,6 +117,10 @@ watch(pickedUser, async () => {
 })
 
 async function sendMessage() {
+  if (!message.value) {
+    return
+  }
+
   if (!chatRoom.value && pickedUser.value?.reference && userData.value?.reference) {
     await messageStore.createChatRoom(userData.value.reference, pickedUser.value?.reference)
     updateMatchInfo()

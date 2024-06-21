@@ -6,10 +6,11 @@ import { ChatRoomModel, mapChatRoom } from '~/models/chatRoom'
 import type { MessageModel } from '~/models/message'
 import { mapMessageModel } from '~/models/message'
 import type { UserModel } from '~/models/user'
+import { mapUser } from '~/models/user'
 
 export interface MatchInfo {
   chatRoom: ChatRoomModel | null
-  user: UserModel
+  user: UserModel | null
   lastMessage: string | null
   lastMessageDate: Timestamp | null
   toAnotherUser: boolean
@@ -71,17 +72,6 @@ export const useMessageStore = defineStore('message', () => {
     const onSuccess = (arg: QuerySnapshot) => {
       messages.value = arg.docs.map(mapMessageModel).reverse()
       lastMessageLoaded.value = arg.docs[arg.docs.length - 1] || null
-
-      // arg.docChanges().forEach((change) => {
-      //   if (change.type === 'added')
-      //     console.log('New message ', change.doc.data())
-
-      //   if (change.type === 'modified')
-      //     console.log('Modified message: ', change.doc.data())
-
-      //   if (change.type === 'removed')
-      //     console.log('Removed message: ', change.doc.data())
-      // })
 
       const message = messages.value[messages.value.length - 1]
       updateLastMessage(message)
@@ -201,12 +191,12 @@ export const useMessageStore = defineStore('message', () => {
     if (!result)
       return
 
-    const usersPromises = matchedUsersRefs.map(ref => fetchDocumentByRef<UserModel>(ref))
+    const usersPromises = matchedUsersRefs.map(ref => fetchDocumentByRef(ref))
     const usersResults = await Promise.all(usersPromises)
 
     for (const userResult of usersResults) {
       const userRef = matchedUsersRefs[usersResults.indexOf(userResult)]
-      if (!userResult.data)
+      if (!userResult?.exists())
         continue
 
       const filteredResult = result.docs.map(mapChatRoom)
@@ -218,7 +208,7 @@ export const useMessageStore = defineStore('message', () => {
       if (!filteredResult[0]) {
         matchedUsersInfo.value.push({
           chatRoom: null,
-          user: userResult.data,
+          user: mapUser(userResult),
           lastMessage: null,
           lastMessageDate: null,
           toAnotherUser: false,
@@ -229,7 +219,7 @@ export const useMessageStore = defineStore('message', () => {
         chatRooms.value.push(filteredResult[0])
         matchedUsersInfo.value.push({
           chatRoom: filteredResult[0],
-          user: userResult.data,
+          user: mapUser(userResult),
           lastMessage: null,
           lastMessageDate: null,
           toAnotherUser: false,

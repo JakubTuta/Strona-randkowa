@@ -23,13 +23,13 @@ export function useDatabase() {
     return { data: (documentSnapshot.data()) as T, ref: documentSnapshot.ref }
   }
 
-  const fetchDocumentByRef = async <T>(ref: DocumentReference) => {
+  const fetchDocumentByRef = async (ref: DocumentReference) => {
     const documentSnapshot = await getDoc(ref)
 
     if (!documentSnapshot.exists())
-      return { data: null, ref: documentSnapshot.ref }
+      return null
 
-    return { data: (documentSnapshot.data()) as T, ref: documentSnapshot.ref }
+    return documentSnapshot
   }
 
   const fetchDocumentsByQuery = async (query: Query<DocumentData, DocumentData>) => {
