@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useTheme } from 'vuetify'
-import type { UserModel } from '~/models/user'
+import { format, isThisWeek, isToday } from 'date-fns'
 
 const props = defineProps<{
   matchedUserInfo: MatchInfo
@@ -9,6 +9,19 @@ const props = defineProps<{
 const { matchedUserInfo } = toRefs(props)
 
 const vTheme = useTheme()
+const { t } = useI18n()
+
+function formatLastMessageDate(date: Date | undefined) {
+  if (!date)
+    return ''
+
+  if (isToday(date))
+    return format(date, 'HH:mm')
+  else if (isThisWeek(date))
+    return t(`weekDays.${format(date, 'EEEE')}`)
+  else
+    return format(date, 'dd.MM')
+}
 </script>
 
 <template>
@@ -35,6 +48,8 @@ const vTheme = useTheme()
           <v-icon v-if="matchedUserInfo?.isLastMessageToAnotherUser" size="x-small">
             mdi-check-circle-outline
           </v-icon>
+
+          {{ formatLastMessageDate(matchedUserInfo?.lastMessageDate?.toDate()) }}
         </v-card-subtitle>
       </div>
     </div>

@@ -187,5 +187,14 @@
     "loadMore": "Load more",
     "noMore": "No more messages",
     "sayHello": "Say hello"
+  },
+  "weekDays": {
+    "Monday": "mon",
+    "Tuesday": "tue",
+    "Wednesday": "wed",
+    "Thursday": "thur",
+    "Friday": "fri",
+    "Saturday": "sat",
+    "Sunday": "sun"
   }
 }

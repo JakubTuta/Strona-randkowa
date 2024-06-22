@@ -187,5 +187,14 @@
     "noMore": "Brak większej ilości wiadomości",
     "loadMore": "Załaduj więcej",
     "sayHello": "Przywitaj się"
+  },
+  "weekDays": {
+    "Monday": "pon",
+    "Tuesday": "wt",
+    "Wednesday": "śr",
+    "Thursday": "czw",
+    "Friday": "pt",
+    "Saturday": "sob",
+    "Sunday": "niedz"
   }
 }
