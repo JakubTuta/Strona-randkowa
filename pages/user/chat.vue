@@ -16,7 +16,7 @@ const { userMatches, userData } = storeToRefs(appStore)
 
 const messageStore = useMessageStore()
 
-const { matchedUsersInfo, chatRoom, chatRooms } = storeToRefs(messageStore)
+const { matchedUsersInfo, chatRoom } = storeToRefs(messageStore)
 
 const isEmojiPickerVisible = ref(false)
 const message = ref('')
@@ -30,7 +30,7 @@ watch(userData, async (newValue) => {
 
     if (userData.value?.reference && pickedUser.value?.reference && matchedUsersInfo.value.length === 0) {
       await messageStore.getMatchedUsersInfo(userData.value?.reference, userData.value?.matches)
-      messageStore.setCurrentChatRoom(matchedUsersInfo.value[0].chatRoom)
+      await messageStore.setCurrentChatRoom(matchedUsersInfo.value[0].chatRoom)
     }
   }
 
@@ -43,12 +43,12 @@ watch(userData, async (newValue) => {
   }
 })
 
-watch(chatRooms, async (newValue, oldValue) => {
-  if ((newValue.length > oldValue.length) && userData.value?.reference) {
-    matchedUsersInfo.value = []
-    await messageStore.getMatchedUsersInfo(userData.value.reference, userData.value?.matches)
-  }
-})
+// watch(chatRooms, async (newValue, oldValue) => {
+//   if ((newValue.length > oldValue.length) && userData.value?.reference) {
+//     matchedUsersInfo.value = []
+//     await messageStore.getMatchedUsersInfo(userData.value.reference, userData.value?.matches)
+//   }
+// })
 
 onMounted(async () => {
   document.addEventListener('click', handleClickOutside)
@@ -57,7 +57,7 @@ onMounted(async () => {
 
   if (userData.value?.reference && pickedUser.value?.reference && matchedUsersInfo.value.length === 0) {
     await messageStore.getMatchedUsersInfo(userData.value?.reference, userData.value?.matches)
-    messageStore.setCurrentChatRoom(matchedUsersInfo.value[0].chatRoom)
+    await messageStore.setCurrentChatRoom(matchedUsersInfo.value[0].chatRoom)
   }
 
   if (matchedUsersInfo.value.length) {
@@ -103,40 +103,23 @@ function handleClickOutside(event: MouseEvent) {
     isEmojiPickerVisible.value = false
 }
 
-function setNewChatRoom(index: number) {
+async function setNewChatRoom(index: number) {
   pickedUser.value = sortedByDateUserMatchesInfo.value[index].user
   // TODO usunac pickedUser i currentChatRoom, zastapic obiektem z tablicy matchedUsersInfo
 
-  messageStore.setCurrentChatRoom(sortedByDateUserMatchesInfo.value[index].chatRoom)
+  await messageStore.setCurrentChatRoom(sortedByDateUserMatchesInfo.value[index].chatRoom)
 }
-
-function updateMatchInfo() {
-  matchedUsersInfo.value = matchedUsersInfo.value.map((info) => {
-    if (info?.user?.reference?.id === pickedUser.value?.reference?.id)
-      return { ...info, chatRoom: chatRoom.value }
-
-    return info
-  })
-}
-
-// watch(pickedUser, async () => {
-//   if (chatRoom.value?.reference)
-//     await messageStore.fetchMessages(chatRoom.value.reference)
-// })
 
 const currentChatRoomMessages = computed(() => {
   return matchedUsersInfo.value.find(info => info.chatRoom?.reference === chatRoom.value?.reference)?.messages || []
 })
 
 async function sendMessage() {
-  if (!message.value) {
+  if (!message.value)
     return
-  }
 
-  if (!chatRoom.value && pickedUser.value?.reference && userData.value?.reference) {
+  if (!chatRoom.value && pickedUser.value?.reference && userData.value?.reference)
     await messageStore.createChatRoom(userData.value.reference, pickedUser.value?.reference)
-    updateMatchInfo()
-  }
 
   if (userData.value?.reference) {
     const toUser = chatRoom.value?.usersRefs.filter(ref => ref.id !== userData.value?.reference?.id)[0]
@@ -166,7 +149,7 @@ async function sendMessage() {
         :items="sortedByDateUserMatchesInfo"
       >
         <template #default="{ item, index }">
-          <MatchedProfileCard :matched-user-info="item" @click="setNewChatRoom(index)" />
+          <MatchedProfileCard :matched-user-info="item" @click="async () => await setNewChatRoom(index)" />
         </template>
       </v-virtual-scroll>
     </v-col>

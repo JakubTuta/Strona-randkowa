@@ -43,11 +43,17 @@ function formatLastMessageDate(date: Date | undefined) {
         <v-card-title class="text-h5" align="left">
           {{ matchedUserInfo.user?.firstName }}
           {{ matchedUserInfo.user?.lastName }}
+          <v-badge
+            v-if="matchedUserInfo.isNewMessage"
+            dot
+            floating
+            color="secondary"
+          />
         </v-card-title>
 
         <v-card-subtitle>
           <v-row>
-            <v-col cols="8" align="left">
+            <v-col cols="8" align="left" :class="matchedUserInfo?.isNewMessage ? 'font-weight-bold' : ''">
               {{ matchedUserInfo?.lastMessage }}
             </v-col>
 
