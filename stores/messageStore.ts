@@ -95,7 +95,7 @@ export const useMessageStore = defineStore('message', () => {
       matchedUsersInfo.value.map((match) => {
         if (match.chatRoom?.usersIds.includes(anotherUser) && match.chatRoom?.usersIds.includes(userId)) {
           match.messages = messages
-          match.lastMessage = lastMessage.text.length > 18 ? `${lastMessage.text.substring(0, 18)}...` : lastMessage.text
+          match.lastMessage = lastMessage.text.length > 33 ? `${lastMessage.text.substring(0, 33)}...` : lastMessage.text
           match.lastMessageDate = lastMessage.date
           match.lastMessageLoaded = lastMessageLoaded
           match.isLastMessageToAnotherUser = lastMessage.fromUser.id === userId

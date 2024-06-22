@@ -26,33 +26,41 @@ function formatLastMessageDate(date: Date | undefined) {
 
 <template>
   <v-card style="cursor: pointer;" class=" my-1 mx-1">
-    <div class="d-flex flex-no-wrap justify-space-between">
-      <v-avatar
-        class="ma-3"
-        rounded="xl"
-        size="85"
-      >
-        <v-img v-if="matchedUserInfo.user?.photos.length" :src="matchedUserInfo.user?.photos[0]" />
-        <v-img v-else-if="vTheme.current.value.dark" src="/account-dark.png" />
-        <v-img v-else src="/account-white.png" />
-      </v-avatar>
+    <v-row>
+      <v-col cols="3">
+        <v-avatar
+          class="ma-3"
+          rounded="xl"
+          size="85"
+        >
+          <v-img v-if="matchedUserInfo.user?.photos.length" :src="matchedUserInfo.user?.photos[0]" />
+          <v-img v-else-if="vTheme.current.value.dark" src="/account-dark.png" />
+          <v-img v-else src="/account-white.png" />
+        </v-avatar>
+      </v-col>
 
-      <div>
-        <v-card-title class="text-h5" align="center" justify="center">
+      <v-col cols="9">
+        <v-card-title class="text-h5" align="left">
           {{ matchedUserInfo.user?.firstName }}
           {{ matchedUserInfo.user?.lastName }}
         </v-card-title>
 
-        <v-card-subtitle class="text-h6" align="center" justify="center">
-          {{ matchedUserInfo?.lastMessage }}
-          <v-icon v-if="matchedUserInfo?.isLastMessageToAnotherUser" size="x-small">
-            mdi-check-circle-outline
-          </v-icon>
+        <v-card-subtitle>
+          <v-row>
+            <v-col cols="8" align="left">
+              {{ matchedUserInfo?.lastMessage }}
+            </v-col>
 
-          {{ formatLastMessageDate(matchedUserInfo?.lastMessageDate?.toDate()) }}
+            <v-col cols="4" align="right">
+              <v-icon v-if="matchedUserInfo?.isLastMessageToAnotherUser" size="x-small">
+                mdi-check-circle-outline
+              </v-icon>
+              {{ formatLastMessageDate(matchedUserInfo?.lastMessageDate?.toDate()) }}
+            </v-col>
+          </v-row>
         </v-card-subtitle>
-      </div>
-    </div>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 

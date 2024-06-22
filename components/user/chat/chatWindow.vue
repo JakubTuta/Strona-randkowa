@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useTheme } from 'vuetify'
 import type { ChatRoomModel } from '~/models/chatRoom'
 import type { MessageModel } from '~/models/message'
 import type { UserModel } from '~/models/user'
@@ -18,6 +19,8 @@ const sharedStore = useSharedStore()
 const { loading } = storeToRefs(sharedStore)
 
 const { pickedUser, messages } = toRefs(props)
+
+const vTheme = useTheme()
 
 function isFromCurrentUser(message: MessageModel) {
   return message.fromUser.id === userData?.value?.reference?.id
@@ -48,7 +51,9 @@ async function load({ done }: { done: Function }) {
         rounded="xl"
         size="40"
       >
-        <v-img :src="pickedUser?.photos[0]" />
+        <v-img v-if="pickedUser?.photos.length" :src="pickedUser?.photos[0]" />
+        <v-img v-else-if="vTheme.current.value.dark" src="/account-dark.png" />
+        <v-img v-else src="/account-white.png" />
       </v-avatar>
       {{ pickedUser?.firstName }} {{ pickedUser?.lastName }}
     </v-col>
@@ -96,7 +101,9 @@ async function load({ done }: { done: Function }) {
               rounded="xl"
               size="40"
             >
-              <v-img :src="pickedUser?.photos[0]" />
+              <v-img v-if="pickedUser?.photos.length" :src="pickedUser?.photos[0]" />
+              <v-img v-else-if="vTheme.current.value.dark" src="/account-dark.png" />
+              <v-img v-else src="/account-white.png" />
             </v-avatar>
             <v-col :cols="isFromCurrentUser(message) ? 6 : 5">
               <v-card :class="isFromCurrentUser(message) ? 'bg-secondary pa-4 mr-2' : 'bg-primary pa-4'">
