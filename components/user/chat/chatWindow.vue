@@ -105,8 +105,10 @@ async function load({ done }: { done: Function }) {
               <v-img v-else-if="vTheme.current.value.dark" src="/account-dark.png" />
               <v-img v-else src="/account-white.png" />
             </v-avatar>
-            <v-col :cols="isFromCurrentUser(message) ? 6 : 5">
-              <v-card :class="isFromCurrentUser(message) ? 'bg-secondary pa-4 mr-2' : 'bg-primary pa-4'">
+            <v-col :cols="isFromCurrentUser(message) ? 6 : 5" :align="isFromCurrentUser(message) ? 'right' : 'left'">
+              <v-card
+                :class="isFromCurrentUser(message) ? 'bg-secondary pa-4 mr-2 d-inline-block mr-8 text-left' : 'bg-primary pa-4 d-inline-block'"
+              >
                 {{ message.text }}
               </v-card>
             </v-col>
