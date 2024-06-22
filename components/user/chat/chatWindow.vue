@@ -77,6 +77,7 @@ async function load({ done }: { done: Function }) {
     <template v-if="chatRoom && !loading">
       <v-infinite-scroll
         v-if="messages.length > 0"
+        :key="chatRoom?.reference?.id || 0"
         class="mt-n2"
         height="655"
         side="start"

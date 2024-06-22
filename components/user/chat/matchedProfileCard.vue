@@ -26,13 +26,13 @@ const vTheme = useTheme()
 
       <div>
         <v-card-title class="text-h5" align="center" justify="center">
-          {{ matchedUserInfo.user.firstName }}
-          {{ matchedUserInfo.user.lastName }}
+          {{ matchedUserInfo.user?.firstName }}
+          {{ matchedUserInfo.user?.lastName }}
         </v-card-title>
 
         <v-card-subtitle class="text-h6" align="center" justify="center">
           {{ matchedUserInfo?.lastMessage }}
-          <v-icon v-if="matchedUserInfo?.toAnotherUser" size="x-small">
+          <v-icon v-if="matchedUserInfo?.isLastMessageToAnotherUser" size="x-small">
             mdi-check-circle-outline
           </v-icon>
         </v-card-subtitle>

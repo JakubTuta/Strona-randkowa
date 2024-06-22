@@ -12,9 +12,11 @@ export interface MatchInfo {
   chatRoom: ChatRoomModel | null
   user: UserModel | null
   lastMessage: string | null
+  lastMessageLoaded: QueryDocumentSnapshot | null
   lastMessageDate: Timestamp | null
-  toAnotherUser: boolean
+  isLastMessageToAnotherUser: boolean
   unreadMessages: number
+  messages: MessageModel[]
 }
 
 const PAGINATION_LIMIT = 10
@@ -22,16 +24,18 @@ const getMessagesQuery = (collection: CollectionReference) => query(collection, 
 const getNextMessageQuery = (collection: CollectionReference, lastMessageLoaded: QueryDocumentSnapshot) => query(collection, orderBy('date', 'desc'), startAfter(lastMessageLoaded), limit(PAGINATION_LIMIT))
 
 export const useMessageStore = defineStore('message', () => {
-  const messages = ref<MessageModel[]>([])
+  // const messages = ref<MessageModel[]>([])
   const chatRoom = ref<ChatRoomModel | null>(null)
   const chatRooms = ref<(ChatRoomModel | null)[]>([])
 
   const matchedUsersInfo = ref<MatchInfo[]>([])
 
-  const unsubscribe: Ref<Unsubscribe | null> = ref(null)
+  // const unsubscribe: Ref<Unsubscribe | null> = ref(null)
+  const unsubscribesArr: Ref<Unsubscribe[]> = ref([])
   const lastMessageLoaded: Ref<QueryDocumentSnapshot | null> = ref(null)
 
   const sharedStore = useSharedStore()
+  const appStore = useAppStore()
 
   const {
     getFirebaseCollection,
@@ -43,14 +47,19 @@ export const useMessageStore = defineStore('message', () => {
   const chatRoomsCollection = getFirebaseCollection(Collections.CHAT_ROOMS)
 
   const reset = () => {
-    messages.value = []
+    // messages.value = []
     matchedUsersInfo.value = []
     chatRooms.value = []
     chatRoom.value = null
-    if (unsubscribe.value) {
-      unsubscribe.value()
-      unsubscribe.value = null
-    }
+    // if (unsubscribe.value) {
+    //   unsubscribe.value()
+    //   unsubscribe.value = null
+    // }
+
+    unsubscribesArr.value.forEach((unsubscribe) => {
+      unsubscribe()
+    })
+    unsubscribesArr.value = []
   }
 
   const updateLastMessage = (message: MessageModel) => {
@@ -59,22 +68,42 @@ export const useMessageStore = defineStore('message', () => {
     if (info) {
       info.lastMessage = message.text
       info.lastMessageDate = message.date
-      info.toAnotherUser = message.fromUser.id === useAppStore().userData?.reference?.id
+      info.isLastMessageToAnotherUser = message.fromUser.id === appStore.userData?.reference?.id
     }
   }
 
-  const fetchMessages = async (chatRoomRef: DocumentReference) => {
+  const fetchMessages = async (chatRoomRef: DocumentReference | null) => {
+    if (!chatRoomRef)
+      return
+
     const messagesCollection = getFirebaseSubCollection(chatRoomRef, 'messages')
 
-    if (unsubscribe.value)
-      unsubscribe.value()
-
     const onSuccess = (arg: QuerySnapshot) => {
-      messages.value = arg.docs.map(mapMessageModel).reverse()
-      lastMessageLoaded.value = arg.docs[arg.docs.length - 1] || null
+      if (!appStore.userData || !appStore.userData.reference) {
+        console.error('User is not defined')
+        return
+      }
 
-      const message = messages.value[messages.value.length - 1]
-      updateLastMessage(message)
+      const messages = arg.docs.map(mapMessageModel).reverse()
+      const lastMessageLoaded = arg.docs[arg.docs.length - 1] || null
+
+      const anotherUser = messages[0].fromUser.id !== appStore.userData.reference.id ? messages[0].fromUser.id : messages[0].toUser.id
+
+      const userId = appStore.userData.reference.id
+      const lastMessage = messages[messages.length - 1]
+
+      matchedUsersInfo.value.map((match) => {
+        if (match.chatRoom?.usersIds.includes(anotherUser) && match.chatRoom?.usersIds.includes(userId)) {
+          match.messages = messages
+          match.lastMessage = lastMessage.text
+          match.lastMessageDate = lastMessage.date
+          match.lastMessageLoaded = lastMessageLoaded
+          match.isLastMessageToAnotherUser = lastMessage.fromUser.id === userId
+        }
+        return match
+      })
+
+      // updateLastMessage(lastMessage)
 
       // TODO do osobnej funkcji
       // const q = query()
@@ -86,7 +115,20 @@ export const useMessageStore = defineStore('message', () => {
       sharedStore.failureSnackbar(err)
     }
 
-    unsubscribe.value = onSnapshot(getMessagesQuery(messagesCollection), onSuccess, onError)
+    unsubscribesArr.value.push(onSnapshot(getMessagesQuery(messagesCollection), onSuccess, onError))
+  }
+
+  const fetchMessagesForAllChatRooms = async (chatRoomRefs: DocumentReference[]) => {
+    try {
+      unsubscribesArr.value.forEach((unsubscribe) => {
+        unsubscribe()
+      })
+      unsubscribesArr.value = []
+      await Promise.all(chatRoomRefs.map(ref => fetchMessages(ref)))
+    }
+    catch (err) {
+      console.error('Error fetching messages', err)
+    }
   }
 
   const fetchNextMessages = async () => {
@@ -95,15 +137,27 @@ export const useMessageStore = defineStore('message', () => {
 
     const messagesCollection = getFirebaseSubCollection(chatRoom.value.reference, 'messages')
 
-    if (lastMessageLoaded.value) {
-      const data = await fetchDocumentsByQuery(getNextMessageQuery(messagesCollection, lastMessageLoaded.value))
+    const index = matchedUsersInfo.value.findIndex(match => match.chatRoom?.reference?.id === chatRoom.value?.reference?.id)
 
-      lastMessageLoaded.value = data?.docs[data.docs.length - 1] || null
+    if (index === -1) {
+      console.error('Match not found')
+      return
+    }
 
-      if (!lastMessageLoaded.value)
+    const currentMatchInfo = matchedUsersInfo.value[index]
+
+    if (currentMatchInfo.lastMessageLoaded) {
+      const data = await fetchDocumentsByQuery(getNextMessageQuery(messagesCollection, currentMatchInfo.lastMessageLoaded))
+
+      currentMatchInfo.lastMessageLoaded = data?.docs[data.docs.length - 1] || null
+
+      if (!currentMatchInfo.lastMessageLoaded)
         return null
 
-      messages.value.unshift(...data?.docs.map(mapMessageModel).reverse() || [])
+      currentMatchInfo.messages.unshift(...data?.docs.map(mapMessageModel).reverse() || [])
+
+      matchedUsersInfo.value[index] = currentMatchInfo
+
       return data
     }
   }
@@ -112,18 +166,36 @@ export const useMessageStore = defineStore('message', () => {
     chatRoom.value = newChatRoom
   }
 
-  const createChatRoom = async (userRef1: DocumentReference, userRef2: DocumentReference) => {
+  const createChatRoom = async (loggedUserRef: DocumentReference, anotherUserRef: DocumentReference) => {
     sharedStore.init()
 
     const chatRoomData = new ChatRoomModel({
-      usersIds: [userRef1.id, userRef2.id],
-      usersRefs: [userRef1, userRef2],
+      usersIds: [loggedUserRef.id, anotherUserRef.id],
+      usersRefs: [loggedUserRef, anotherUserRef],
     }, null)
 
-    const docRef = await addDoc(chatRoomsCollection, chatRoomData.toMap())
+    const newChatRoomRef = await addDoc(chatRoomsCollection, chatRoomData.toMap())
 
-    chatRoom.value = new ChatRoomModel(chatRoomData, docRef)
+    const anotherUser = await fetchDocumentByRef(newChatRoomRef)
+
+    if (!anotherUser || !anotherUser.exists()) {
+      console.error('Another user is not defined')
+      return
+    }
+
+    chatRoom.value = new ChatRoomModel(chatRoomData, newChatRoomRef)
     chatRooms.value.push(chatRoom.value)
+    matchedUsersInfo.value.push({
+      chatRoom: chatRoom.value,
+      user: mapUser(anotherUser),
+      lastMessage: null,
+      lastMessageLoaded: null,
+      lastMessageDate: null,
+      isLastMessageToAnotherUser: false,
+      unreadMessages: 0,
+      messages: [],
+    })
+    await fetchMessages(newChatRoomRef)
   }
 
   const sendMessage = async (message: MessageModel) => {
@@ -210,9 +282,11 @@ export const useMessageStore = defineStore('message', () => {
           chatRoom: null,
           user: mapUser(userResult),
           lastMessage: null,
+          lastMessageLoaded: null,
           lastMessageDate: null,
-          toAnotherUser: false,
+          isLastMessageToAnotherUser: false,
           unreadMessages: 0,
+          messages: [],
         })
       }
       else {
@@ -221,9 +295,11 @@ export const useMessageStore = defineStore('message', () => {
           chatRoom: filteredResult[0],
           user: mapUser(userResult),
           lastMessage: null,
+          lastMessageLoaded: null,
           lastMessageDate: null,
-          toAnotherUser: false,
+          isLastMessageToAnotherUser: false,
           unreadMessages: 0,
+          messages: [],
         })
       }
     }
@@ -232,12 +308,14 @@ export const useMessageStore = defineStore('message', () => {
   }
 
   return {
-    messages,
+    // messages,
     chatRoom,
     chatRooms,
     matchedUsersInfo,
+    unsubscribesArr,
     createChatRoom,
     setCurrentChatRoom,
+    fetchMessagesForAllChatRooms,
     fetchMessages,
     fetchNextMessages,
     getChatRoom,

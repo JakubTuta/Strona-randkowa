@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { DocumentReference } from 'firebase/firestore'
 import { Timestamp } from 'firebase/firestore'
 import EmojiPicker from 'vue3-emoji-picker'
 import MatchedProfileCard from '~/components/user/chat/matchedProfileCard.vue'
@@ -15,7 +16,7 @@ const { userMatches, userData } = storeToRefs(appStore)
 
 const messageStore = useMessageStore()
 
-const { messages, matchedUsersInfo, chatRoom, chatRooms } = storeToRefs(messageStore)
+const { matchedUsersInfo, chatRoom, chatRooms } = storeToRefs(messageStore)
 
 const isEmojiPickerVisible = ref(false)
 const message = ref('')
@@ -33,13 +34,17 @@ watch(userData, async (newValue) => {
     }
   }
 
-  if (chatRoom.value?.reference)
-    await messageStore.fetchMessages(chatRoom.value.reference)
+  if (matchedUsersInfo.value.length) {
+    const chatRoomRefs: DocumentReference[] = matchedUsersInfo.value
+      .map(info => info.chatRoom?.reference)
+      .filter(ref => ref !== undefined) as DocumentReference[]
+
+    await messageStore.fetchMessagesForAllChatRooms(chatRoomRefs)
+  }
 })
 
 watch(chatRooms, async (newValue, oldValue) => {
   if ((newValue.length > oldValue.length) && userData.value?.reference) {
-    // TODO do zmiany to czyszczenie?
     matchedUsersInfo.value = []
     await messageStore.getMatchedUsersInfo(userData.value.reference, userData.value?.matches)
   }
@@ -55,8 +60,13 @@ onMounted(async () => {
     messageStore.setCurrentChatRoom(matchedUsersInfo.value[0].chatRoom)
   }
 
-  if (chatRoom.value?.reference)
-    await messageStore.fetchMessages(chatRoom.value.reference)
+  if (matchedUsersInfo.value.length) {
+    const chatRoomRefs: DocumentReference[] = matchedUsersInfo.value
+      .map(info => info.chatRoom?.reference)
+      .filter(ref => ref !== undefined) as DocumentReference[]
+
+    await messageStore.fetchMessagesForAllChatRooms(chatRoomRefs)
+  }
 })
 
 onUnmounted(() => {
@@ -109,11 +119,13 @@ function updateMatchInfo() {
   })
 }
 
-watch(pickedUser, async () => {
-  // TODO do zmiany to czyszczenie?
-  messages.value = []
-  if (chatRoom.value?.reference)
-    await messageStore.fetchMessages(chatRoom.value.reference)
+// watch(pickedUser, async () => {
+//   if (chatRoom.value?.reference)
+//     await messageStore.fetchMessages(chatRoom.value.reference)
+// })
+
+const currentChatRoomMessages = computed(() => {
+  return matchedUsersInfo.value.find(info => info.chatRoom?.reference === chatRoom.value?.reference)?.messages || []
 })
 
 async function sendMessage() {
@@ -159,7 +171,7 @@ async function sendMessage() {
       </v-virtual-scroll>
     </v-col>
     <v-col cols="9">
-      <UserChatWindow :picked-user="pickedUser" :messages="messages" />
+      <UserChatWindow :picked-user="pickedUser" :messages="currentChatRoomMessages" />
       <div id="wrapper" ref="wrapper">
         <EmojiPicker
           v-if="isEmojiPickerVisible"
