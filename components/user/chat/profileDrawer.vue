@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useDisplay, useTheme } from 'vuetify'
+import deleteModal from './deleteModal.vue'
 import type { UserModel } from '~/models/user'
 import type { THobby } from '~/types/hobby'
 
@@ -117,6 +118,18 @@ async function addRating() {
   changeRateFlag()
   rating.value = 0
 }
+
+const deleteModalFlag = ref<boolean>(false)
+
+function changeDeleteModalFlag() {
+  deleteModalFlag.value = !deleteModalFlag.value
+}
+
+async function deleteUserFromMatches() {
+  console.log(userData.value.reference)
+  console.log(pickedUser.value?.reference)
+  // await appStore.deleteMatch(userData.value?.reference, pickedUser.value?.reference)
+}
 </script>
 
 <template>
@@ -153,7 +166,7 @@ async function addRating() {
               density="comfortable"
               icon="mdi-star"
               color=""
-              size="large" class="mt-4 mr-6"
+              size="large" class="mr-1"
               @click="changeRateFlag"
             />
           </template>
@@ -169,7 +182,8 @@ async function addRating() {
               density="comfortable"
               icon="mdi-delete-outline"
               color=""
-              size="large" class="mt-4 mr-6"
+              size="large" class="mr-1 ml-1"
+              @click="changeDeleteModalFlag"
             />
           </template>
         </v-tooltip>
@@ -184,7 +198,7 @@ async function addRating() {
               density="comfortable"
               icon="mdi-lock"
               color=""
-              size="large" class="mt-4 mr-6"
+              size="large" class="ml-1"
             />
           </template>
         </v-tooltip>
@@ -279,5 +293,7 @@ async function addRating() {
         </v-col>
       </div>
     </v-row>
+
+    <delete-modal :is-show="deleteModalFlag" @on-delete="deleteUserFromMatches" @on-close="changeDeleteModalFlag" />
   </v-navigation-drawer>
 </template>

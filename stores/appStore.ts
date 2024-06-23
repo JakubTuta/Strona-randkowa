@@ -287,6 +287,24 @@ export const useAppStore = defineStore('app', () => {
     updateDoc(userData.value.reference, userData.value.toMap())
   }
 
+  const deleteMatch = async (currentUser: DocumentReference, userToDelete: DocumentReference) => {
+    const docRef = doc(usersCollection, currentUser.id)
+    try {
+      const docSnapshot = await getDoc(docRef)
+      const data = docSnapshot.data()
+      if (data !== undefined) {
+        const arrayField = data[userToDelete.id]
+        const updatedArray = arrayField.filter(item => item.id !== userToDelete.id)
+        await updateDoc(docRef, {
+          score: updatedArray,
+        })
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
   return {
     user,
     userData,
@@ -306,5 +324,6 @@ export const useAppStore = defineStore('app', () => {
     getPhotoPath,
     editMainPhoto,
     setLanguage,
+    deleteMatch,
   }
 })
