@@ -115,6 +115,13 @@ export const useMessageStore = defineStore('message', () => {
         }
       }
 
+      if (matchedUsersInfo.value[currentChatRoomIndex].chatRoom?.reference?.id === chatRoom.value?.reference?.id
+        && lastMessage.toUser.id === loggedUserId
+        && lastMessage?.reference
+      ) {
+        updateLastReadMessage(chatRoomRef, lastMessage.reference)
+      }
+
       sharedStore.success()
     }
 
@@ -133,7 +140,7 @@ export const useMessageStore = defineStore('message', () => {
         break
       case 'lg':
       case 'xl':
-        maxChars = 40
+        maxChars = 30
         break
       default:
         maxChars = 20
