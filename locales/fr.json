@@ -24,7 +24,7 @@
     "big": "Grand"
   },
   "emailVerification": {
-    "title": "Vérification de l'e-mail",
+    "title": "Vérification d'e-mail",
     "content": "Vérifiez votre adresse e-mail.",
     "sendAgain": "Renvoyer",
     "signOut": "Déconnexion"
@@ -51,10 +51,10 @@
   },
   "landing": {
     "start": "Bienvenue sur le site de rencontres",
-    "slogan": "Une application conçue spécifiquement pour être supprimée. Intrigué ?",
+    "slogan": "Un programme conçue spécifiquement pour être supprimée. Intrigué ?",
     "startNow": "Commencer maintenant",
     "howItWorks": "Découvrez comment ça fonctionne",
-    "howItWorksTutorial": "Nous avons préparé une brève description de notre application spécialement pour vous.",
+    "howItWorksTutorial": "Nous avons préparé une brève description de notre programme spécialement pour vous.",
     "goSee": "Voir",
     "eventsAndRelationships": "Rencontrez des gens et participez à des événements",
     "eventsButton": "Voir les événements",
@@ -64,12 +64,12 @@
     "seeWhatGoingOn": "Découvrez comment ça fonctionne",
     "shortDescription": "Vous vous demandez à quoi sert cette application ? Rencontres ? Événements ? Se faire des amis ? Exactement !",
     "events": "Section Événements",
-    "eventsDescription": "Vous ne savez pas quoi faire ce week-end ? Pas d'idée de sortie avec des amis ? Consultez la section Événements. Chaque utilisateur connecté peut ajouter son événement, qui sera affiché sur la page d'accueil pour que vous puissiez y participer.",
+    "eventsDescription": "Vous ne savez pas quoi vous ferez-vous ce week-end ? Aucune idée de sortie avec des amis ? Consultez la section Événements. Chaque utilisateur connecté peut ajouter son événement, qui sera affiché sur votre page d'accueil pour que vous puissiez y participer.",
     "goToEvents": "Voir les événements",
     "relationships": "Rencontrez des gens",
-    "relationshipsDescription": "Vous n'avez personne avec qui étudier ? Vous voulez rencontrer quelqu'un ? Vous n'avez personne pour aller au cinéma ? Cette application est faite pour vous ! Vous pouvez rencontrer d'autres étudiants avec qui vous pouvez parcourir l'université.",
+    "relationshipsDescription": "Vous n'avez personne avec qui vous pouvez étudier ? Voulez-vous rencontrer quelqu'un ? Vous n'avez personne pour aller au cinéma ? Cette programme est faite pour vous ! Vous pouvez rencontrer des autres étudiants avec lesquels vous pouvez terminer l'université.",
     "chats": "Discutez avec des gens",
-    "chatsDescription": "Communication rapide et agréable avec des personnes nouvellement rencontrées. Vous voulez apprendre à les connaître ? Envoyez-leur un message maintenant !",
+    "chatsDescription": "Communication rapide et agréable avec des personnes nouvellement rencontrées. Voulez-vous apprendre à les connaître ? Envoyez-leur un message maintenant !",
     "whatsNext": "Et maintenant ?",
     "whatsNextDescription": "Commençons !"
   },
@@ -93,7 +93,7 @@
   "universal": {
     "emailExists": "L'e-mail existe déjà",
     "saved": "Enregistré",
-    "passwordsNotMatch": "Les mots de passe ne correspondent pas",
+    "passwordsNotMatch": "Les mots de passe ne sont pas même",
     "form": {
       "close": "Fermer",
       "save": "Enregistrer"
@@ -109,11 +109,11 @@
     "password": "Mot de passe",
     "repeatPassword": "Répéter le mot de passe",
     "giveBirthDate": "Entrez votre date de naissance",
-    "sex": "Genre",
+    "sex": "Sexe",
     "faculty": "Faculté",
     "fieldOfStudy": "Domaine d'études",
-    "preferredGender": "Genre souhaité pour une relation",
-    "lookingFor": "Actuellement, je recherche une relation :",
+    "preferredGender": "Sexe préféré pour une relation",
+    "lookingFor": "Maintenant je recherche une relation :",
     "name": "Prénom",
     "surname": "Nom de famille",
     "acceptPolicy": "J'accepte les règlements",
@@ -126,7 +126,7 @@
     "prevStep": "Étape précédente"
   },
   "authErrors": {
-    "invalidEmailOrPassword": "E-mail ou mot de passe invalide",
+    "invalidEmailOrPassword": "E-mail ou mot de passe incorrect",
     "unknown": "Erreur inconnue"
   },
   "user": {
@@ -150,17 +150,17 @@
   },
   "profile": {
     "firstName": "Prénom",
-    "lastName": "Nom de famille",
+    "lastName": "Nom",
     "description": "Description",
     "dateBirth": "Date de naissance",
-    "gender": "Genre",
+    "gender": "Sexe",
     "faculty": "Faculté",
     "fieldOfStudy": "Domaine d'études",
     "index": "Numéro d'index",
-    "preferredGender": "Genre préféré",
-    "lookingFor": "Recherche",
-    "hobbies": "Centres d'intérêt",
-    "yourPreferences": "Vos préférences et centres d'intérêt",
+    "preferredGender": "Sexe préféré",
+    "lookingFor": "Recherche pour",
+    "hobbies": "Intérêts et passe-temps",
+    "yourPreferences": "Vos préférences et intérêts",
     "editProfile": "Modifier les données",
     "editPreferences": "Modifier les préférences",
     "nothingToShow": "Rien à afficher",
@@ -179,7 +179,7 @@
   "uploadImage": {
     "image": "Photo",
     "removeImage": "Supprimer la photo",
-    "uploadImage": "Télécharger une photo"
+    "uploadImage": "Ajouter une photo"
   },
   "matchingView": {
     "discard": "Ignorer",
@@ -187,7 +187,7 @@
     "endTitle": "C'est tout !",
     "endMessage": "Maintenant, vous pouvez envoyer un message à l'une de vos correspondances !",
     "yourMatches": "Vos correspondances :",
-    "noMatches": "En fait, vous n'avez aucune correspondance :(",
+    "noMatches": "Vous n'avez aucune correspondance maintenant :(",
     "matchSnackbar": "Nouvelle correspondance !"
   }
 }
