@@ -291,12 +291,15 @@ export const useAppStore = defineStore('app', () => {
     const docRef = doc(usersCollection, currentUser.id)
     try {
       const docSnapshot = await getDoc(docRef)
-      const data = docSnapshot.data()
+      const data = docSnapshot.data() as IUser
+
       if (data !== undefined) {
-        const arrayField = data[userToDelete.id]
-        const updatedArray = arrayField.filter(item => item.id !== userToDelete.id)
+        const currentMatchesArray = data.matches
+        console.log(currentMatchesArray)
+        const updatedMatchesArray = currentMatchesArray.filter(item => item.id !== userToDelete.id)
+        console.log(updatedMatchesArray)
         await updateDoc(docRef, {
-          score: updatedArray,
+          matches: updatedMatchesArray,
         })
       }
     }

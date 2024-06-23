@@ -126,9 +126,9 @@ function changeDeleteModalFlag() {
 }
 
 async function deleteUserFromMatches() {
-  console.log(userData.value.reference)
+  console.log(userData.value?.reference)
   console.log(pickedUser.value?.reference)
-  // await appStore.deleteMatch(userData.value?.reference, pickedUser.value?.reference)
+  await appStore.deleteMatch(userData.value?.reference, pickedUser.value?.reference)
 }
 </script>
 
