@@ -26,18 +26,18 @@ const { isShow } = toRefs(props)
   <v-dialog v-model="isShow" max-width="500px">
     <v-card>
       <v-card-title class="headline">
-        Potwierdzenie usunięcia użytkownika z par
+        {{ $t("chatView.deleteTitle") }}
       </v-card-title>
       <v-card-text>
-        Czy na pewno chcesz usunąć użytkownika z pary? Operacja jest nieodwracalna.
+        {{ $t("chatView.deleteText") }}
       </v-card-text>
       <v-card-actions>
         <v-spacer />
         <v-btn color="secondary" @click="close()">
-          Anuluj
+          {{ $t("chatView.cancel") }}
         </v-btn>
         <v-btn color="primary" @click="confirmDelete">
-          Usuń
+          {{ $t("chatView.confirm") }}
         </v-btn>
       </v-card-actions>
     </v-card>

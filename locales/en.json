@@ -186,7 +186,13 @@
     "block": "Block user",
     "loadMore": "Load more",
     "noMore": "No more messages",
-    "sayHello": "Say hello"
+    "sayHello": "Say hello",
+    "blockTitle": "User Block Confirmation",
+    "blockText": "Are you sure you want to block the user from the pair? The user will no longer be displayed in all parts of the application.",
+    "deleteTitle": "Pair Deletion Confirmation",
+    "deleteText": "Are you sure you want to remove the user from the pair? This operation is irreversible.",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   },
   "weekDays": {
     "Monday": "mon",

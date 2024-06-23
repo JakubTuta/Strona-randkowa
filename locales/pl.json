@@ -186,7 +186,13 @@
     "block": "Zablokuj użytkownika",
     "noMore": "Brak większej ilości wiadomości",
     "loadMore": "Załaduj więcej",
-    "sayHello": "Przywitaj się"
+    "sayHello": "Przywitaj się",
+    "blockTitle": "Potwierdzenie zablokowania użytkownika",
+    "blockText": "Czy na pewno chcesz zablokować użytkownika z pary? Użytkownik przestanie ci się wyświetlać we wszystkich miejscach aplikacji.",
+    "deleteTitle": "Potwierdzenie usunięcia pary",
+    "deleteText": "Czy na pewno chcesz usunąć użytkownika z pary? Operacja jest nieodwracalna.",
+    "cancel": "Anuluj",
+    "confirm": "Potwierdź"
   },
   "weekDays": {
     "Monday": "pon",

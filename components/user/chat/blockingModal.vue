@@ -23,18 +23,18 @@ const { isShow } = toRefs(props)
   <v-dialog v-model="isShow" max-width="500px">
     <v-card>
       <v-card-title class="headline">
-        Potwierdzenie zablokowania użytkownika
+        {{ $t("chatView.blockTitle") }}
       </v-card-title>
       <v-card-text>
-        Czy na pewno chcesz zablokować użytkownika z pary? Użytkownik przestanie ci się wyświetlać we wszystkich miejscach aplikacji.
+        {{ $t("chatView.blockText") }}
       </v-card-text>
       <v-card-actions>
         <v-spacer />
         <v-btn color="secondary" @click="close()">
-          Anuluj
+          {{ $t("chatView.cancel") }}
         </v-btn>
         <v-btn color="primary" @click="confirmBlock">
-          Zablokuj
+          {{ $t("chatView.confirm") }}
         </v-btn>
       </v-card-actions>
     </v-card>
