@@ -74,6 +74,13 @@ const userDetails = computed(() => {
     }
   }
 })
+
+const rateFlag = ref<boolean>(false)
+const rating = ref<number>()
+
+function changeRateFlag() {
+  rateFlag.value = !rateFlag.value
+}
 </script>
 
 <template>
@@ -111,6 +118,7 @@ const userDetails = computed(() => {
               icon="mdi-star"
               color=""
               size="large" class="mt-4 mr-6"
+              @click="changeRateFlag"
             />
           </template>
         </v-tooltip>
@@ -147,8 +155,25 @@ const userDetails = computed(() => {
       </v-col>
     </v-row>
 
+    <v-row v-if="rateFlag" justify="center" class="align-center">
+      <div class="text-h4 my-2 d-flex align-center">
+        <v-rating
+          v-model="rating"
+          class="ma-2"
+          density="compact"
+        />
+        <v-btn
+          density="comfortable"
+          icon="mdi-check"
+          color="primary"
+          size="small"
+          class="ml-2"
+        />
+      </div>
+    </v-row>
+
     <v-row>
-      <v-col cols="12" align="center">
+      <v-col class="text-h6" cols="12" align="center">
         {{ pickedUser?.description }}
       </v-col>
     </v-row>
