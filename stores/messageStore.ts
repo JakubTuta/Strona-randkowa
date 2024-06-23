@@ -1,3 +1,4 @@
+import { max } from 'date-fns'
 import { update } from 'firebase/database'
 import { type CollectionReference, type DocumentReference, type QueryDocumentSnapshot, type QuerySnapshot, type Timestamp, type Unsubscribe, addDoc, limit, onSnapshot, orderBy, query, startAfter, updateDoc, where } from 'firebase/firestore'
 
@@ -91,7 +92,7 @@ export const useMessageStore = defineStore('message', () => {
       matchedUsersInfo.value.map((match) => {
         if (match.chatRoom?.usersIds.includes(anotherUserId) && match.chatRoom?.usersIds.includes(loggedUserId)) {
           match.messages = messages
-          match.lastMessage = lastMessage.text.length > 33 ? `${lastMessage.text.substring(0, 33)}...` : lastMessage.text
+          match.lastMessage = lastMessage.text.length > 30 ? `${lastMessage.text.substring(0, 30)}...` : lastMessage.text
           match.lastMessageDate = lastMessage.date
           match.lastMessageLoaded = lastMessageLoaded
           match.isLastMessageToAnotherUser = lastMessage.fromUser.id === loggedUserId
@@ -122,6 +123,27 @@ export const useMessageStore = defineStore('message', () => {
     }
 
     unsubscribesArr.value.push(onSnapshot(getMessagesQuery(messagesCollection), onSuccess, onError))
+  }
+
+  const trimLastMessages = (breakpoint: string) => {
+    let maxChars = 0
+    switch (breakpoint) {
+      case 'md':
+        maxChars = 20
+        break
+      case 'lg':
+      case 'xl':
+        maxChars = 40
+        break
+      default:
+        maxChars = 20
+    }
+
+    matchedUsersInfo.value.map((match) => {
+      if (match.lastMessage && match.lastMessage.length > maxChars)
+        match.lastMessage = `${match.lastMessage.substring(0, maxChars)}...`
+      return match
+    })
   }
 
   const fetchMessagesForAllChatRooms = async (chatRoomRefs: DocumentReference[]) => {
@@ -387,6 +409,7 @@ export const useMessageStore = defineStore('message', () => {
     fetchMessages,
     fetchNextMessages,
     getChatRoom,
+    trimLastMessages,
     getMatchedUsersInfo,
     sendMessage,
     reset,

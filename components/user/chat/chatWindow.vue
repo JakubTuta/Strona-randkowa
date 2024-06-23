@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useTheme } from 'vuetify'
+import { useDisplay, useTheme } from 'vuetify'
 import type { ChatRoomModel } from '~/models/chatRoom'
 import type { MessageModel } from '~/models/message'
 import type { UserModel } from '~/models/user'
@@ -19,6 +19,8 @@ const sharedStore = useSharedStore()
 const { loading } = storeToRefs(sharedStore)
 
 const { pickedUser, messages } = toRefs(props)
+
+const { name } = useDisplay()
 
 const vTheme = useTheme()
 
@@ -41,6 +43,38 @@ async function load({ done }: { done: Function }) {
     }
   }, 100)
 }
+
+function getMessageClass(message: MessageModel) {
+  let maxChars = 0
+  switch (name.value) {
+    case 'xs':
+      maxChars = 10
+      break
+    case 'sm':
+      maxChars = 30
+      break
+    case 'md':
+      maxChars = 40
+      break
+    case 'lg':
+      maxChars = 50
+      break
+    case 'xl':
+      maxChars = 70
+      break
+    case 'xxl':
+      maxChars = 120
+      break
+    default:
+      maxChars = 20
+  }
+
+  const display = message.text.length > maxChars ? 'd-block' : 'd-inline-block'
+
+  return isFromCurrentUser(message)
+    ? `bg-secondary pa-4 mr-2 mr-0 mr-md-8 text-left ${display}`
+    : `bg-primary pa-4 ${display}`
+}
 </script>
 
 <template>
@@ -60,7 +94,7 @@ async function load({ done }: { done: Function }) {
 
     <v-spacer />
 
-    <v-col cols="1">
+    <v-col cols="3" align="right">
       <v-menu>
         <template #activator="{ props }">
           <v-btn icon="mdi-dots-vertical" v-bind="props" color="" />
@@ -107,7 +141,7 @@ async function load({ done }: { done: Function }) {
             </v-avatar>
             <v-col :cols="isFromCurrentUser(message) ? 6 : 5" :align="isFromCurrentUser(message) ? 'right' : 'left'">
               <v-card
-                :class="isFromCurrentUser(message) ? 'bg-secondary pa-4 mr-2 d-inline-block mr-8 text-left' : 'bg-primary pa-4 d-inline-block'"
+                :class="getMessageClass(message)"
               >
                 {{ message.text }}
               </v-card>
@@ -125,3 +159,9 @@ async function load({ done }: { done: Function }) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.inline-block {
+  display: inline-block;
+}
+</style>

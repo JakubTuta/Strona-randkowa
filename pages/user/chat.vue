@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useDisplay } from 'vuetify'
 import type { DocumentReference } from 'firebase/firestore'
 import { Timestamp } from 'firebase/firestore'
 import EmojiPicker from 'vue3-emoji-picker'
@@ -22,6 +23,7 @@ const isEmojiPickerVisible = ref(false)
 const message = ref('')
 const wrapper: Ref<HTMLDivElement | null> = ref(null)
 const pickedUser: Ref<UserModel | null> = ref(null)
+const { name, xs } = useDisplay()
 
 watch(userData, async (newValue) => {
   if (newValue) {
@@ -40,9 +42,13 @@ watch(userData, async (newValue) => {
       .filter(ref => ref !== undefined) as DocumentReference[]
 
     await messageStore.fetchMessagesForAllChatRooms(chatRoomRefs)
+    messageStore.trimLastMessages(name.value)
   }
 })
 
+watch(name, () => {
+  messageStore.trimLastMessages(name.value)
+})
 // watch(chatRooms, async (newValue, oldValue) => {
 //   if ((newValue.length > oldValue.length) && userData.value?.reference) {
 //     matchedUsersInfo.value = []
@@ -66,6 +72,7 @@ onMounted(async () => {
       .filter(ref => ref !== undefined) as DocumentReference[]
 
     await messageStore.fetchMessagesForAllChatRooms(chatRoomRefs)
+    messageStore.trimLastMessages(name.value)
   }
 })
 
@@ -142,8 +149,27 @@ async function sendMessage() {
 </script>
 
 <template>
+  <v-row v-if="xs">
+    <v-col cols="12">
+      <v-infinite-scroll
+        direction="horizontal"
+        mode="manual"
+      >
+        <template v-for="(item, index) in sortedByDateUserMatchesInfo" :key="item">
+          <MatchedProfileCard :matched-user-info="item" @click="async () => await setNewChatRoom(index)" />
+        </template>
+
+        <template #load-more>
+          <v-btn v-if="false">
+            Empty
+          </v-btn>
+        </template>
+      </v-infinite-scroll>
+    </v-col>
+  </v-row>
+
   <v-row class="h-100 mb-8 px-4">
-    <v-col cols="3">
+    <v-col v-if="!xs" cols="2" lg="3">
       <v-virtual-scroll
         height="100%"
         :items="sortedByDateUserMatchesInfo"
@@ -153,7 +179,7 @@ async function sendMessage() {
         </template>
       </v-virtual-scroll>
     </v-col>
-    <v-col cols="9">
+    <v-col cols="12" sm="10" lg="9">
       <UserChatWindow :picked-user="pickedUser" :messages="currentChatRoomMessages" />
       <div id="wrapper" ref="wrapper">
         <EmojiPicker
