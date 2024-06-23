@@ -320,6 +320,7 @@ export const useAppStore = defineStore('app', () => {
         await updateDoc(docRef, {
           blockedProfiles: currentBlockedArray,
         })
+        await deleteMatch(currentUser, userToBlock)
       }
     }
     catch (e) {
