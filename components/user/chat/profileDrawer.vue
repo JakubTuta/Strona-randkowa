@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useDisplay, useTheme } from 'vuetify'
 import type { UserModel } from '~/models/user'
+import type { THobby } from '~/types/hobby'
 
 const drawerProps = defineProps<{
   pickedUser: UserModel | null
@@ -9,6 +10,7 @@ const drawerProps = defineProps<{
 const vTheme = useTheme()
 const { name } = useDisplay()
 const drawer = defineModel({ default: false })
+const { t } = useI18n()
 
 const { pickedUser } = toRefs(drawerProps)
 
@@ -43,6 +45,35 @@ const drawerWidth = computed(() => {
       return 600
   }
 })
+
+function setDateString(date: Date) {
+  return date.toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric' })
+}
+
+const userDetails = computed(() => {
+  if (pickedUser.value) {
+    return {
+      birthDate: setDateString(pickedUser.value.dateBirth),
+      gender: pickedUser.value.gender,
+      faculty: pickedUser.value.faculty,
+      fieldOfStudy: pickedUser.value.fieldOfStudy,
+      preferredGender: pickedUser.value.preferredGender,
+      lookingFor: pickedUser.value.lookingFor,
+      hobbies: pickedUser.value.hobbies,
+    }
+  }
+  else {
+    return {
+      birthDate: '',
+      gender: '',
+      faculty: '',
+      fieldOfStudy: '',
+      preferredGender: '',
+      lookingFor: '',
+      hobbies: [],
+    }
+  }
+})
 </script>
 
 <template>
@@ -63,7 +94,7 @@ const drawerWidth = computed(() => {
 
     <v-row>
       <v-col cols="12" align="center" class="text-h3">
-        {{ pickedUser?.firstName }} {{ pickedUser?.lastName }} {{ userAge }}
+        {{ pickedUser?.firstName }} {{ pickedUser?.lastName }}, {{ userAge }}
       </v-col>
     </v-row>
 
@@ -119,6 +150,51 @@ const drawerWidth = computed(() => {
     <v-row>
       <v-col cols="12" align="center">
         {{ pickedUser?.description }}
+      </v-col>
+    </v-row>
+
+    <v-row>
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field v-model="userDetails.birthDate" :label="t('profile.dateBirth')" readonly />
+      </v-col>
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field v-model="userDetails.gender" :value="t(`user.sex.${userDetails.gender}`)" :label="t('profile.gender')" readonly />
+      </v-col>
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field v-model="userDetails.faculty" :label="t('profile.faculty')" readonly />
+      </v-col>
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field
+          v-model="userDetails.fieldOfStudy" :value="t(`fieldsOfStudies.${userDetails.fieldOfStudy}`)" :label="t('profile.fieldOfStudy')"
+          readonly
+        />
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field
+          v-model="userDetails.lookingFor" :value="t(`user.preferredRelationship.${userDetails.lookingFor}`)"
+          :label="t('profile.lookingFor')" readonly
+        />
+      </v-col>
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field
+          v-model="userDetails.preferredGender" :value="t(`user.sex.${userDetails.preferredGender}`)"
+          :label="t('profile.preferredGender')" readonly
+        />
+      </v-col>
+      <v-col cols="12" md="12" sm="12" class="d-flex justify-center">
+        <v-chip-group v-if="userDetails.hobbies">
+          <v-chip v-for="element in userDetails.hobbies" :key="element" size="large" draggable>
+            {{ t(`user.hobbies.${element}`) }}
+          </v-chip>
+        </v-chip-group>
+        <v-chip-group v-else>
+          <v-chip size="large" class="outlined">
+            {{ t("profile.nothingToShow") }}
+          </v-chip>
+        </v-chip-group>
       </v-col>
     </v-row>
   </v-navigation-drawer>
