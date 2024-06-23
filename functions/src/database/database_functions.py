@@ -167,7 +167,7 @@ def get_filtered_users(
 def has_reference_scored(
     scored_profile: UserModel, who_scored: firestore.DocumentReference
 ):
-    scoring_profiles_ids = map(lambda score: score.user.id, scored_profile.score)
+    scoring_profiles_ids = map(lambda score: score["user"].id, scored_profile.score)
 
     has_user_scored = who_scored.id in scoring_profiles_ids
 
