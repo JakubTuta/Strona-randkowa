@@ -6,6 +6,10 @@ import type { THobby } from '~/types/hobby'
 const drawerProps = defineProps<{
   pickedUser: UserModel | null
 }>()
+const appStore = useAppStore()
+const { userData } = storeToRefs(appStore)
+
+const restStore = useRestStore()
 
 const vTheme = useTheme()
 const { name } = useDisplay()
@@ -60,6 +64,7 @@ const userDetails = computed(() => {
       preferredGender: pickedUser.value.preferredGender,
       lookingFor: pickedUser.value.lookingFor,
       hobbies: pickedUser.value.hobbies,
+      totalScore: countTotalRating(pickedUser.value.score),
     }
   }
   else {
@@ -71,15 +76,46 @@ const userDetails = computed(() => {
       preferredGender: '',
       lookingFor: '',
       hobbies: [],
+      totalScore: 0,
     }
   }
 })
+
+function countTotalRating(scores: any) {
+  if (scores.length) {
+    let sum = 0
+    const totalElements = scores.length
+
+    for (let i = 0; i < totalElements; i++) {
+      sum += scores[i].score
+    }
+
+    return sum / totalElements
+  }
+  else {
+    return 0
+  }
+}
 
 const rateFlag = ref<boolean>(false)
 const rating = ref<number>()
 
 function changeRateFlag() {
   rateFlag.value = !rateFlag.value
+}
+
+async function addRating() {
+  console.log(userData.value.reference)
+  console.log(pickedUser.value?.reference)
+  console.log(rating.value)
+  try {
+    await restStore.rateProfile(userData.value?.reference, pickedUser.value?.reference, rating.value)
+  }
+  catch (e) {
+    console.log(e)
+  }
+  changeRateFlag()
+  rating.value = 0
 }
 </script>
 
@@ -155,8 +191,8 @@ function changeRateFlag() {
       </v-col>
     </v-row>
 
-    <v-row v-if="rateFlag" justify="center" class="align-center">
-      <div class="text-h4 my-2 d-flex align-center">
+    <v-row justify="center">
+      <div v-if="rateFlag" class="d-flex align-center">
         <v-rating
           v-model="rating"
           class="ma-2"
@@ -168,6 +204,16 @@ function changeRateFlag() {
           color="primary"
           size="small"
           class="ml-2"
+          @click="addRating"
+        />
+      </div>
+      <div v-else>
+        <v-rating
+          v-if="!rateFlag"
+          v-model="userDetails.totalScore"
+          class="ma-2"
+          density="compact"
+          readonly
         />
       </div>
     </v-row>

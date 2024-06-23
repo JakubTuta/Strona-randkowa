@@ -89,9 +89,35 @@ export const useRestStore = defineStore('rest', () => {
     return false
   }
 
+  const rateProfile = async (whoRates: DocumentReference, ratedProfile: DocumentReference, rating: number) => {
+    if (!whoRates || !ratedProfile)
+      return
+    if (rating > 5.0 || rating < 1.0)
+      return
+
+    const requestData = {
+      whoScoredId: whoRates.id,
+      scoredProfileId: ratedProfile.id,
+      score: rating,
+    }
+
+    try {
+      const data = await getAxiosFirebase(whoRates)
+        .post('/add_score', requestData)
+
+      if (data.status === 200)
+        return
+    }
+    catch (error) {
+      console.error(error)
+    }
+    return false
+  }
+
   return {
     users,
     getTopUsers,
     checkMatches,
+    rateProfile,
   }
 })
