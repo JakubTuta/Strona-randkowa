@@ -295,11 +295,30 @@ export const useAppStore = defineStore('app', () => {
 
       if (data !== undefined) {
         const currentMatchesArray = data.matches
-        console.log(currentMatchesArray)
         const updatedMatchesArray = currentMatchesArray.filter(item => item.id !== userToDelete.id)
-        console.log(updatedMatchesArray)
         await updateDoc(docRef, {
           matches: updatedMatchesArray,
+        })
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  const blockProfile = async (currentUser: DocumentReference, userToBlock: DocumentReference) => {
+    const docRef = doc(usersCollection, currentUser.id)
+    try {
+      const docSnapshot = await getDoc(docRef)
+      const data = docSnapshot.data() as IUser
+
+      if (data !== undefined) {
+        const currentBlockedArray = data.blockedProfiles
+        console.log(currentBlockedArray)
+        currentBlockedArray.push(userToBlock)
+        console.log(currentBlockedArray)
+        await updateDoc(docRef, {
+          blockedProfiles: currentBlockedArray,
         })
       }
     }
@@ -328,5 +347,6 @@ export const useAppStore = defineStore('app', () => {
     editMainPhoto,
     setLanguage,
     deleteMatch,
+    blockProfile,
   }
 })

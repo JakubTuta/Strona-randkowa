@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useDisplay, useTheme } from 'vuetify'
 import deleteModal from './deleteModal.vue'
+import blockingModal from './blockingModal.vue'
 import type { UserModel } from '~/models/user'
 import type { THobby } from '~/types/hobby'
 
@@ -130,6 +131,18 @@ async function deleteUserFromMatches() {
   console.log(pickedUser.value?.reference)
   await appStore.deleteMatch(userData.value?.reference, pickedUser.value?.reference)
 }
+
+const blockModalFlag = ref<boolean>(false)
+
+function changeBlockModalFlag() {
+  blockModalFlag.value = !blockModalFlag.value
+}
+
+async function blockUser() {
+  console.log(userData.value?.reference)
+  console.log(pickedUser.value?.reference)
+  await appStore.blockProfile(userData.value?.reference, pickedUser.value?.reference)
+}
 </script>
 
 <template>
@@ -199,6 +212,7 @@ async function deleteUserFromMatches() {
               icon="mdi-lock"
               color=""
               size="large" class="ml-1"
+              @click="changeBlockModalFlag"
             />
           </template>
         </v-tooltip>
@@ -295,5 +309,6 @@ async function deleteUserFromMatches() {
     </v-row>
 
     <delete-modal :is-show="deleteModalFlag" @on-delete="deleteUserFromMatches" @on-close="changeDeleteModalFlag" />
+    <blocking-modal :is-show="blockModalFlag" @on-block="blockUser" @on-close="changeBlockModalFlag" />
   </v-navigation-drawer>
 </template>
