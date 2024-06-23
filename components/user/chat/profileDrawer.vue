@@ -197,5 +197,16 @@ const userDetails = computed(() => {
         </v-chip-group>
       </v-col>
     </v-row>
+
+    <v-row justify="center">
+      <div v-for="(photo, index) in pickedUser?.photos.slice(1)" :key="index" :value="photo">
+        <v-col>
+          <v-img
+            class="mx-auto my-5 elevation-5" rounded="xl" :width="150" :height="150" cover
+            :src="photo"
+          />
+        </v-col>
+      </div>
+    </v-row>
   </v-navigation-drawer>
 </template>
