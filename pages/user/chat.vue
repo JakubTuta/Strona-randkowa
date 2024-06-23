@@ -24,6 +24,7 @@ const message = ref('')
 const wrapper: Ref<HTMLDivElement | null> = ref(null)
 const pickedUser: Ref<UserModel | null> = ref(null)
 const { name, xs } = useDisplay()
+const profileDrawer = ref(false)
 
 watch(userData, async (newValue) => {
   if (newValue) {
@@ -168,6 +169,8 @@ async function sendMessage() {
     </v-col>
   </v-row>
 
+  <UserChatProfileDrawer v-model="profileDrawer" :picked-user="pickedUser" />
+
   <v-row class="h-100 mb-8 px-4">
     <v-col v-if="!xs" cols="2" lg="3">
       <v-virtual-scroll
@@ -180,7 +183,7 @@ async function sendMessage() {
       </v-virtual-scroll>
     </v-col>
     <v-col cols="12" sm="10" lg="9">
-      <UserChatWindow :picked-user="pickedUser" :messages="currentChatRoomMessages" />
+      <UserChatWindow v-model="profileDrawer" :picked-user="pickedUser" :messages="currentChatRoomMessages" />
       <div id="wrapper" ref="wrapper">
         <EmojiPicker
           v-if="isEmojiPickerVisible"

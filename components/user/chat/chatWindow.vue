@@ -9,6 +9,8 @@ const props = defineProps<{
   messages: MessageModel[]
 }>()
 
+const drawer = defineModel({ default: false })
+
 const appStore = useAppStore()
 const { userData } = storeToRefs(appStore)
 
@@ -95,18 +97,13 @@ function getMessageClass(message: MessageModel) {
     <v-spacer />
 
     <v-col cols="3" align="right">
-      <v-menu>
-        <template #activator="{ props }">
-          <v-btn icon="mdi-dots-vertical" v-bind="props" color="" />
-        </template>
-
-        <v-list class="justify-center">
-          <v-list-item prepend-icon="mdi-account" :title="$t('chatView.viewProfile')" />
-          <v-list-item prepend-icon="mdi-star" :title="$t('chatView.rate')" />
-          <v-list-item prepend-icon="mdi-delete-outline" :title="$t('chatView.remove')" />
-          <v-list-item prepend-icon="mdi-lock" :title="$t('chatView.block')" />
-        </v-list>
-      </v-menu>
+      <v-btn
+        density="comfortable"
+        icon="mdi-dots-vertical"
+        color=""
+        size="large" class="mt-4 mr-4"
+        @click="drawer = !drawer"
+      />
     </v-col>
   </v-row>
 
