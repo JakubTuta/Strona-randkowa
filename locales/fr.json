@@ -50,8 +50,8 @@
     }
   },
   "landing": {
-    "start": "Bienvenue sur le site de rencontres",
-    "slogan": "Un programme conçue spécifiquement pour être supprimée. Intrigué ?",
+    "start": "Bienvenue sur le Campus Connection+!",
+    "slogan": "Site Web spécifique pour les étudiants de TUL",
     "startNow": "Commencer maintenant",
     "howItWorks": "Découvrez comment ça fonctionne",
     "howItWorksTutorial": "Nous avons préparé une brève description de notre programme spécialement pour vous.",
@@ -62,7 +62,7 @@
   },
   "about": {
     "seeWhatGoingOn": "Découvrez comment ça fonctionne",
-    "shortDescription": "Vous vous demandez à quoi sert cette application ? Rencontres ? Événements ? Se faire des amis ? Exactement !",
+    "shortDescription": "Vous vous demandez à quoi sert cette application? Allez, on vous fait visiter!",
     "events": "Section Événements",
     "eventsDescription": "Vous ne savez pas quoi vous ferez-vous ce week-end ? Aucune idée de sortie avec des amis ? Consultez la section Événements. Chaque utilisateur connecté peut ajouter son événement, qui sera affiché sur votre page d'accueil pour que vous puissiez y participer.",
     "goToEvents": "Voir les événements",
