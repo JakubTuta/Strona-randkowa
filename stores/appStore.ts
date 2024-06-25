@@ -21,6 +21,8 @@ export const useAppStore = defineStore('app', () => {
   const sharedStore = useSharedStore()
   const uploadImageStore = useUploadImageStore()
 
+  const messageStore = useMessageStore()
+
   const user: Ref<User | null> = ref(null)
   const userData: Ref<UserModel | null> = ref(null)
 
@@ -33,6 +35,8 @@ export const useAppStore = defineStore('app', () => {
     await signoutFirebase(auth)
     user.value = null
     userData.value = null
+
+    messageStore.reset()
 
     sharedStore.success()
   }
@@ -249,6 +253,7 @@ export const useAppStore = defineStore('app', () => {
   }
 
   const fetchLikedProfiles = async (likedUserRefs: DocumentReference[]) => {
+    sharedStore.init()
     try {
       const likedUsers = []
       for (const ref of likedUserRefs) {
@@ -259,8 +264,10 @@ export const useAppStore = defineStore('app', () => {
         }
       }
       userMatches.value = likedUsers
+      sharedStore.success()
     }
     catch (error) {
+      sharedStore.failureSnackbar({ code: String(error) })
       console.error('Error fetching liked users:', error)
     }
   }
@@ -291,6 +298,47 @@ export const useAppStore = defineStore('app', () => {
     updateDoc(userData.value.reference, userData.value.toMap())
   }
 
+  const deleteMatch = async (currentUser: DocumentReference, userToDelete: DocumentReference) => {
+    const docRef = doc(usersCollection, currentUser.id)
+    try {
+      const docSnapshot = await getDoc(docRef)
+      const data = docSnapshot.data() as IUser
+
+      if (data !== undefined) {
+        const currentMatchesArray = data.matches
+        const updatedMatchesArray = currentMatchesArray.filter(item => item.id !== userToDelete.id)
+        await updateDoc(docRef, {
+          matches: updatedMatchesArray,
+        })
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
+  const blockProfile = async (currentUser: DocumentReference, userToBlock: DocumentReference) => {
+    const docRef = doc(usersCollection, currentUser.id)
+    try {
+      const docSnapshot = await getDoc(docRef)
+      const data = docSnapshot.data() as IUser
+
+      if (data !== undefined) {
+        const currentBlockedArray = data.blockedProfiles
+        console.log(currentBlockedArray)
+        currentBlockedArray.push(userToBlock)
+        console.log(currentBlockedArray)
+        await updateDoc(docRef, {
+          blockedProfiles: currentBlockedArray,
+        })
+        await deleteMatch(currentUser, userToBlock)
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
+  }
+
   return {
     user,
     userData,
@@ -310,5 +358,7 @@ export const useAppStore = defineStore('app', () => {
     getPhotoPath,
     editMainPhoto,
     setLanguage,
+    deleteMatch,
+    blockProfile,
   }
 })
