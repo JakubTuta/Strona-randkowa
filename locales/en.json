@@ -51,8 +51,8 @@
     }
   },
   "landing": {
-    "start": "Welcome to the dating site",
-    "slogan": "An app designed specifically to be deleted. Intrigued?",
+    "start": "Welcome to Campus Connection+!",
+    "slogan": "An app designed specifically for TUL's students",
     "startNow": "Start now",
     "howItWorks": "See how it works",
     "howItWorksTutorial": "We have prepared a short description of how our app works especially for you.",
@@ -63,7 +63,7 @@
   },
   "about": {
     "seeWhatGoingOn": "See how it works",
-    "shortDescription": "Wondering what this app is for? Dating? Events? Making friends? That's right!",
+    "shortDescription": "Wondering what this app is for? Come on, we'll show you around!",
     "events": "Events section",
     "eventsDescription": "Don't know what to do this weekend? No idea for going out with friends? Check out the events section. Every logged-in user can add their event and it will be displayed on your homepage for you to participate in.",
     "goToEvents": "See events",
