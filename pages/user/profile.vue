@@ -117,7 +117,7 @@ function setMainPhoto(url: string) {
 </script>
 
 <template>
-  <v-row justify="center" cols="12">
+  <v-row justify="center" cols="12" class="mx-2">
     <v-col cols="12" sm="10" md="6">
       <v-sheet
         class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-height="1200"
@@ -126,7 +126,7 @@ function setMainPhoto(url: string) {
         <v-col>
           <v-row justify="center">
             <v-col sm="12" md="12">
-              <div class="text-h4 my-2">
+              <div class="text-h5 my-2">
                 <v-icon left class="mr-2">
                   mdi-face-man-shimmer
                 </v-icon>
@@ -173,11 +173,11 @@ function setMainPhoto(url: string) {
     <v-col cols="12" sm="10" md="6">
       <v-sheet
         class="d-flex align-center flex-wrap text-center mx-auto my-10 px-4" elevation="4" max-width="1100"
-        max-height="1200" rounded
+        max-height="1300" height="782" rounded
       >
         <v-col cols="12" sm="12" md="12">
           <v-row>
-            <div class="mx-auto text-h4 flex-wrap my-2">
+            <div class="mx-auto text-h5 flex-wrap my-2">
               {{ `${userData?.firstName} ${userData?.lastName}, ${age}` }}
               <v-card-subtitle>
                 {{ index }}
@@ -187,34 +187,35 @@ function setMainPhoto(url: string) {
 
           <v-row>
             <v-col cols="12" md="12" sm="12">
-              <v-text-field v-model="description" :label="t('profile.description')" readonly />
+              <v-text-field v-model="description" density="compact" :label="t('profile.description')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="birthDate" :label="t('profile.dateBirth')" readonly />
+              <v-text-field v-model="birthDate" density="compact" :label="t('profile.dateBirth')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="gender" :value="t(`user.sex.${gender}`)" :label="t('profile.gender')" readonly />
+              <v-text-field v-model="gender" density="compact" :value="t(`user.sex.${gender}`)" :label="t('profile.gender')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
-              <v-text-field v-model="faculty" :label="t('profile.faculty')" readonly />
+              <v-text-field v-model="faculty" density="compact" :label="t('profile.faculty')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
               <v-text-field
-                v-model="fieldOfStudy" :value="t(`fieldsOfStudies.${fieldOfStudy}`)" :label="t('profile.fieldOfStudy')"
+                v-model="fieldOfStudy"
+                density="compact" :value="t(`fieldsOfStudies.${fieldOfStudy}`)" :label="t('profile.fieldOfStudy')"
                 readonly
               />
             </v-col>
           </v-row>
 
           <v-card-actions class="justify-end">
-            <v-btn @click="changeProfileEditFlag()">
+            <v-btn variant="elevated" append-icon="mdi-grease-pencil" @click="changeProfileEditFlag()">
               {{ t("profile.editProfile") }}
             </v-btn>
           </v-card-actions>
 
           <v-row>
             <v-col cols="12" md="12" sm="12">
-              <div class="mx-auto text-h4">
+              <div class="mx-auto text-h5">
                 {{ t("profile.yourPreferences") }}
               </div>
             </v-col>
@@ -223,13 +224,15 @@ function setMainPhoto(url: string) {
           <v-row justify="center">
             <v-col cols="12" md="6" sm="12">
               <v-text-field
-                v-model="lookingFor" :value="t(`user.preferredRelationship.${lookingFor}`)"
+                v-model="lookingFor"
+                density="compact" :value="t(`user.preferredRelationship.${lookingFor}`)"
                 :label="t('profile.lookingFor')" readonly
               />
             </v-col>
             <v-col cols="12" md="6" sm="12">
               <v-text-field
-                v-model="preferredGender" :value="t(`user.sex.${preferredGender}`)"
+                v-model="preferredGender"
+                density="compact" :value="t(`user.sex.${preferredGender}`)"
                 :label="t('profile.preferredGender')" readonly
               />
             </v-col>
@@ -248,7 +251,7 @@ function setMainPhoto(url: string) {
           </v-row>
 
           <v-card-actions class="justify-end">
-            <v-btn @click="changePreferencesEditFlag()">
+            <v-btn variant="elevated" append-icon="mdi-grease-pencil" @click="changePreferencesEditFlag()">
               {{ t("profile.editPreferences") }}
             </v-btn>
           </v-card-actions>
