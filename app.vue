@@ -32,7 +32,10 @@ onMounted(() => {
   else {
     setLocale((navigator.languages.includes('pl') || navigator.languages.includes('pl-PL'))
       ? locale.value = 'pl'
-      : locale.value = 'en')
+      : (navigator.languages.includes('fr') || navigator.languages.includes('fr-FR'))
+            ? locale.value = 'fr'
+            : locale.value = 'en'
+    )
   }
 
   if (currentTheme.value)

@@ -57,6 +57,10 @@ const languages = computed(() => (
       name: t('settings.english'),
       value: 'en',
     },
+    {
+      name: t('settings.french'),
+      value: 'fr',
+    },
   ]
 ))
 

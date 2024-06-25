@@ -1,0 +1,193 @@
+{
+  "appName": "Randki+",
+  "login": {
+    "login": "Connexion",
+    "e-mail": "Adresse e-mail",
+    "password": "Mot de passe",
+    "signUp": "Se connecter",
+    "doYouHaveAccount": "Vous n'avez pas encore de compte ?",
+    "register": "S'inscrire"
+  },
+  "settings": {
+    "themes": "Thème",
+    "language": "Langue",
+    "fontSize": "Taille de police",
+    "polish": "Polonais",
+    "english": "Anglais",
+    "french": "Français",
+    "dark": "Sombre",
+    "light": "Clair",
+    "highContrast": "Contraste élevé",
+    "blackAndWhite": "Noir et blanc",
+    "small": "Petit",
+    "medium": "Moyen",
+    "big": "Grand"
+  },
+  "emailVerification": {
+    "title": "Vérification d'e-mail",
+    "content": "Vérifiez votre adresse e-mail.",
+    "sendAgain": "Renvoyer",
+    "signOut": "Déconnexion"
+  },
+  "navBar": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "changeTheme": "Changer de thème",
+    "events": "Événements",
+    "about": "Page À propos",
+    "settings": "Paramètres",
+    "footer": "Projet de compétence",
+    "user": {
+      "myProfile": "Mon profil",
+      "communities": "Communautés",
+      "events": {
+        "events": "Événements",
+        "add": "Créer un événement",
+        "browse": "Parcourir les événements"
+      },
+      "meet": "Rencontrer des gens",
+      "chat": "Chat"
+    }
+  },
+  "landing": {
+    "start": "Bienvenue sur le site de rencontres",
+    "slogan": "Un programme conçue spécifiquement pour être supprimée. Intrigué ?",
+    "startNow": "Commencer maintenant",
+    "howItWorks": "Découvrez comment ça fonctionne",
+    "howItWorksTutorial": "Nous avons préparé une brève description de notre programme spécialement pour vous.",
+    "goSee": "Voir",
+    "eventsAndRelationships": "Rencontrez des gens et participez à des événements",
+    "eventsButton": "Voir les événements",
+    "eventsContent": "Rencontrez quelqu'un de nouveau. Participez à des événements, faites des rencontres. Cela ne prend qu'un instant. Vous ne savez pas ce que vous manquez."
+  },
+  "about": {
+    "seeWhatGoingOn": "Découvrez comment ça fonctionne",
+    "shortDescription": "Vous vous demandez à quoi sert cette application ? Rencontres ? Événements ? Se faire des amis ? Exactement !",
+    "events": "Section Événements",
+    "eventsDescription": "Vous ne savez pas quoi vous ferez-vous ce week-end ? Aucune idée de sortie avec des amis ? Consultez la section Événements. Chaque utilisateur connecté peut ajouter son événement, qui sera affiché sur votre page d'accueil pour que vous puissiez y participer.",
+    "goToEvents": "Voir les événements",
+    "relationships": "Rencontrez des gens",
+    "relationshipsDescription": "Vous n'avez personne avec qui vous pouvez étudier ? Voulez-vous rencontrer quelqu'un ? Vous n'avez personne pour aller au cinéma ? Cette programme est faite pour vous ! Vous pouvez rencontrer des autres étudiants avec lesquels vous pouvez terminer l'université.",
+    "chats": "Discutez avec des gens",
+    "chatsDescription": "Communication rapide et agréable avec des personnes nouvellement rencontrées. Voulez-vous apprendre à les connaître ? Envoyez-leur un message maintenant !",
+    "whatsNext": "Et maintenant ?",
+    "whatsNextDescription": "Commençons !"
+  },
+  "events": {
+    "add": {
+      "eventName": "Nom de l'événement",
+      "durationTime": "Quand ?",
+      "addEvent": "Ajouter un événement",
+      "error": "Données incorrectes"
+    },
+    "index": {
+      "myEvents": "Mes événements",
+      "editEvent": "Modifier l'événement",
+      "upcomingEvents": "Événements à venir",
+      "showEvent": "Afficher plus",
+      "noEvents": "Aucun événement à afficher",
+      "startDate": "Début :",
+      "endDate": "Fin :"
+    }
+  },
+  "universal": {
+    "emailExists": "L'e-mail existe déjà",
+    "saved": "Enregistré",
+    "passwordsNotMatch": "Les mots de passe ne sont pas même",
+    "form": {
+      "close": "Fermer",
+      "save": "Enregistrer"
+    },
+    "quickChat": "Vos amis",
+    "meetNewPeople": "Personnes que vous pourriez connaître"
+  },
+  "registration": {
+    "step": "Étape {step}",
+    "optional": "Facultatif",
+    "register": "Inscription",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "repeatPassword": "Répéter le mot de passe",
+    "giveBirthDate": "Entrez votre date de naissance",
+    "sex": "Sexe",
+    "faculty": "Faculté",
+    "fieldOfStudy": "Domaine d'études",
+    "preferredGender": "Sexe préféré pour une relation",
+    "lookingFor": "Maintenant je recherche une relation :",
+    "name": "Prénom",
+    "surname": "Nom de famille",
+    "acceptPolicy": "J'accepte les règlements",
+    "studentIndex": "Numéro d'index universitaire",
+    "registerYourself": "S'inscrire",
+    "invalidIndex": "Aucun numéro d'index ou numéro incorrect n'a été fourni",
+    "noPhoto": "Pas de photo de profil ajoutée",
+    "noBirthDate": "Aucune date de naissance donnée",
+    "nextStep": "Étape suivante",
+    "prevStep": "Étape précédente"
+  },
+  "authErrors": {
+    "invalidEmailOrPassword": "E-mail ou mot de passe incorrect",
+    "unknown": "Erreur inconnue"
+  },
+  "user": {
+    "sex": {
+      "male": "Homme",
+      "female": "Femme",
+      "other": "Autre",
+      "any": "Tout"
+    },
+    "preferredRelationship": {
+      "friendship": "Amitié",
+      "relationship": "Relation",
+      "studyPartner": "Partenaire d'étude",
+      "other": "Autre"
+    },
+    "hobbies": {
+      "gym": "Salle de sport",
+      "studyPartner": "Partenariat d'étude",
+      "beer": "Bière"
+    }
+  },
+  "profile": {
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "description": "Description",
+    "dateBirth": "Date de naissance",
+    "gender": "Sexe",
+    "faculty": "Faculté",
+    "fieldOfStudy": "Domaine d'études",
+    "index": "Numéro d'index",
+    "preferredGender": "Sexe préféré",
+    "lookingFor": "Recherche pour",
+    "hobbies": "Intérêts et passe-temps",
+    "yourPreferences": "Vos préférences et intérêts",
+    "editProfile": "Modifier les données",
+    "editPreferences": "Modifier les préférences",
+    "nothingToShow": "Rien à afficher",
+    "yourMainPhoto": "Votre photo de profil :",
+    "configuration": "Configurer"
+  },
+  "fieldsOfStudies": {
+    "computerScience": "Informatique",
+    "automaticsAndRobotics": "Automatique et Robotique",
+    "logistics": "Logistique",
+    "maths": "Mathématiques",
+    "physics": "Physique",
+    "architecture": "Architecture",
+    "other": "Autre"
+  },
+  "uploadImage": {
+    "image": "Photo",
+    "removeImage": "Supprimer la photo",
+    "uploadImage": "Ajouter une photo"
+  },
+  "matchingView": {
+    "discard": "Ignorer",
+    "accept": "Aimer",
+    "endTitle": "C'est tout !",
+    "endMessage": "Maintenant, vous pouvez envoyer un message à l'une de vos correspondances !",
+    "yourMatches": "Vos correspondances :",
+    "noMatches": "Vous n'avez aucune correspondance maintenant :(",
+    "matchSnackbar": "Nouvelle correspondance !"
+  }
+}
