@@ -177,7 +177,7 @@ function setMainPhoto(url: string) {
       >
         <v-col cols="12" sm="12" md="12">
           <v-row>
-            <div class="mx-auto text-h5 flex-wrap my-2">
+            <div class="mx-auto text-h4 flex-wrap my-2">
               {{ `${userData?.firstName} ${userData?.lastName}, ${age}` }}
               <v-card-subtitle>
                 {{ index }}
@@ -187,7 +187,7 @@ function setMainPhoto(url: string) {
 
           <v-row>
             <v-col cols="12" md="12" sm="12">
-              <v-text-field v-model="description" density="compact" :label="t('profile.description')" readonly />
+              <v-textarea v-model="description" rows="3" no-resize density="compact" variant="outlined" :label="t('profile.description')" readonly />
             </v-col>
             <v-col cols="12" md="6" sm="12">
               <v-text-field v-model="birthDate" density="compact" :label="t('profile.dateBirth')" readonly />
