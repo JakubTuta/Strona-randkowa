@@ -145,7 +145,14 @@
     "hobbies": {
       "gym": "Salle de sport",
       "studyPartner": "Partenariat d'étude",
-      "beer": "Bière"
+      "beer": "Bière",
+      "sports": "Sport",
+      "karaoke": "Karaoké",
+      "running": "Course",
+      "music": "Musique",
+      "jujitsu": "Ju-jitsu",
+      "books": "Livres",
+      "chess": "Échecs"
     }
   },
   "profile": {
