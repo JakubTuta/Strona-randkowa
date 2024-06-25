@@ -57,7 +57,7 @@ watch(userData, (newValue) => {
     <v-app>
       <v-main>
         <AppLoading />
-        <v-btn class="settingsButton" icon="mdi-cog" color="secondary" @click="showEditForm" />
+        <v-btn class="settingsButton" justify="start" icon="mdi-cog" color="secondary" @click="showEditForm" />
         <NuxtPage />
         <AppSnackbar />
       </v-main>
@@ -69,7 +69,7 @@ watch(userData, (newValue) => {
 <style scoped>
   .settingsButton {
     position: fixed;
-    right: 2em;
+    left: 2em;
     bottom: 2em;
     z-index: 1;
   }

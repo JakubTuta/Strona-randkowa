@@ -6,12 +6,12 @@ export default defineNuxtConfig({
     head: {
       title: 'Randki+',
       meta: [
-        { name: 'description', content: 'Strona randkowa Politechniki Łódzkiej.' }
+        { name: 'description', content: 'Strona randkowa Politechniki Łódzkiej.' },
       ],
     },
   },
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', 'vue3-emoji-picker'],
   },
   modules: [
     '@pinia/nuxt',

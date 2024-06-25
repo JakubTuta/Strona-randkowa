@@ -14,7 +14,7 @@ const drawer = ref(false)
     <EmailVerification />
     <slot />
 
-    <v-footer class="d-flex flex-column justify-center mt-10" elevation="4">
+    <v-footer class="d-flex flex-column justify-center" elevation="4">
       <div>
         <v-btn
           v-for="icon in icons"
