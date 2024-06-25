@@ -4,7 +4,7 @@ import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
 export default defineNuxtConfig({
   app: {
     head: {
-      title: 'Randki+',
+      title: 'Campus Connection+',
       meta: [
         { name: 'description', content: 'Strona randkowa Politechniki Łódzkiej.' },
       ],

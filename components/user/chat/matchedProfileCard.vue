@@ -26,7 +26,7 @@ function formatLastMessageDate(date: Date | undefined) {
 </script>
 
 <template>
-  <v-card style="cursor: pointer;" class=" my-1 mx-1">
+  <v-card style="cursor: pointer;" color="background" class=" my-1 mx-1">
     <v-row>
       <v-col cols="3">
         <v-avatar

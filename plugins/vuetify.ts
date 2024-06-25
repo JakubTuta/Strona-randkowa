@@ -27,13 +27,13 @@ export default defineNuxtPlugin((app) => {
           colors: {
             background: '#000000',
             surface: '#ffffff',
-            primary: '#ff0000',
-            secondary: '#00ff00',
+            primary: '#F1C232',
+            secondary: '#F1C232',
             error: '#ff0000',
             info: '#0000ff',
             success: '#00ff00',
             warning: '#ffff00',
-          }
+          },
         },
         blackAndWhite: {
           dark: true,
@@ -46,8 +46,8 @@ export default defineNuxtPlugin((app) => {
             info: '#ffffff',
             success: '#ffffff',
             warning: '#ffffff',
-          }
-        }
+          },
+        },
       },
     },
     defaults: {
