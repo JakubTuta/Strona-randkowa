@@ -73,14 +73,14 @@ watch(event, () => {
           class="py-3"
           readonly
         />
-        <!-- <v-row cols="12">
+        <v-row cols="12">
           <v-col xs="12" sm="12" md="6">
             <v-text-field v-model="startDate" :label="t('events.index.startDate')" readonly />
           </v-col>
           <v-col xs="12" sm="12" md="6">
             <v-text-field v-model="endDate" :label="t('events.index.endDate')" readonly />
           </v-col>
-        </v-row> -->
+        </v-row>
 
         <VueDatePicker
           v-model="durationTime"

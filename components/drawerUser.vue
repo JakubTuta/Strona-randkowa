@@ -14,7 +14,7 @@ const drawer = defineModel({ default: false })
       <v-divider />
     </div>
 
-    <v-list-item link :title="$t('navBar.user.communities')" append-icon="mdi-account-group" />
+<!--    <v-list-item link :title="$t('navBar.user.communities')" append-icon="mdi-account-group" />-->
     <v-list-item link :title="$t('navBar.user.events.events')" append-icon="mdi-calendar-multiple">
       <v-menu activator="parent" location="start">
         <v-list class="justify-center">

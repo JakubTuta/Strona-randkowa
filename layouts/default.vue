@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { icons } from '~/helpers/socials'
+
 const { t } = useI18n()
 </script>
 
@@ -8,7 +9,7 @@ const { t } = useI18n()
     <NavBarGuest />
     <slot />
 
-    <v-footer class="d-flex flex-column justify-center" elevation="4">
+    <v-footer class="d-flex flex-column justify-center bg-background" elevation="4">
       <div>
         <v-btn
           v-for="icon in icons"

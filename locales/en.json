@@ -1,5 +1,5 @@
 {
-  "appName": "Randki+",
+  "appName": "Campus Connection+",
   "login": {
     "login": "Login",
     "e-mail": "E-mail address",
@@ -15,6 +15,7 @@
     "fontSize": "Font size",
     "polish": "Polish",
     "english": "English",
+    "french": "French",
     "dark": "Dark",
     "light": "Light",
     "highContrast": "High contrast",
@@ -70,8 +71,8 @@
     }
   },
   "landing": {
-    "start": "Welcome to the dating site",
-    "slogan": "An app designed specifically to be deleted. Intrigued?",
+    "start": "Welcome to Campus Connection+!",
+    "slogan": "An app designed specifically for TUL's students",
     "startNow": "Start now",
     "howItWorks": "See how it works",
     "howItWorksTutorial": "We have prepared a short description of how our app works especially for you.",
@@ -82,9 +83,9 @@
   },
   "about": {
     "seeWhatGoingOn": "See how it works",
-    "shortDescription": "Wondering what this app is for? Dating? Events? Making friends? That's right!",
+    "shortDescription": "Wondering what this app is for? Come on, we'll show you around!",
     "events": "Events section",
-    "eventsDescription": "Don't know what to do this weekend? No idea for going out with friends? Check out the events section. Every logged-in user can add their event and it will be displayed on the homepage for you to participate in.",
+    "eventsDescription": "Don't know what to do this weekend? No idea for going out with friends? Check out the events section. Every logged-in user can add their event and it will be displayed on your homepage for you to participate in.",
     "goToEvents": "See events",
     "relationships": "Meet people",
     "relationshipsDescription": "Don't have anyone to study with? Want to meet someone? Don't have anyone to go to the movies with? This app is just for you! You can meet other students with whom you can go through university",
@@ -132,14 +133,14 @@
     "sex": "Gender",
     "faculty": "Faculty",
     "fieldOfStudy": "Field of study",
-    "preferredGender": "Wanted gender for a relationship",
+    "preferredGender": "Preferred gender for a relationship",
     "lookingFor": "Currently my looking for relationship is: ",
     "name": "Name",
     "surname": "Surname",
-    "acceptPolicy": "I accept the regulations",
+    "acceptPolicy": "I accept the terms and regulations",
     "studentIndex": "University Index",
     "registerYourself": "Register",
-    "invalidIndex": "No or incorrect index number was provided",
+    "invalidIndex": "No or incorrect index number provided",
     "noPhoto": "No profile picture added",
     "noBirthDate": "No date of birth given",
     "nextStep": "Next step",
@@ -165,7 +166,14 @@
     "hobbies": {
       "gym": "Gym",
       "studyPartner": "Study Partnering",
-      "beer": "Beer"
+      "beer": "Beer",
+      "sports": "Sports",
+      "karaoke": "Karaoke",
+      "running": "Running",
+      "music": "Music",
+      "jujitsu": "Ju-jitsu",
+      "books": "Books",
+      "chess": "Chess"
     }
   },
   "profile": {
@@ -207,7 +215,7 @@
     "endTitle": "That's all!",
     "endMessage": "Now, you can write a message to someone from your matches!",
     "yourMatches": "Your matches:",
-    "noMatches": "Actually you don't have any matches :(",
+    "noMatches": "Currently you don't have any matches :(",
     "matchSnackbar": "New match!"
   },
   "chatView": {

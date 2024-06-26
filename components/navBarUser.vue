@@ -41,9 +41,9 @@ async function logOut() {
     <v-spacer />
 
     <div class="hidden-sm-and-down">
-      <v-btn variant="text" color="default" prepend-icon="mdi-account-group">
-        {{ t('navBar.user.communities') }}
-      </v-btn>
+<!--      <v-btn variant="text" color="default" prepend-icon="mdi-account-group">-->
+<!--        {{ t('navBar.user.communities') }}-->
+<!--      </v-btn>-->
 
       <v-btn variant="text" color="default" prepend-icon="mdi-calendar-multiple" :append-icon="eventMenuIcon">
         {{ t('navBar.user.events.events') }}

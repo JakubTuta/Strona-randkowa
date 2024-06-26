@@ -42,6 +42,16 @@ watch(userData, async () => {
     console.log(userEvents.value)
   }
 })
+
+function convertDate(date) {
+  const day = date.getDate().toString().padStart(2, '0')
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const year = date.getFullYear()
+  const hours = date.getHours().toString().padStart(2, '0')
+  const minutes = date.getMinutes().toString().padStart(2, '0')
+
+  return `${day}.${month}.${year} ${hours}:${minutes}`
+}
 </script>
 
 <template>
@@ -64,8 +74,11 @@ watch(userData, async () => {
             >
               <v-row justify="center">
                 <v-col>
-                  <div class="d-flex fill-height justify-center align-center py-2 text-h4 bg-grey-darken-4">
+                  <div class="d-flex justify-center align-center py-2 text-h4 bg-grey-darken-4">
                     {{ item.name }}
+                  </div>
+                  <div class="d-flex justify-center align-center text-h4 py-2 bg-grey-darken-4">
+                    {{ convertDate(item.startDate) }}
                   </div>
 
                   <div class="d-flex fill-height justify-center align-center">
